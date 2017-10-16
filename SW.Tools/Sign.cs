@@ -21,32 +21,40 @@ namespace SW.Tools
         #region Public 
         public static byte[] CrearPFX(byte[] bytesCER, byte[] bytesKEY, string password)
         {
+            try
+            {
+                if (bytesCER == null || bytesKEY == null)
+                    throw new Exception("Empty cer and or key");
 
-            if (bytesCER == null || bytesKEY == null)
-                throw new Exception("Empty cer and or key");
+                var certificate = new Mono.Security.X509.X509Certificate(bytesCER);
 
-            var certificate = new Mono.Security.X509.X509Certificate(bytesCER);
+                char[] arrayOfChars = password.ToCharArray();
+                AsymmetricKeyParameter privateKey = Org.BouncyCastle.Security.PrivateKeyFactory.DecryptKey(arrayOfChars, bytesKEY);
 
-            char[] arrayOfChars = password.ToCharArray();
-            AsymmetricKeyParameter privateKey = Org.BouncyCastle.Security.PrivateKeyFactory.DecryptKey(arrayOfChars, bytesKEY);
+                RSA subjectKey = DotNetUtilitiesCustom.ToRSA((RsaPrivateCrtKeyParameters)privateKey);
 
-            RSA subjectKey = DotNetUtilitiesCustom.ToRSA((RsaPrivateCrtKeyParameters)privateKey);
+                Mono.Security.X509.PKCS12 p12 = new Mono.Security.X509.PKCS12();
+                p12.Password = password;
 
-            Mono.Security.X509.PKCS12 p12 = new Mono.Security.X509.PKCS12();
-            p12.Password = password;
+                ArrayList list = new ArrayList();
+                // we use a fixed array to avoid endianess issues 
+                // (in case some tools requires the ID to be 1).
+                list.Add(new byte[4] { 1, 0, 0, 0 });
+                Hashtable attributes = new Hashtable(1);
+                attributes.Add(Mono.Security.X509.PKCS9.localKeyId, list);
+                p12.AddCertificate(certificate, attributes);
+                p12.AddPkcs8ShroudedKeyBag(subjectKey, attributes);
+                return p12.GetBytes();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Los datos del Certificado CER KEY o Password son incorrectos. No es posible leer la llave privada.", ex);
+            }
 
-            ArrayList list = new ArrayList();
-            // we use a fixed array to avoid endianess issues 
-            // (in case some tools requires the ID to be 1).
-            list.Add(new byte[4] { 1, 0, 0, 0 });
-            Hashtable attributes = new Hashtable(1);
-            attributes.Add(Mono.Security.X509.PKCS9.localKeyId, list);
-            p12.AddCertificate(certificate, attributes);
-            p12.AddPkcs8ShroudedKeyBag(subjectKey, attributes);
-            return p12.GetBytes();
         }
         public static string SellarCFDIv33(byte[] certificatePfx, string password, string xml)
         {
+            xml = Fiscal.RemoverCaracteresInvalidosXml(xml);
             X509Certificate2 x509Certificate = new X509Certificate2(certificatePfx, password
                  , X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.Exportable);
 
@@ -80,16 +88,26 @@ namespace SW.Tools
         }
         public static string CadenaOriginalCFDIv33(string strXml)
         {
-            var xslt_cadenaoriginal_3_3 = new XslCompiledTransform();
-            xslt_cadenaoriginal_3_3.Load(typeof(cadenaoriginal_3_3));
-            string resultado = null;
-            StringWriter writer = new StringWriter();
-            XmlReader xml = XmlReader.Create(new StringReader(strXml));
-            xslt_cadenaoriginal_3_3.Transform(xml, null, writer);
-            resultado = writer.ToString().Trim();
-            writer.Close();
+            try
+            {
+                var xslt_cadenaoriginal_3_3 = new XslCompiledTransform();
+                xslt_cadenaoriginal_3_3.Load(typeof(cadenaoriginal_3_3));
+                string resultado = null;
+                StringWriter writer = new StringWriter();
+                XmlReader xml = XmlReader.Create(new StringReader(strXml));
+                xslt_cadenaoriginal_3_3.Transform(xml, null, writer);
+                resultado = writer.ToString().Trim();
+                writer.Close();
 
-            return resultado;
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("El XML proporcionado no es válido.", ex);
+            }
+
+            
         }
         #endregion
         #region Privates
@@ -115,7 +133,7 @@ namespace SW.Tools
             signatureBytes = rsa.SignData(data, CryptoConfig.MapNameToOID(algorithm));
             return Convert.ToBase64String(signatureBytes);
         }
-        
+
         private static string CertificateNumber(X509Certificate2 cert)
         {
             string hexadecimalString = cert.SerialNumber;

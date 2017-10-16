@@ -1,11 +1,16 @@
 ﻿using System;
+using System.Text;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Xml;
 
-namespace SW.Tools_UT
+namespace SW.ToolsUT
 {
+    /// <summary>
+    /// Descripción resumida de UT_Tools_CreateInvoice
+    /// </summary>
     [TestClass]
-    public class BuildInvoiceCFDI33
+    public class UT_Tools_BuildInvoiceCFDI33
     {
         [TestMethod]
         public void GetInvoice()
