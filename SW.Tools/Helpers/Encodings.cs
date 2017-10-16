@@ -20,7 +20,7 @@ namespace SW.Tools.Helpers
             string returnValue = System.Text.Encoding.UTF8.GetString(encodedDataAsBytes);
             return returnValue;
         }
-        public static string HeadecimalStringToASCII(string hexadecimalString)
+        public static string HexadecimalStringToASCII(string hexadecimalString)
         {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i <= hexadecimalString.Length - 2; i += 2)

@@ -43,7 +43,7 @@ namespace SW.Tools_UT
             Assert.IsTrue(xmlInvoice != "");
         }
         [TestMethod]
-        public void GetInvoiceWithComplement()
+        public void GetInvoiceWithXmlComplement()
         {
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(@"<cce11:ComercioExterior CertificadoOrigen='0' ClaveDePedimento='A1' Incoterm='DDP' Subdivision='0' TipoCambioUSD='18.5000' TipoOperacion='2' TotalUSD='100.73' Version='1.1' xmlns:cce11='http://www.sat.gob.mx/ComercioExterior11'>
@@ -58,7 +58,7 @@ namespace SW.Tools_UT
       </cce11:Destinatario>
       <cce11:Mercancias>
         <cce11:Mercancia FraccionArancelaria='48191001' NoIdentificacion='CHI-ESU9000' ValorDolares='100.73'/>
-      </cce11:Mercancias>    </cce11:ComercioExterior>");
+      </cce11:Mercancias></cce11:ComercioExterior>");
             XmlElement addenda = doc.DocumentElement;
             Tools.Entities.Comprobante comprobante = new Tools.Entities.Comprobante();
             comprobante.SetComprobante(Tools.Catalogs.c_Moneda.MXN, Tools.Catalogs.c_TipoDeComprobante.I, Tools.Catalogs.c_FormaPago.Item01, Tools.Catalogs.c_MetodoPago.PPD, "2000");
