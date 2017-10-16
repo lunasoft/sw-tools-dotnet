@@ -10,7 +10,7 @@ namespace SW.Tools.Entities
     public partial class Comprobante
     {
         public void SetConcepto(decimal cantidad, string claveProdServ, string claveUnidad, string descripcion,
-            decimal descuento, string noIdentificacion, string unidad, decimal valorUnitario)
+             string noIdentificacion, string unidad, decimal valorUnitario, decimal descuento = 0 )
         {
             decimal importe = valorUnitario * cantidad;
             this.conceptsList.Add(new ComprobanteConcepto()
@@ -33,7 +33,9 @@ namespace SW.Tools.Entities
             if (_base <= 0)
                 throw new ToolsException("CFDI33154", Errors.CFDI33154);
             decimal importe = _base * tasaOCuota;
-            int positionConcept = this.conceptsList.Count;
+            if(!string.IsNullOrEmpty(this.Moneda))
+                importe = importe.TruncateDecimals(this.Moneda_Info.Decimales);
+            int positionConcept = this.conceptsList.Count-1;
             if (this.Conceptos[positionConcept].Impuestos == null)
                 this.Conceptos[positionConcept].Impuestos = new ComprobanteConceptoImpuestos();
             if (this.Conceptos[positionConcept].Impuestos.trasladosList == null)
@@ -48,7 +50,9 @@ namespace SW.Tools.Entities
             if (_base <= 0)
                 throw new ToolsException("CFDI33163", Errors.CFDI33163);
             decimal importe = _base * tasaOCuota;
-            int positionConcept = this.conceptsList.Count;
+            if (!string.IsNullOrEmpty(this.Moneda))
+                importe = importe.TruncateDecimals(this.Moneda_Info.Decimales);
+            int positionConcept = this.conceptsList.Count-1;
             if (this.Conceptos[positionConcept].Impuestos == null)
                 this.Conceptos[positionConcept].Impuestos = new ComprobanteConceptoImpuestos();
             if (this.Conceptos[positionConcept].Impuestos.retencionesList == null)
@@ -71,6 +75,14 @@ namespace SW.Tools.Entities
 
         public void SetComplemento(XmlElement xmlComplemento)
         {
+            if (this.complementoList == null)
+            {
+                this.complementoList = new ComprobanteComplemento[1];
+                this.complementoList[0] = new ComprobanteComplemento();
+            }
+                
+            if (this.complementoList[0].antFieldList == null)
+                this.complementoList[0].antFieldList = new List<XmlElement>();
             this.complementoList[0].antFieldList.Add(xmlComplemento);
         }
 
@@ -87,8 +99,15 @@ namespace SW.Tools.Entities
                 this.Impuestos = new ComprobanteImpuestos();
             if (this.Impuestos.trasladoList == null)
                 this.Impuestos.trasladoList = new List<ComprobanteImpuestosTraslado>();
-            this.Impuestos.trasladoList.Add(new ComprobanteImpuestosTraslado()
-            { Importe = importe, Impuesto = impuesto, TasaOCuota = tasaOCuota, TipoFactor = tipoFactor });
+
+            if (this.Impuestos.trasladoList.Any(a => a.Impuesto == impuesto && a.TasaOCuota == tasaOCuota))
+            {
+                this.Impuestos.trasladoList.Where(a => a.Impuesto == impuesto && a.TasaOCuota == tasaOCuota)
+                    .ToList().ForEach(i => i.Importe = i.Importe + importe);
+            }
+            else
+                this.Impuestos.trasladoList.Add(new ComprobanteImpuestosTraslado()
+                { Importe = importe, Impuesto = impuesto, TasaOCuota = tasaOCuota, TipoFactor = tipoFactor });
         }
         private void SetImpuestoRetencion(decimal importe, string impuesto)
         {
@@ -96,7 +115,10 @@ namespace SW.Tools.Entities
                 this.Impuestos = new ComprobanteImpuestos();
             if (this.Impuestos.retencionesList == null)
                 this.Impuestos.retencionesList = new List<ComprobanteImpuestosRetencion>();
-            this.Impuestos.retencionesList.Add(new ComprobanteImpuestosRetencion()
+            if(this.Impuestos.trasladoList.Any(a=>a.Impuesto==impuesto))
+                this.Impuestos.retencionesList.Where(a => a.Impuesto == impuesto).ToList().ForEach(i=>i.Importe = i.Importe+ importe);
+            else
+                this.Impuestos.retencionesList.Add(new ComprobanteImpuestosRetencion()
                 { Importe = importe, Impuesto = impuesto });
         }
 
@@ -107,7 +129,7 @@ namespace SW.Tools.Entities
             this.Emisor.Rfc = rfc;
         }
 
-        public void SetReceptor(string rfc, string nombre, string residenciaFiscal, string numRegIdTrib, string usoCFDI)
+        public void SetReceptor(string rfc, string nombre, string usoCFDI, string residenciaFiscal=null, string numRegIdTrib=null)
         {
             this.Receptor.Rfc = rfc;
             this.Receptor.Nombre = nombre;
@@ -116,9 +138,8 @@ namespace SW.Tools.Entities
             this.Receptor.NumRegIdTrib = numRegIdTrib;
             this.Receptor.UsoCFDI = usoCFDI;
         }
-        public void SetComprobante(string serie, string folio, string formaPago, string condicionesDePago, 
-            string moneda, decimal tipoCambio, string tipoDeComprobante, string metodoPago, 
-            string lugarExpedicion, string confirmacion = null)
+        public void SetComprobante(string moneda,  string tipoDeComprobante, string formaPago, string metodoPago,
+            string lugarExpedicion, string serie=null, string folio=null, string condicionesDePago=null, decimal tipoCambio = 1, string confirmacion = null)
         {
             this.Serie = serie;
             this.Folio = folio;
@@ -137,12 +158,13 @@ namespace SW.Tools.Entities
             {
                 this.SubTotal = this.Conceptos.Sum(a => a.Importe).TruncateDecimals(this.Moneda_Info.Decimales);
                 if (this.Conceptos != null && this.Conceptos.Any(a => a.DescuentoSpecified))
+                {
                     this.Descuento = this.Conceptos.Sum(a => a.Descuento).TruncateDecimals(this.Moneda_Info.Decimales);
+                    this.DescuentoSpecified = true;
+                }
             }
             else if (this.TipoDeComprobante == "T" || this.TipoDeComprobante == "P")
                 this.SubTotal = 0;
-            Validation.CurrencyRateNotExist(this);
-
             //Calcular total
             decimal totalCalculado = 0;
             totalCalculado = this.SubTotal - this.Descuento;
@@ -159,25 +181,24 @@ namespace SW.Tools.Entities
                     totalCalculado = totalCalculado - decimal.Parse(implocal.GetAttribute("TotaldeRetenciones"));
             }
             this.Total = totalCalculado;
-            this.Fecha = DateTime.Now;
+            this.Fecha = DateTime.Now.CentralTime();
             if (this.Impuestos != null)
             {
-                if (this.Impuestos.Retenciones != null && this.Impuestos.Retenciones.Count() > 0)
-                {
-                    this.Impuestos.TotalImpuestosRetenidos = this.Impuestos.Retenciones.Sum(a => a.Importe);
-                    this.Impuestos.TotalImpuestosRetenidosSpecified = true;
-                }
-                if (this.Impuestos.Traslados != null && this.Impuestos.Retenciones.Count() > 0)
+                if (this.Impuestos.Traslados != null && this.Impuestos.Traslados.Count() > 0)
                 {
                     this.Impuestos.TotalImpuestosTrasladados = this.Impuestos.Traslados.Sum(a => a.Importe);
                     this.Impuestos.TotalImpuestosTrasladadosSpecified = true;
                 }
+
+                if (this.Impuestos.retencionesList != null && this.Impuestos.retencionesList.Count() > 0)
+                {
+                    this.Impuestos.TotalImpuestosRetenidos = this.Impuestos.Retenciones.Sum(a => a.Importe);
+                    this.Impuestos.TotalImpuestosRetenidosSpecified = true;
+                }
+                
             }
-                
-            
 
 
-                
 
             return this;
         }

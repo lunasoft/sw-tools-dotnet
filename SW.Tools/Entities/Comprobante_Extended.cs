@@ -273,6 +273,7 @@ namespace SW.Tools.Entities
         {
             get
             {
+                
                 return this.Complemento?.Any(w => w.Any?.Count(a => a.Name.Contains("implocal:ImpuestosLocales")) > 0) == true;
             }
         }

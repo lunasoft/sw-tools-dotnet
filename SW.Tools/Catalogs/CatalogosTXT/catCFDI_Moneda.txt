@@ -1,0 +1,178 @@
+AED|Dirham de EAU|2|500
+AFN|Afghani|2|500
+ALL|Lek|2|500
+AMD|Dram armenio|2|500
+ANG|Florín antillano neerlandés|2|500
+AOA|Kwanza|2|500
+ARS|Peso Argentino|2|500
+AUD|Dólar Australiano|2|500
+AWG|Aruba Florin|2|500
+AZN|Azerbaijanian Manat|2|500
+BAM|Convertibles marca|2|500
+BBD|Dólar de Barbados|2|500
+BDT|Taka|2|500
+BGN|Lev búlgaro|2|500
+BHD|Dinar de Bahrein|3|500
+BIF|Burundi Franc|0|500
+BMD|Dólar de Bermudas|2|500
+BND|Dólar de Brunei|2|500
+BOB|Boliviano|2|500
+BOV|Mvdol|2|500
+BRL|Real brasileño|2|500
+BSD|Dólar de las Bahamas|2|500
+BTN|Ngultrum|2|500
+BWP|Pula|2|500
+BYR|Rublo bielorruso|0|500
+BZD|Dólar de Belice|2|500
+CAD|Dolar Canadiense|2|500
+CDF|Franco congoleño|2|500
+CHE|WIR Euro|2|500
+CHF|Franco Suizo|2|500
+CHW|Franc WIR|2|500
+CLF|Unidad de Fomento|4|500
+CLP|Peso chileno|0|500
+CNY|Yuan Renminbi|2|500
+COP|Peso Colombiano|2|500
+COU|Unidad de Valor real|2|500
+CRC|Colón costarricense|2|500
+CUC|Peso Convertible|2|500
+CUP|Peso Cubano|2|500
+CVE|Cabo Verde Escudo|2|500
+CZK|Corona checa|2|500
+DJF|Franco de Djibouti|0|500
+DKK|Corona danesa|2|500
+DOP|Peso Dominicano|2|500
+DZD|Dinar argelino|2|500
+EGP|Libra egipcia|2|500
+ERN|Nakfa|2|500
+ETB|Birr etíope|2|500
+EUR|Euro|2|500
+FJD|Dólar de Fiji|2|500
+FKP|Libra malvinense|2|500
+GBP|Libra Esterlina|2|500
+GEL|Lari|2|500
+GHS|Cedi de Ghana|2|500
+GIP|Libra de Gibraltar|2|500
+GMD|Dalasi|2|500
+GNF|Franco guineano|0|500
+GTQ|Quetzal|2|500
+GYD|Dólar guyanés|2|500
+HKD|Dolar De Hong Kong|2|500
+HNL|Lempira|2|500
+HRK|Kuna|2|500
+HTG|Gourde|2|500
+HUF|Florín|2|500
+IDR|Rupia|2|500
+ILS|Nuevo Shekel Israelí|2|500
+INR|Rupia india|2|500
+IQD|Dinar iraquí|3|500
+IRR|Rial iraní|2|500
+ISK|Corona islandesa|0|500
+JMD|Dólar Jamaiquino|2|500
+JOD|Dinar jordano|3|500
+JPY|Yen|0|500
+KES|Chelín keniano|2|500
+KGS|Som|2|500
+KHR|Riel|2|500
+KMF|Franco Comoro|0|500
+KPW|Corea del Norte ganó|2|500
+KRW|Won|0|500
+KWD|Dinar kuwaití|3|500
+KYD|Dólar de las Islas Caimán|2|500
+KZT|Tenge|2|500
+LAK|Kip|2|500
+LBP|Libra libanesa|2|500
+LKR|Rupia de Sri Lanka|2|500
+LRD|Dólar liberiano|2|500
+LSL|Loti|2|500
+LYD|Dinar libio|3|500
+MAD|Dirham marroquí|2|500
+MDL|Leu moldavo|2|500
+MGA|Ariary malgache|2|500
+MKD|Denar|2|500
+MMK|Kyat|2|500
+MNT|Tugrik|2|500
+MOP|Pataca|2|500
+MRO|Ouguiya|2|500
+MUR|Rupia de Mauricio|2|500
+MVR|Rupia|2|500
+MWK|Kwacha|2|500
+MXN|Peso Mexicano|2|500
+MXV|México Unidad de Inversión (UDI)|2|500
+MYR|Ringgit malayo|2|500
+MZN|Mozambique Metical|2|500
+NAD|Dólar de Namibia|2|500
+NGN|Naira|2|500
+NIO|Córdoba Oro|2|500
+NOK|Corona noruega|2|500
+NPR|Rupia nepalí|2|500
+NZD|Dólar de Nueva Zelanda|2|500
+OMR|Rial omaní|3|500
+PAB|Balboa|2|500
+PEN|Nuevo Sol|2|500
+PGK|Kina|2|500
+PHP|Peso filipino|2|500
+PKR|Rupia de Pakistán|2|500
+PLN|Zloty|2|500
+PYG|Guaraní|0|500
+QAR|Qatar Rial|2|500
+RON|Leu rumano|2|500
+RSD|Dinar serbio|2|500
+RUB|Rublo ruso|2|500
+RWF|Franco ruandés|0|500
+SAR|Riyal saudí|2|500
+SBD|Dólar de las Islas Salomón|2|500
+SCR|Rupia de Seychelles|2|500
+SDG|Libra sudanesa|2|500
+SEK|Corona sueca|2|500
+SGD|Dolar De Singapur|2|500
+SHP|Libra de Santa Helena|2|500
+SLL|Leona|2|500
+SOS|Chelín somalí|2|500
+SRD|Dólar de Suriname|2|500
+SSP|Libra sudanesa Sur|2|500
+STD|Dobra|2|500
+SVC|Colon El Salvador|2|500
+SYP|Libra Siria|2|500
+SZL|Lilangeni|2|500
+THB|Baht|2|500
+TJS|Somoni|2|500
+TMT|Turkmenistán nuevo manat|2|500
+TND|Dinar tunecino|3|500
+TOP|Pa'anga|2|500
+TRY|Lira turca|2|500
+TTD|Dólar de Trinidad y Tobago|2|500
+TWD|Nuevo dólar de Taiwán|2|500
+TZS|Shilling tanzano|2|500
+UAH|Hryvnia|2|500
+UGX|Shilling de Uganda|0|500
+USD|Dolar americano|2|500
+USN|Dólar estadounidense (día siguiente)|2|500
+UYI|Peso Uruguay en Unidades Indexadas (URUIURUI)|0|500
+UYU|Peso Uruguayo|2|500
+UZS|Uzbekistán Sum|2|500
+VEF|Bolívar|2|500
+VND|Dong|0|500
+VUV|Vatu|0|500
+WST|Tala|2|500
+XAF|Franco CFA BEAC|0|500
+XAG|Plata|0|500
+XAU|Oro|0|500
+XBA|Unidad de Mercados de Bonos Unidad Europea Composite (EURCO)|0|500
+XBB|Unidad Monetaria de Bonos de Mercados Unidad Europea (UEM-6)|0|500
+XBC|Mercados de Bonos Unidad Europea unidad de cuenta a 9 (UCE-9)|0|500
+XBD|Mercados de Bonos Unidad Europea unidad de cuenta a 17 (UCE-17)|0|500
+XCD|Dólar del Caribe Oriental|2|500
+XDR|DEG (Derechos Especiales de Giro)|0|500
+XOF|Franco CFA BCEAO|0|500
+XPD|Paladio|0|500
+XPF|Franco CFP|0|500
+XPT|Platino|0|500
+XSU|Sucre|0|500
+XTS|Códigos reservados específicamente para propósitos de prueba|0|
+XUA|Unidad ADB de Cuenta|0|500
+XXX|Los códigos asignados para las transacciones en que intervenga ninguna moneda|0|
+YER|Rial yemení|2|500
+ZAR|Rand|2|500
+ZMW|Kwacha zambiano|2|500
+ZWL|Zimbabwe Dólar|2|500

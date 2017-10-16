@@ -79,7 +79,9 @@ namespace SW.Tools.Entities
             this.Emisor = new ComprobanteEmisor();
             this.Receptor = new ComprobanteReceptor();
             this.conceptsList = new List<ComprobanteConcepto>();
-            this.complementoList = new ComprobanteComplemento[1];
+            //this.complementoList = new ComprobanteComplemento[1];
+            //this.complementoList[0].Any = new System.Xml.XmlElement[1];
+            
             
         }
         /// <remarks/>
@@ -1182,7 +1184,9 @@ namespace SW.Tools.Entities
         {
             get
             {
-                return this.trasladosList.ToArray();
+                if(this.trasladosList!=null)
+                    return this.trasladosList.ToArray();
+                return null;
             }
             set
             {
@@ -1196,7 +1200,9 @@ namespace SW.Tools.Entities
         {
             get
             {
-                return this.retencionesList.ToArray();
+                if(this.retencionesList!=null)
+                    return this.retencionesList.ToArray();
+                return null;
             }
             set
             {
@@ -1813,7 +1819,9 @@ namespace SW.Tools.Entities
         {
             get
             {
-                return this.retencionesList.ToArray();
+                if(this.retencionesList!=null)
+                    return this.retencionesList.ToArray();
+                return null;
             }
             set
             {
@@ -1827,7 +1835,9 @@ namespace SW.Tools.Entities
         {
             get
             {
-                return this.trasladoList.ToArray();
+                if(this.trasladoList!=null)
+                    return this.trasladoList.ToArray();
+                return null;
             }
             set
             {

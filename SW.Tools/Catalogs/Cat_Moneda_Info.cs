@@ -80,7 +80,7 @@ namespace SW.Tools.Catalogs
             = new Lazy<Dictionary<string, Cat_Moneda_Info>>(() =>
             {
                 var assembly = System.Reflection.Assembly.GetAssembly(typeof(Cat_Moneda_Info));
-                var rs_Catalogs_catCFDI_Moneda = assembly.GetManifestResourceStream("SW.CFDISDK.Catalogs.catCFDI_Moneda.txt");
+                var rs_Catalogs_catCFDI_Moneda = assembly.GetManifestResourceStream("SW.Tools.Catalogs.CatalogosTXT.catCFDI_Moneda.txt");
                 var catalog = new Dictionary<string, Cat_Moneda_Info>();
                 using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
                 {
