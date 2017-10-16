@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SW.Tools.Issue;
 using System.Xml;
 
 namespace SW.Tools_UT
@@ -27,18 +26,18 @@ namespace SW.Tools_UT
             XmlElement addenda = doc.DocumentElement;
 
             Tools.Entities.Comprobante comprobante = new Tools.Entities.Comprobante();
-            comprobante.SetComprobante("MXN", "PPD", "20000", "HFGA", "2366213", "01", "AGENTE");
-            comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta", "1", "NO APLICA", 3592.83m);
-            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 3592.83m);
+            comprobante.SetComprobante(Tools.Catalogs.c_Moneda.MXN, Tools.Catalogs.c_TipoDeComprobante.I, Tools.Catalogs.c_FormaPago.Item01, Tools.Catalogs.c_MetodoPago.PPD, "2000");
+            comprobante.SetConcepto(1, Tools.Catalogs.c_ClaveProdServ.Item84131500, Tools.Catalogs.c_ClaveUnidad.ZZ, "Prima neta", "1", "NO APLICA", 3592.83m);
+            comprobante.SetConceptoImpuestoTraslado(0.1600000m, Tools.Entities.c_TipoFactor.Tasa, "002", 3592.83m);
 
-            comprobante.SetConcepto(1, "84131500", "ZZ", "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m);
-            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 258.68m);
+            comprobante.SetConcepto(1, Tools.Catalogs.c_ClaveProdServ.Item84131500, Tools.Catalogs.c_ClaveUnidad.ZZ, "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m);
+            comprobante.SetConceptoImpuestoTraslado(0.1600000m, Tools.Entities.c_TipoFactor.Tasa, "002", 258.68m);
 
-            comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m);
-            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 550.00m);
+            comprobante.SetConcepto(1, Tools.Catalogs.c_ClaveProdServ.Item84131500, Tools.Catalogs.c_ClaveUnidad.ZZ, "derecho de poliza", "1", "NO APLICA", 550.00m);
+            comprobante.SetConceptoImpuestoTraslado(0.1600000m, Tools.Entities.c_TipoFactor.Tasa, "002", 550.00m);
             comprobante.SetAddenda(addenda);
-            comprobante.SetEmisor("AAA010101AAA", "ACCEM SERVICIOS EMPRESARIALES SC", "601");
-            comprobante.SetReceptor("XAXX010101000", "MIGUEL LANGARKA GENESTA", "G03");
+            comprobante.SetEmisor("AAA010101AAA", "ACCEM SERVICIOS EMPRESARIALES SC", Tools.Entities.c_RegimenFiscal.Item601);
+            comprobante.SetReceptor("XAXX010101000", "MIGUEL LANGARKA GENESTA", Tools.Entities.c_UsoCFDI.G03);
             var invoice = comprobante.GetComprobante();
             var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocumentToXml(invoice);
             Assert.IsTrue(xmlInvoice != "");
@@ -62,18 +61,18 @@ namespace SW.Tools_UT
       </cce11:Mercancias>    </cce11:ComercioExterior>");
             XmlElement addenda = doc.DocumentElement;
             Tools.Entities.Comprobante comprobante = new Tools.Entities.Comprobante();
-            comprobante.SetComprobante("MXN", "PPD", "20000", "HFGA", "2366213", "01", "AGENTE");
-            comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta", "1", "NO APLICA", 3592.83m);
-            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 3592.83m);
+            comprobante.SetComprobante(Tools.Catalogs.c_Moneda.MXN, Tools.Catalogs.c_TipoDeComprobante.I, Tools.Catalogs.c_FormaPago.Item01, Tools.Catalogs.c_MetodoPago.PPD, "2000");
+            comprobante.SetConcepto(1, Tools.Catalogs.c_ClaveProdServ.Item84131500, Tools.Catalogs.c_ClaveUnidad.ZZ, "Prima neta", "1", "NO APLICA", 3592.83m);
+            comprobante.SetConceptoImpuestoTraslado(0.1600000m, Tools.Entities.c_TipoFactor.Tasa, "002", 3592.83m);
 
-            comprobante.SetConcepto(1, "84131500", "ZZ", "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m);
-            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 258.68m);
+            comprobante.SetConcepto(1, Tools.Catalogs.c_ClaveProdServ.Item84131500, Tools.Catalogs.c_ClaveUnidad.ZZ, "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m);
+            comprobante.SetConceptoImpuestoTraslado(0.1600000m, Tools.Entities.c_TipoFactor.Tasa, "002", 258.68m);
 
-            comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m);
-            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 550.00m);
+            comprobante.SetConcepto(1, Tools.Catalogs.c_ClaveProdServ.Item84131500, Tools.Catalogs.c_ClaveUnidad.ZZ, "derecho de poliza", "1", "NO APLICA", 550.00m);
+            comprobante.SetConceptoImpuestoTraslado(0.1600000m, Tools.Entities.c_TipoFactor.Tasa, "002", 550.00m);
             comprobante.SetComplemento(addenda);
-            comprobante.SetEmisor("AAA010101AAA", "ACCEM SERVICIOS EMPRESARIALES SC", "601");
-            comprobante.SetReceptor("XAXX010101000", "MIGUEL LANGARKA GENESTA", "G03");
+            comprobante.SetEmisor("AAA010101AAA", "ACCEM SERVICIOS EMPRESARIALES SC", Tools.Entities.c_RegimenFiscal.Item601);
+            comprobante.SetReceptor("XAXX010101000", "MIGUEL LANGARKA GENESTA", Tools.Entities.c_UsoCFDI.G03);
             var invoice = comprobante.GetComprobante();
             var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocumentToXml(invoice);
             Assert.IsTrue(xmlInvoice != "");

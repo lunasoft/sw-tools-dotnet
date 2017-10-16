@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SW.Tools.Catalogs;
-using SW.Tools.Issue;
 using SW.Tools.Helpers;
 
 namespace SW.Tools.Entities
@@ -213,61 +212,61 @@ namespace SW.Tools.Entities
                 return this.Complemento?.Any(w => w.Any?.Count(a => a.Name.Contains("ecc11:EstadoDeCuentaCombustible")) > 0) == true;
             }
         }
-        private decimal? maxLimitComprobante;
+        //private decimal? maxLimitComprobante;
 
-        [System.Xml.Serialization.XmlIgnore]
-        public decimal? MaxLimitComprobante
-        {
-            get
-            {
-                if (maxLimitComprobante == null)
-                {
-                    try
-                    {
-                        var limit = Cat_TipoComprobante.Catalog[EnumUtils.GetEnumValue<c_TipoDeComprobante>(this.TipoDeComprobante)];
-                        if (this.TipoDeComprobante == c_TipoDeComprobante.N.ToString())
-                        {
-                            if (this.HasNomina12)
-                            {
-                                var payrollComplement = this.Complemento.FirstOrDefault(c => c.Any.Any(w => w.Name == "nomina12:Nomina"));
-                                var payroll = payrollComplement.Any.FirstOrDefault(w => w.Name == "nomina12:Nomina");
-                                var payrollXml = payroll.OuterXml.ToXmlDocument();
-                                if (payrollXml == null)
-                                    throw new ToolsException("CFDI33XXX", "El complemento nomina12:Nomina no es valido.");
+        //[System.Xml.Serialization.XmlIgnore]
+        //public decimal? MaxLimitComprobante
+        //{
+        //    get
+        //    {
+        //        if (maxLimitComprobante == null)
+        //        {
+        //            try
+        //            {
+        //                var limit = Cat_TipoComprobante.Catalog[EnumUtils.GetEnumValue<c_TipoDeComprobante>(this.TipoDeComprobante)];
+        //                if (this.TipoDeComprobante == c_TipoDeComprobante.N.ToString())
+        //                {
+        //                    if (this.HasNomina12)
+        //                    {
+        //                        var payrollComplement = this.Complemento.FirstOrDefault(c => c.Any.Any(w => w.Name == "nomina12:Nomina"));
+        //                        var payroll = payrollComplement.Any.FirstOrDefault(w => w.Name == "nomina12:Nomina");
+        //                        var payrollXml = payroll.OuterXml.ToXmlDocument();
+        //                        if (payrollXml == null)
+        //                            throw new ToolsException("CFDI33XXX", "El complemento nomina12:Nomina no es valido.");
 
-                                var objPayroll = Serializer.DeserealizeDocument<Entities.Complements.Nomina>(payrollXml.OuterXml);
-                                if (objPayroll.Percepciones != null)
-                                {
-                                    if (objPayroll.Percepciones.TotalSueldosSpecified && !objPayroll.Percepciones.TotalSeparacionIndemnizacionSpecified)
-                                        maxLimitComprobante = limit.ValorMaximo["NS"];
-                                    else if (!objPayroll.Percepciones.TotalSueldosSpecified && (objPayroll.Percepciones.TotalSeparacionIndemnizacionSpecified
-                                        || objPayroll.Percepciones.TotalJubilacionPensionRetiroSpecified))
-                                        maxLimitComprobante = limit.ValorMaximo["NdS"];
-                                    else if ((objPayroll.Percepciones.TotalSueldosSpecified && objPayroll.Percepciones.TotalSeparacionIndemnizacionSpecified)
-                                            || objPayroll.Percepciones.TotalJubilacionPensionRetiroSpecified)
-                                        maxLimitComprobante = limit.ValorMaximo["NdS"] + limit.ValorMaximo["NS"];
-                                    else
-                                        maxLimitComprobante = limit.ValorMaximo["NS"];
-                                }
-                                else
-                                {
-                                    maxLimitComprobante = limit.ValorMaximo["NS"];
-                                }
-                            }
-                        }
-                        else
-                            maxLimitComprobante = limit.ValorMaximo["ValorMaximo"];
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new ToolsException("CFDI33XXX", "No fue posible obtener el valor maximo del comprobante por tipo de comprobante",
-                            ex.Message);
-                    }
-                }
-                return maxLimitComprobante;
-            }
+        //                        var objPayroll = Serializer.DeserealizeDocument<Entities.Complements.Nomina>(payrollXml.OuterXml);
+        //                        if (objPayroll.Percepciones != null)
+        //                        {
+        //                            if (objPayroll.Percepciones.TotalSueldosSpecified && !objPayroll.Percepciones.TotalSeparacionIndemnizacionSpecified)
+        //                                maxLimitComprobante = limit.ValorMaximo["NS"];
+        //                            else if (!objPayroll.Percepciones.TotalSueldosSpecified && (objPayroll.Percepciones.TotalSeparacionIndemnizacionSpecified
+        //                                || objPayroll.Percepciones.TotalJubilacionPensionRetiroSpecified))
+        //                                maxLimitComprobante = limit.ValorMaximo["NdS"];
+        //                            else if ((objPayroll.Percepciones.TotalSueldosSpecified && objPayroll.Percepciones.TotalSeparacionIndemnizacionSpecified)
+        //                                    || objPayroll.Percepciones.TotalJubilacionPensionRetiroSpecified)
+        //                                maxLimitComprobante = limit.ValorMaximo["NdS"] + limit.ValorMaximo["NS"];
+        //                            else
+        //                                maxLimitComprobante = limit.ValorMaximo["NS"];
+        //                        }
+        //                        else
+        //                        {
+        //                            maxLimitComprobante = limit.ValorMaximo["NS"];
+        //                        }
+        //                    }
+        //                }
+        //                else
+        //                    maxLimitComprobante = limit.ValorMaximo["ValorMaximo"];
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                throw new ToolsException("CFDI33XXX", "No fue posible obtener el valor maximo del comprobante por tipo de comprobante",
+        //                    ex.Message);
+        //            }
+        //        }
+        //        return maxLimitComprobante;
+        //    }
 
-        }
+        //}
         [System.Xml.Serialization.XmlIgnore]
         public bool HasImpLocales
         {
