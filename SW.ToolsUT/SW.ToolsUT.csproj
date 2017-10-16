@@ -48,11 +48,14 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="UT_Tools_BuildInvoiceCFDI33.cs" />
     <Compile Include="UT_Tools_Fiscal.cs" />
     <Compile Include="UT_Tools_Sign.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

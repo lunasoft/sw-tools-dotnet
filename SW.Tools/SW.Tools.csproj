@@ -51,15 +51,44 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Catalogs\catCFDI_ClaveUnidad.cs" />
+    <Compile Include="Catalogs\catCFDI_c_Estado.cs" />
+    <Compile Include="Catalogs\catCFDI_c_FormaPago.cs" />
+    <Compile Include="Catalogs\catCFDI_c_MetodoPago.cs" />
+    <Compile Include="Catalogs\catCFDI_c_Moneda.cs" />
+    <Compile Include="Catalogs\catCFDI_c_Pais.cs" />
+    <Compile Include="Catalogs\CatCFDI_c_TipoDeComprobante.cs" />
+    <Compile Include="Catalogs\Cat_Moneda_Info.cs" />
+    <Compile Include="Catalogs\c_ClaveProdServ.cs" />
     <Compile Include="DotNetUtilitiesCustom.cs" />
     <Compile Include="DateTimeExtensions.cs" />
+    <Compile Include="Catalogs\c_Moneda_Element.cs" />
+    <Compile Include="Entities\Complements\RFCINC.cs" />
+    <Compile Include="Entities\Comprobante.cs" />
+    <Compile Include="Entities\Comprobante_Build.cs" />
+    <Compile Include="Entities\Comprobante_Extended.cs" />
+    <Compile Include="Entities\Complements\Nomina.cs" />
+    <Compile Include="Entities\Pagos10.cs" />
+    <Compile Include="Entities\ToolsException.cs" />
     <Compile Include="Entities\YearsMonthsDays.cs" />
+    <Compile Include="Errors.cs" />
     <Compile Include="Fiscal.cs" />
+    <Compile Include="Helpers\Coins.cs" />
+    <Compile Include="Helpers\DateTime.cs" />
+    <Compile Include="Helpers\Encodings.cs" />
+    <Compile Include="Helpers\EnumUtils.cs" />
+    <Compile Include="Helpers\Serializer.cs" />
+    <Compile Include="Helpers\Xml.cs" />
+    <Compile Include="Helpers\XmlExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sign.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Catalogs\CatalogosTXT\catCFDI_Moneda.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
