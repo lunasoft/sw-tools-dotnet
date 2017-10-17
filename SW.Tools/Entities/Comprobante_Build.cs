@@ -181,6 +181,7 @@ namespace SW.Tools.Entities
                 if (implocal.HasAttribute("TotaldeRetenciones"))
                     totalCalculado = totalCalculado - decimal.Parse(implocal.GetAttribute("TotaldeRetenciones"));
             }
+
             this.Total = totalCalculado;
             this.Fecha = DateTime.Now.CentralTime();
             if (this.Impuestos != null)
@@ -189,12 +190,14 @@ namespace SW.Tools.Entities
                 {
                     this.Impuestos.TotalImpuestosTrasladados = this.Impuestos.Traslados.Sum(a => a.Importe).TruncateDecimals(this.moneda_Info.Decimales);
                     this.Impuestos.TotalImpuestosTrasladadosSpecified = true;
+                    this.Total += this.Impuestos.TotalImpuestosTrasladados;
                 }
 
                 if (this.Impuestos.retencionesList != null && this.Impuestos.retencionesList.Count() > 0)
                 {
                     this.Impuestos.TotalImpuestosRetenidos = this.Impuestos.Retenciones.Sum(a => a.Importe).TruncateDecimals(this.moneda_Info.Decimales);
                     this.Impuestos.TotalImpuestosRetenidosSpecified = true;
+                    this.Total -= this.Impuestos.TotalImpuestosTrasladados;
                 }
                 
             }
