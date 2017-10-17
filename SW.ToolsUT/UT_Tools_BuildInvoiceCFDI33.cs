@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Xml;
 using System.IO;
+using SW.Services.Authentication;
+using SW.Services.Stamp;
+using SW.Services.Cancelation;
+
 
 namespace SW.ToolsUT
 {
@@ -13,6 +17,15 @@ namespace SW.ToolsUT
     [TestClass]
     public class UT_Tools_BuildInvoiceCFDI33
     {
+        private string userStamp;
+        private string passwordStamp;
+        private string url;
+        public UT_Tools_BuildInvoiceCFDI33()
+        {
+            userStamp = "demo";
+            passwordStamp = "123456789";
+            url = "http://services.test.sw.com.mx";
+        }
         [TestMethod]
         public void UT_GetInvoice()
         {
@@ -97,7 +110,7 @@ namespace SW.ToolsUT
         }
 
         [TestMethod]
-        public void UT_SignInvoicePagos10()
+        public void UT_StampInvoicePagos10()
         {
             SW.Tools.Entities.Pagos pago = new Tools.Entities.Pagos();
             pago.SetPago(Tools.Catalogs.c_FormaPago.Item01, null, DateTime.Now, null, Tools.Catalogs.c_Moneda.USD, 15000.00m, null, "1", null, null, 21.5m);
@@ -107,26 +120,29 @@ namespace SW.ToolsUT
             var invoice = pago.GetInvoice("99056");
             var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
+            Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
+            StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
+            Assert.IsTrue(response.status == "success");
         }
         [TestMethod]
-        public void UT_SignInvoice()
+        public void UT_StampInvoice()
         {
             Tools.Entities.Comprobante comprobante = new Tools.Entities.Comprobante();
             comprobante.SetComprobante(Tools.Catalogs.c_Moneda.MXN, Tools.Catalogs.c_TipoDeComprobante.I, Tools.Catalogs.c_FormaPago.Item01, Tools.Catalogs.c_MetodoPago.PPD, "20000");
             comprobante.SetConcepto(1, Tools.Catalogs.c_ClaveProdServ.Item84131500, Tools.Catalogs.c_ClaveUnidad.ZZ, "Prima neta", "1", "NO APLICA", 3592.83m);
             comprobante.SetConceptoImpuestoTraslado(0.1600000m, Tools.Entities.c_TipoFactor.Tasa, "002", 3592.83m);
-
             comprobante.SetConcepto(1, Tools.Catalogs.c_ClaveProdServ.Item84131500, Tools.Catalogs.c_ClaveUnidad.ZZ, "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m);
             comprobante.SetConceptoImpuestoTraslado(0.1600000m, Tools.Entities.c_TipoFactor.Tasa, "002", 258.68m);
-
             comprobante.SetConcepto(1, Tools.Catalogs.c_ClaveProdServ.Item84131500, Tools.Catalogs.c_ClaveUnidad.ZZ, "derecho de poliza", "1", "NO APLICA", 550.00m);
             comprobante.SetConceptoImpuestoTraslado(0.1600000m, Tools.Entities.c_TipoFactor.Tasa, "002", 550.00m);
             comprobante.SetEmisor("LAN8507268IA", "ACCEM SERVICIOS EMPRESARIALES SC", Tools.Entities.c_RegimenFiscal.Item601);
             comprobante.SetReceptor("XAXX010101000", "MIGUEL LANGARKA GENESTA", Tools.Entities.c_UsoCFDI.G03);
             var invoice = comprobante.GetComprobante();
             var xmlInvoice = Tools.Helpers.Serializer.SerializeDocument(invoice);
-
             xmlInvoice = SignInvoice(xmlInvoice);
+            Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
+            StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
+            Assert.IsTrue(response.status == "success");
         }
         private string SignInvoice(string xmlInvoice)
         {
