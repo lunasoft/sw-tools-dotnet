@@ -109,6 +109,7 @@ namespace SW.Tools.Entities
                 this.Impuestos.trasladoList.Add(new ComprobanteImpuestosTraslado()
                 { Importe = importe, Impuesto = impuesto, TasaOCuota = tasaOCuota, TipoFactor = tipoFactor.GetString() });
         }
+
         private void SetImpuestoRetencion(decimal importe, string impuesto)
         {
             if (this.Impuestos == null)
@@ -138,6 +139,7 @@ namespace SW.Tools.Entities
             this.Receptor.NumRegIdTrib = numRegIdTrib;
             this.Receptor.UsoCFDI = usoCFDI.GetString();
         }
+
         public void SetComprobante(c_Moneda moneda,  c_TipoDeComprobante tipoDeComprobante, c_FormaPago formaPago, c_MetodoPago metodoPago,
             string lugarExpedicion, string serie=null, string folio=null, string condicionesDePago=null, decimal tipoCambio = 1, string confirmacion = null)
         {
@@ -152,6 +154,7 @@ namespace SW.Tools.Entities
             this.lugarExpedicionField = lugarExpedicion;
             this.Confirmacion = confirmacion;
         }
+
         public Comprobante GetComprobante()
         {
             if (this.TipoDeComprobante == "I" || this.TipoDeComprobante == "E" || this.TipoDeComprobante == "N")
@@ -165,7 +168,6 @@ namespace SW.Tools.Entities
             }
             else if (this.TipoDeComprobante == "T" || this.TipoDeComprobante == "P")
                 this.SubTotal = 0;
-            //Calcular total
             decimal totalCalculado = 0;
             totalCalculado = this.SubTotal - this.Descuento;
             if (this.Impuestos != null)
@@ -174,12 +176,12 @@ namespace SW.Tools.Entities
             {
                 var implocalComplement = this.Complemento.FirstOrDefault(c => c.Any.Any(w => w.Name == "implocal:ImpuestosLocales"));
                 var implocal = implocalComplement.Any.FirstOrDefault(w => w.Name == "implocal:ImpuestosLocales");
-
                 if (implocal.HasAttribute("TotaldeTraslados"))
                     totalCalculado = totalCalculado + decimal.Parse(implocal.GetAttribute("Totaldetraslados"));
                 if (implocal.HasAttribute("TotaldeRetenciones"))
                     totalCalculado = totalCalculado - decimal.Parse(implocal.GetAttribute("TotaldeRetenciones"));
             }
+
             this.Total = totalCalculado;
             this.Fecha = DateTime.Now.CentralTime();
             if (this.Impuestos != null)
@@ -188,18 +190,18 @@ namespace SW.Tools.Entities
                 {
                     this.Impuestos.TotalImpuestosTrasladados = this.Impuestos.Traslados.Sum(a => a.Importe).TruncateDecimals(this.moneda_Info.Decimales);
                     this.Impuestos.TotalImpuestosTrasladadosSpecified = true;
+                    this.Total += this.Impuestos.TotalImpuestosTrasladados;
                 }
 
                 if (this.Impuestos.retencionesList != null && this.Impuestos.retencionesList.Count() > 0)
                 {
                     this.Impuestos.TotalImpuestosRetenidos = this.Impuestos.Retenciones.Sum(a => a.Importe).TruncateDecimals(this.moneda_Info.Decimales);
                     this.Impuestos.TotalImpuestosRetenidosSpecified = true;
+                    this.Total -= this.Impuestos.TotalImpuestosTrasladados;
                 }
                 
             }
             return this;
         }
-
-
     }
 }

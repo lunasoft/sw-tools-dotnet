@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SW.Tools.Catalogs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,27 +14,22 @@ namespace SW.Tools.Entities
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.sat.gob.mx/Pagos", IsNullable = false)]
     public partial class Pagos
     {
-
+        internal List<PagosPago> PagoList;
         private PagosPago[] pagoField;
-
         private string versionField;
-
-        public Pagos()
-        {
-            this.versionField = "1.0";
-        }
-
-
         [System.Xml.Serialization.XmlElementAttribute("Pago")]
         public PagosPago[] Pago
         {
             get
             {
-                return this.pagoField;
+                if (PagoList != null)
+                    return this.PagoList.ToArray();
+                else
+                    return null;
             }
             set
             {
-                this.pagoField = value;
+                this.PagoList.Add(value.Last());
             }
         }
 
@@ -114,31 +110,36 @@ namespace SW.Tools.Entities
 
         private byte[] selloPagoField;
 
+        internal List<PagosPagoDoctoRelacionado> DoctoRelacionadoList;
 
         [System.Xml.Serialization.XmlElementAttribute("DoctoRelacionado")]
         public PagosPagoDoctoRelacionado[] DoctoRelacionado
         {
             get
             {
-                return this.doctoRelacionadoField;
+                if(DoctoRelacionadoList!=null)
+                    return this.DoctoRelacionadoList.ToArray();
+                return null;
             }
             set
             {
-                this.doctoRelacionadoField = value;
+                this.DoctoRelacionadoList.Add(value.Last());
             }
         }
 
-
+        internal List<PagosPagoImpuestos> ImpuestosList;
         [System.Xml.Serialization.XmlElementAttribute("Impuestos")]
         public PagosPagoImpuestos[] Impuestos
         {
             get
             {
-                return this.impuestosField;
+                if(this.ImpuestosList!=null)
+                    return this.ImpuestosList.ToArray();
+                return null;
             }
             set
             {
-                this.impuestosField = value;
+                this.ImpuestosList.Add(value.Last());
             }
         }
 
@@ -183,7 +184,20 @@ namespace SW.Tools.Entities
                 this.monedaPField = value;
             }
         }
-
+        private Cat_Moneda_Info monedaP_Info;
+        [System.Xml.Serialization.XmlIgnore]
+        public Cat_Moneda_Info Moneda_Info
+        {
+            get
+            {
+                if (monedaP_Info == null)
+                {
+                    monedaP_Info = CatCFDI_Moneda.Catalog.ContainsKey(this.MonedaP.ToString()) ?
+                        CatCFDI_Moneda.Catalog[this.MonedaP.ToString()] : default(Cat_Moneda_Info);
+                }
+                return monedaP_Info;
+            }
+        }
 
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public decimal TipoCambioP
@@ -459,6 +473,20 @@ namespace SW.Tools.Entities
                 this.folioField = value;
             }
         }
+        private Cat_Moneda_Info monedaDR_Info;
+        [System.Xml.Serialization.XmlIgnore]
+        public Cat_Moneda_Info Moneda_Info
+        {
+            get
+            {
+                if (monedaDR_Info == null)
+                {
+                    monedaDR_Info = CatCFDI_Moneda.Catalog.ContainsKey(this.MonedaDR.ToString()) ?
+                        CatCFDI_Moneda.Catalog[this.MonedaDR.ToString()] : default(Cat_Moneda_Info);
+                }
+                return monedaDR_Info;
+            }
+        }
 
 
         [System.Xml.Serialization.XmlAttributeAttribute()]
@@ -615,14 +643,6 @@ namespace SW.Tools.Entities
         }
     }
 
-
-
-
-
-
-
-
-
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -643,31 +663,35 @@ namespace SW.Tools.Entities
 
         private bool totalImpuestosTrasladadosFieldSpecified;
 
-
+        internal List<PagosPagoImpuestosRetencion> RetencionesList;
         [System.Xml.Serialization.XmlArrayItemAttribute("Retencion", IsNullable = false)]
         public PagosPagoImpuestosRetencion[] Retenciones
         {
             get
             {
-                return this.retencionesField;
+                if(this.RetencionesList!=null)
+                    return this.RetencionesList.ToArray();
+                return null;
             }
             set
             {
-                this.retencionesField = value;
+                this.RetencionesList.Add(value.Last());
             }
         }
 
-
+        internal List<PagosPagoImpuestosTraslado> TrasladosList;
         [System.Xml.Serialization.XmlArrayItemAttribute("Traslado", IsNullable = false)]
         public PagosPagoImpuestosTraslado[] Traslados
         {
             get
             {
-                return this.trasladosField;
+                if(TrasladosList!=null)
+                    return this.TrasladosList.ToArray();
+                return null;
             }
             set
             {
-                this.trasladosField = value;
+                this.TrasladosList.Add(value.Last());
             }
         }
 

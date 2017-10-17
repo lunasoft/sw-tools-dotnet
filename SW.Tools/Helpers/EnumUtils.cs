@@ -78,7 +78,10 @@ namespace SW.Tools.Helpers
         {
             return GetXmlEnumAttributeValueFromEnum<c_TipoRelacion>(value);
         }
-        
+        public static string GetString(this c_TasaOCuota value)
+        {
+            return GetXmlEnumAttributeValueFromEnum<c_TasaOCuota>(value);
+        }
         public static TEnum GetEnumValue<TEnum>(string value)
         {
             try
