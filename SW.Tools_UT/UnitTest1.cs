@@ -39,7 +39,7 @@ namespace SW.Tools_UT
             comprobante.SetEmisor("AAA010101AAA", "ACCEM SERVICIOS EMPRESARIALES SC", Tools.Entities.c_RegimenFiscal.Item601);
             comprobante.SetReceptor("XAXX010101000", "MIGUEL LANGARKA GENESTA", Tools.Entities.c_UsoCFDI.G03);
             var invoice = comprobante.GetComprobante();
-            var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocumentToXml(invoice);
+            var xmlInvoice = Tools.Helpers.Serializer.SerializeDocument(invoice);
             Assert.IsTrue(xmlInvoice != "");
         }
         [TestMethod]
@@ -74,8 +74,20 @@ namespace SW.Tools_UT
             comprobante.SetEmisor("AAA010101AAA", "ACCEM SERVICIOS EMPRESARIALES SC", Tools.Entities.c_RegimenFiscal.Item601);
             comprobante.SetReceptor("XAXX010101000", "MIGUEL LANGARKA GENESTA", Tools.Entities.c_UsoCFDI.G03);
             var invoice = comprobante.GetComprobante();
-            var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocumentToXml(invoice);
+            var xmlInvoice = Tools.Helpers.Serializer.SerializeDocument(invoice);
             Assert.IsTrue(xmlInvoice != "");
+        }
+
+        [TestMethod]
+        public void GetInvoicePagos10()
+        {
+            SW.Tools.Entities.Pagos pago = new Tools.Entities.Pagos();
+            pago.SetPago(Tools.Catalogs.c_FormaPago.Item01, null, DateTime.Now, null, Tools.Catalogs.c_Moneda.USD, 15000.00m, null, "1", null, null, 21.5m);
+            pago.SetDoctoRelacionado("RogueOne", "Folio1", "0aded095-b84d-4364-8f8e-59c3f650e530", Tools.Catalogs.c_MetodoPago.PPD, Tools.Catalogs.c_Moneda.MXN, "1", 30000, 15000, 15000);
+            pago.SetEmisor("LAN7008173R5", "CINDEMEX SA DE CV", Tools.Entities.c_RegimenFiscal.Item601);
+            pago.SetReceptor("AAQM610917QJA", "EMPLEADO SMARTERWEB");
+            var invoice = pago.GetInvoice();
+            var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocument(invoice);
         }
     }
 }
