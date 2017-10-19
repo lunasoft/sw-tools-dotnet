@@ -84,8 +84,12 @@ namespace SW.Tools.Entities
                 return moneda_Info;
             }
         }
+        
 
-        //Tipode cambio
+        
+
+
+
         private decimal max_limit_rateexchange;
         //El límite superior se obtiene multiplicando el valor publicado del tipo de cambio por la suma
         //de uno más el porcentaje aplicable a la moneda tomado del catálogo c_Moneda.     
