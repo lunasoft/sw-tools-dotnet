@@ -232,7 +232,7 @@ namespace SW.Tools.Entities
             this.invoice.Receptor.UsoCFDI = "P01";
         }
 
-        public Comprobante GetInvoice(string lugarExpedicion, string serie, string folio)
+        public Comprobante GetInvoice(string lugarExpedicion, string serie=null, string folio=null)
         {
             invoice.TipoDeComprobante = "P";
             invoice.SubTotal = 0;

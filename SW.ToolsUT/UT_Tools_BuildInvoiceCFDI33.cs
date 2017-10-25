@@ -102,7 +102,7 @@ namespace SW.ToolsUT
                 "PPD", "MXN", "1", 30000, 15000, 15000);
             pago.SetEmisor("LAN7008173R5", "CINDEMEX SA DE CV", "601");
             pago.SetReceptor("AAQM610917QJA", "EMPLEADO SMARTERWEB");
-            var invoice = pago.GetInvoice("99056");
+            var invoice = pago.GetInvoice("99056","A","1");
             var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocument(invoice);
         }
 
@@ -115,7 +115,7 @@ namespace SW.ToolsUT
                 "PPD", "MXN", "1", 1, 30000, 15000);
             pago.SetEmisor("LAN8507268IA", "CINDEMEX SA DE CV", "601");
             pago.SetReceptor("AAQM610917QJA", "EMPLEADO SMARTERWEB");
-            var invoice = pago.GetInvoice("99056");
+            var invoice = pago.GetInvoice("99056", "A", "1");
             var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
             Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
