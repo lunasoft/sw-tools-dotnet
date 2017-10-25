@@ -11,116 +11,219 @@ namespace SW.Tools.Entities
     public partial class Pagos
     {
 
-        public void SetPago(c_FormaPago formaDePagoP, string ctaBeneficiario, DateTime fechaPago, string ctaOrdenante, 
-            c_Moneda monedaP, decimal monto, string numBancoOrdenante, string numOperacion, string rfcEmisorCtaBenef, string rfcEmisorCtaOrd, 
-            decimal tipoCambioP)
+        public void SetPago(string formaDePagoP, string ctaBeneficiario, DateTime fechaPago, string ctaOrdenante, 
+            string monedaP, decimal monto, string numBancoOrdenante, string numOperacion, string rfcEmisorCtaBenef, 
+            string rfcEmisorCtaOrd, decimal tipoCambioP)
         {
-            if (this.PagoList == null)
-                this.PagoList = new List<PagosPago>();
-            this.PagoList.Add(new PagosPago()
+            if (this.Pago != null)
             {
-                FechaPago = fechaPago.CentralTime().ShortDate(),
-                FormaDePagoP = formaDePagoP.GetString(),
-                CtaBeneficiario = ctaBeneficiario,
-                CtaOrdenante = ctaOrdenante,
-                MonedaP = monedaP.GetString(),
-                Monto = monto,
-                NomBancoOrdExt = numBancoOrdenante,
-                NumOperacion = numOperacion,
-                RfcEmisorCtaBen = rfcEmisorCtaBenef,
-                RfcEmisorCtaOrd = rfcEmisorCtaOrd,
-                TipoCambioP = tipoCambioP
-            });
-            this.PagoList.Last().Monto = Math.Round(monto, this.Pago.Last().Moneda_Info.Decimales);
-            this.PagoList.Last().TipoCambioP = this.PagoList.Last().MonedaP != "MXN" ? tipoCambioP : 0;
-            this.PagoList.Last().TipoCambioPSpecified = this.PagoList.Last().TipoCambioP != 0 ? true : false;
+                var pagolist = this.Pago.ToList();
+                pagolist.Add(new PagosPago()
+                {
+                    FechaPago = fechaPago.CentralTime().ShortDate(),
+                    FormaDePagoP = formaDePagoP,
+                    CtaBeneficiario = ctaBeneficiario,
+                    CtaOrdenante = ctaOrdenante,
+                    MonedaP = monedaP,
+                    Monto = monto,
+                    NomBancoOrdExt = numBancoOrdenante,
+                    NumOperacion = numOperacion,
+                    RfcEmisorCtaBen = rfcEmisorCtaBenef,
+                    RfcEmisorCtaOrd = rfcEmisorCtaOrd,
+                    TipoCambioP = tipoCambioP
+                });
+                this.Pago = pagolist.ToArray();
+            }
+            else
+            {
+                this.Pago = new PagosPago[1];
+                this.Pago[0] = new PagosPago()
+                {
+                    FechaPago = fechaPago.CentralTime().ShortDate(),
+                    FormaDePagoP = formaDePagoP,
+                    CtaBeneficiario = ctaBeneficiario,
+                    CtaOrdenante = ctaOrdenante,
+                    MonedaP = monedaP,
+                    Monto = monto,
+                    NomBancoOrdExt = numBancoOrdenante,
+                    NumOperacion = numOperacion,
+                    RfcEmisorCtaBen = rfcEmisorCtaBenef,
+                    RfcEmisorCtaOrd = rfcEmisorCtaOrd,
+                    TipoCambioP = tipoCambioP
+                };
+            }
+            this.Pago.Last().Monto = Math.Round(monto, this.Pago.Last().Moneda_Info.Decimales);
+            this.Pago.Last().TipoCambioP = this.Pago.Last().MonedaP != "MXN" ? tipoCambioP : 0;
+            this.Pago.Last().TipoCambioPSpecified = this.Pago.Last().TipoCambioP != 0 ? true : false;
         }
 
         public void SetTipoCadPago(string tipoCatPago, byte[] selloPago, byte[] cerPago, string cadPago)
         {
-            if (this.PagoList == null)
-                this.PagoList = new List<PagosPago>();
-            if (this.PagoList.Count > 0)
+            if (this.Pago != null && this.Pago.Length > 0)
             {
-                this.PagoList.Last().TipoCadPago = tipoCatPago;
-                this.PagoList.Last().TipoCadPagoSpecified = true;
-                this.PagoList.Last().CertPago = cerPago;
-                this.PagoList.Last().SelloPago = selloPago;
-                this.PagoList.Last().CadPago = cadPago;
+                this.Pago.Last().TipoCadPago = tipoCatPago;
+                this.Pago.Last().TipoCadPagoSpecified = true;
+                this.Pago.Last().CertPago = cerPago;
+                this.Pago.Last().SelloPago = selloPago;
+                this.Pago.Last().CadPago = cadPago;
             }
             else
-                this.PagoList.ToList().Add(new PagosPago()
-                { TipoCadPago = tipoCatPago, TipoCadPagoSpecified = true, CadPago = cadPago, CertPago = cerPago, SelloPago= selloPago });
+            {
+                this.Pago = new PagosPago[1];
+                this.Pago[0] = new PagosPago()
+                { TipoCadPago = tipoCatPago, TipoCadPagoSpecified = true, CadPago = cadPago, CertPago = cerPago, SelloPago = selloPago };
+            }
         }
 
-        public void SetDoctoRelacionado(string serie, string folio, string idDocumento, c_MetodoPago metodoDePagoDr, c_Moneda monedaDr, string numParcialidad, decimal tipoCambioDR, decimal impSalgoAnt=0, decimal impPagado=0, decimal impSaldoInoluto=-1 )
+        public void SetDoctoRelacionado(string serie, string folio, string idDocumento, string metodoDePagoDr, 
+            string monedaDr, string numParcialidad, decimal tipoCambioDR=-1, decimal impSalgoAnt=0, decimal impPagado=0, 
+            decimal impSaldoInoluto=-1 )
         {
-            if (this.PagoList == null)
-                this.PagoList = new List<PagosPago>();
-            if (this.PagoList.Last().DoctoRelacionadoList == null)
-                this.PagoList.Last().DoctoRelacionadoList = new List<PagosPagoDoctoRelacionado>();
-            this.PagoList.Last().DoctoRelacionadoList.Add(new PagosPagoDoctoRelacionado()
-            { Folio = folio, IdDocumento = idDocumento, MetodoDePagoDR = metodoDePagoDr.GetString(), MonedaDR = monedaDr.GetString(), NumParcialidad = numParcialidad,
-                Serie = serie,ImpPagado = impPagado, ImpSaldoAnt= impSalgoAnt, ImpSaldoInsoluto = impSaldoInoluto, TipoCambioDR = tipoCambioDR });
-
+            if (this.Pago != null && this.Pago.Length>0)
+            {
+                if (this.Pago.Last().DoctoRelacionado != null)
+                {
+                    var doctoRela = this.Pago.Last().DoctoRelacionado.ToList();
+                    doctoRela.Add(new PagosPagoDoctoRelacionado()
+                    {
+                        Folio = folio,
+                        IdDocumento = idDocumento,
+                        MetodoDePagoDR = metodoDePagoDr,
+                        MonedaDR = monedaDr,
+                        NumParcialidad = numParcialidad,
+                        Serie = serie,
+                        ImpPagado = impPagado,
+                        ImpSaldoAnt = impSalgoAnt,
+                        ImpSaldoInsoluto = impSaldoInoluto
+                    });
+                    if (tipoCambioDR != -1)
+                    {
+                        doctoRela.Last().TipoCambioDR = tipoCambioDR;
+                        doctoRela.Last().TipoCambioDRSpecified = true;
+                    }
+                    this.Pago.Last().DoctoRelacionado = doctoRela.ToArray();
+                }
+                else
+                {
+                    this.Pago.Last().DoctoRelacionado = new PagosPagoDoctoRelacionado[1];
+                    this.Pago.Last().DoctoRelacionado[0] = new PagosPagoDoctoRelacionado()
+                    {
+                        Folio = folio,
+                        IdDocumento = idDocumento,
+                        MetodoDePagoDR = metodoDePagoDr,
+                        MonedaDR = monedaDr,
+                        NumParcialidad = numParcialidad,
+                        Serie = serie,
+                        ImpPagado = impPagado,
+                        ImpSaldoAnt = impSalgoAnt,
+                        ImpSaldoInsoluto = impSaldoInoluto
+                    };
+                    if (tipoCambioDR != -1)
+                    {
+                        this.Pago.Last().DoctoRelacionado[0].TipoCambioDR = tipoCambioDR;
+                        this.Pago.Last().DoctoRelacionado[0].TipoCambioDRSpecified = true;
+                    }
+                }
+            }
             if (impSaldoInoluto == -1)
-                this.PagoList.Last().DoctoRelacionadoList.Last().ImpSaldoInsoluto = impSalgoAnt - impPagado;
+                this.Pago.Last().DoctoRelacionado.Last().ImpSaldoInsoluto = impSalgoAnt - impPagado;
 
-            Math.Round(this.PagoList.Last().DoctoRelacionadoList.Last().ImpPagado, this.PagoList.Last().DoctoRelacionadoList.Last().Moneda_Info.Decimales);
-            Math.Round(this.PagoList.Last().DoctoRelacionadoList.Last().ImpSaldoAnt, this.PagoList.Last().DoctoRelacionadoList.Last().Moneda_Info.Decimales);
-            Math.Round(this.PagoList.Last().DoctoRelacionadoList.Last().ImpSaldoInsoluto, this.PagoList.Last().DoctoRelacionadoList.Last().Moneda_Info.Decimales);
+            Math.Round(this.Pago.Last().DoctoRelacionado.Last().ImpPagado, this.Pago.Last().DoctoRelacionado.Last().Moneda_Info.Decimales);
+            Math.Round(this.Pago.Last().DoctoRelacionado.Last().ImpSaldoAnt, this.Pago.Last().DoctoRelacionado.Last().Moneda_Info.Decimales);
+            Math.Round(this.Pago.Last().DoctoRelacionado.Last().ImpSaldoInsoluto, this.Pago.Last().DoctoRelacionado.Last().Moneda_Info.Decimales);
 
-            if (this.PagoList.Last().DoctoRelacionadoList.Last().MonedaDR == "MXN" && this.PagoList.Last().MonedaP != "MEX")
-                this.PagoList.Last().DoctoRelacionadoList.Last().TipoCambioDR = 1;
-
-            this.PagoList.Last().DoctoRelacionadoList.Last().TipoCambioDRSpecified = this.PagoList.Last().DoctoRelacionadoList.Last().TipoCambioDR <= 0 ? false : true;
-            this.PagoList.Last().DoctoRelacionadoList.Last().ImpPagadoSpecified = this.PagoList.Last().DoctoRelacionadoList.Last().ImpPagado <= 0 ? false : true;
-            this.PagoList.Last().DoctoRelacionadoList.Last().ImpSaldoAntSpecified = this.PagoList.Last().DoctoRelacionadoList.Last().ImpSaldoAnt <= 0 ? false : true;
-            this.PagoList.Last().DoctoRelacionadoList.Last().ImpSaldoInsolutoSpecified = this.PagoList.Last().DoctoRelacionadoList.Last().ImpSaldoInsoluto < 0 ? false : true;
+            this.Pago.Last().DoctoRelacionado.Last().TipoCambioDRSpecified = this.Pago.Last().DoctoRelacionado.Last().TipoCambioDR <= 0 ? false : true;
+            this.Pago.Last().DoctoRelacionado.Last().ImpPagadoSpecified = this.Pago.Last().DoctoRelacionado.Last().ImpPagado <= 0 ? false : true;
+            this.Pago.Last().DoctoRelacionado.Last().ImpSaldoAntSpecified = this.Pago.Last().DoctoRelacionado.Last().ImpSaldoAnt <= 0 ? false : true;
+            this.Pago.Last().DoctoRelacionado.Last().ImpSaldoInsolutoSpecified = this.Pago.Last().DoctoRelacionado.Last().ImpSaldoInsoluto < 0 ? false : true;
         }
 
-        public void SetImpuestoRetenciones(decimal importe, c_Impuesto impuesto)
+        public void SetImpuestoRetenciones(decimal importe, string impuesto, bool isNewImpuestoNode=false)
         {
-            if (this.PagoList == null)
-                this.PagoList = new List<PagosPago>();
-            if (this.PagoList.Last().ImpuestosList != null)
-                this.PagoList.Last().ImpuestosList.Add(new PagosPagoImpuestos());
-            if (this.PagoList.Last().ImpuestosList.Last().RetencionesList != null)
-                this.PagoList.Last().ImpuestosList.Last().RetencionesList = new List<PagosPagoImpuestosRetencion>();
-            this.PagoList.Last().ImpuestosList.Last().RetencionesList.Add(new PagosPagoImpuestosRetencion()
-            { Importe = importe, Impuesto = impuesto.GetString() });
-            this.PagoList.Last().ImpuestosList.Last().TotalImpuestosRetenidos += importe;
-            this.PagoList.Last().ImpuestosList.Last().TotalImpuestosRetenidosSpecified = true;
+            if (this.Pago == null)
+            {
+                this.Pago = new PagosPago[1];
+                this.Pago[0] = new PagosPago();
+            }
+
+            if (this.Pago.Last().Impuestos == null)
+            {
+                this.Pago.Last().Impuestos = new PagosPagoImpuestos[1];
+                this.Pago.Last().Impuestos[0] = new PagosPagoImpuestos();
+            }
+            else
+            {
+                if (isNewImpuestoNode)
+                {
+                    var listImpuestosPago = this.Pago.Last().Impuestos.ToList();
+                    listImpuestosPago.Add(new PagosPagoImpuestos());
+                    this.Pago.Last().Impuestos = listImpuestosPago.ToArray();
+                }
+            }
+            if (this.Pago.Last().Impuestos.Last().Retenciones == null)
+            {
+                this.Pago.Last().Impuestos.Last().Retenciones = new PagosPagoImpuestosRetencion[1];
+                this.Pago.Last().Impuestos.Last().Retenciones[0] = new PagosPagoImpuestosRetencion()
+                { Importe = importe, Impuesto = impuesto };
+            }
+
+            this.Pago.Last().Impuestos.Last().TotalImpuestosRetenidos += importe;
+            this.Pago.Last().Impuestos.Last().TotalImpuestosRetenidosSpecified = true;
         }
 
-        public void SetImpuestoTraslados(decimal importe, c_Impuesto impuesto, c_TasaOCuota tasaOCuota, c_TipoFactor tipoFactor)
+        public void SetImpuestoTraslados(decimal importe, string impuesto, string tasaOCuota, 
+            string tipoFactor, bool isNewImpuestoNode = false)
         {
-            if (this.PagoList == null)
-                this.PagoList = new List<PagosPago>();
-            if (this.PagoList.Last().ImpuestosList != null)
-                this.PagoList.Last().ImpuestosList.Add(new PagosPagoImpuestos());
-            if (this.PagoList.Last().ImpuestosList.Last().TrasladosList != null)
-                this.PagoList.Last().ImpuestosList.Last().TrasladosList = new List<PagosPagoImpuestosTraslado>();
-            this.PagoList.Last().ImpuestosList.Last().TrasladosList.Add(new PagosPagoImpuestosTraslado()
-            { Importe = importe, Impuesto = impuesto.GetString(), TasaOCuota = tasaOCuota.GetString(), TipoFactor = tipoFactor.GetString()});
-            this.PagoList.Last().ImpuestosList.Last().TotalImpuestosTrasladados += importe;
-            this.PagoList.Last().ImpuestosList.Last().TotalImpuestosTrasladadosSpecified = true;
+            if (this.Pago == null)
+            {
+                this.Pago = new PagosPago[1];
+                this.Pago[0] = new PagosPago();
+            }
+            if (this.Pago.Last().Impuestos == null)
+            {
+                this.Pago.Last().Impuestos = new PagosPagoImpuestos[1];
+                this.Pago.Last().Impuestos[0] = new PagosPagoImpuestos();
+            }
+            else
+            {
+                if (isNewImpuestoNode)
+                {
+                    var listImpuestosPago = this.Pago.Last().Impuestos.ToList();
+                    listImpuestosPago.Add(new PagosPagoImpuestos());
+                    this.Pago.Last().Impuestos = listImpuestosPago.ToArray();
+                }
+            }
+            if (this.Pago.Last().Impuestos.Last().Traslados == null)
+            {
+                this.Pago.Last().Impuestos.Last().Traslados = new PagosPagoImpuestosTraslado[1];
+                this.Pago.Last().Impuestos.Last().Traslados[0] = new PagosPagoImpuestosTraslado()
+                {Importe = importe, Impuesto = impuesto, TasaOCuota = tasaOCuota, TipoFactor = tipoFactor};
+            }
+            this.Pago.Last().Impuestos.Last().TotalImpuestosTrasladados += importe;
+            this.Pago.Last().Impuestos.Last().TotalImpuestosTrasladadosSpecified = true;
         }
+
         private Comprobante invoice;
         public Pagos()
         {
             this.versionField = "1.0";
             this.invoice = new Comprobante();
         }
-        public void SetEmisor(string rfc, string nombre, c_RegimenFiscal regimenFiscal)
+
+        public void SetEmisor(string rfc, string nombre, string regimenFiscal)
         {
+            if (this.invoice.Emisor == null)
+                this.invoice.Emisor = new ComprobanteEmisor();
             this.invoice.Emisor.Nombre = nombre;
-            this.invoice.Emisor.RegimenFiscal = regimenFiscal.GetString();
+            this.invoice.Emisor.RegimenFiscal = regimenFiscal;
             this.invoice.Emisor.Rfc = rfc;
         }
 
         public void SetReceptor(string rfc, string nombre, string residenciaFiscal = null, string numRegIdTrib = null)
         {
+            if (this.invoice.Receptor == null)
+                this.invoice.Receptor = new ComprobanteReceptor();
+
             this.invoice.Receptor.Rfc = rfc;
             this.invoice.Receptor.Nombre = nombre;
             this.invoice.Receptor.ResidenciaFiscal = residenciaFiscal;
@@ -128,6 +231,7 @@ namespace SW.Tools.Entities
             this.invoice.Receptor.NumRegIdTrib = numRegIdTrib;
             this.invoice.Receptor.UsoCFDI = "P01";
         }
+
         public Comprobante GetInvoice(string lugarExpedicion)
         {
             invoice.TipoDeComprobante = "P";
@@ -136,9 +240,9 @@ namespace SW.Tools.Entities
             invoice.Total = 0;
             invoice.LugarExpedicion = lugarExpedicion;
             invoice.Fecha = DateTime.Now.CentralTime();
-            invoice.conceptsList = new List<ComprobanteConcepto>();
-            invoice.conceptsList.Add(new ComprobanteConcepto()
-            { ClaveProdServ = "84111506", Cantidad = 1, ClaveUnidad = "ACT", Descripcion = "Pago", ValorUnitario = 0, Importe = 0 });
+            invoice.Conceptos = new ComprobanteConcepto[1];
+            invoice.Conceptos[0]= new ComprobanteConcepto()
+            { ClaveProdServ = "84111506", Cantidad = 1, ClaveUnidad = "ACT", Descripcion = "Pago", ValorUnitario = 0, Importe = 0 };
             var xmlPagos = Serializer.SerializeDocument(this);
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(xmlPagos);

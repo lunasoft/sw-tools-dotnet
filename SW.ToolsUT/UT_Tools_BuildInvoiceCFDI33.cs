@@ -43,20 +43,18 @@ namespace SW.ToolsUT
 			</PSG:Partes>
 		</PSG:Factura>");
             XmlElement addenda = doc.DocumentElement;
-
             Tools.Entities.Comprobante comprobante = new Tools.Entities.Comprobante();
-            comprobante.SetComprobante(Tools.Catalogs.c_Moneda.MXN, Tools.Catalogs.c_TipoDeComprobante.I, Tools.Catalogs.c_FormaPago.Item01, Tools.Catalogs.c_MetodoPago.PPD, "2000");
-            comprobante.SetConcepto(1, Tools.Catalogs.c_ClaveProdServ.Item84131500, Tools.Catalogs.c_ClaveUnidad.ZZ, "Prima neta", "1", "NO APLICA", 3592.83m);
-            comprobante.SetConceptoImpuestoTraslado(0.1600000m, Tools.Entities.c_TipoFactor.Tasa, "002", 3592.83m);
-
-            comprobante.SetConcepto(1, Tools.Catalogs.c_ClaveProdServ.Item84131500, Tools.Catalogs.c_ClaveUnidad.ZZ, "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m);
-            comprobante.SetConceptoImpuestoTraslado(0.1600000m, Tools.Entities.c_TipoFactor.Tasa, "002", 258.68m);
-
-            comprobante.SetConcepto(1, Tools.Catalogs.c_ClaveProdServ.Item84131500, Tools.Catalogs.c_ClaveUnidad.ZZ, "derecho de poliza", "1", "NO APLICA", 550.00m);
-            comprobante.SetConceptoImpuestoTraslado(0.1600000m, Tools.Entities.c_TipoFactor.Tasa, "002", 550.00m);
+            comprobante.SetComprobante("MXN", "I", "01", "PPD", "2000");
+            comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta1", "1", "NO APLICA", 3592.83m);
+            comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta1", "1", "NO APLICA", 3592.83m);
+            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 3592.83m);
+            comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta1", "1", "NO APLICA", 3592.83m);
+            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "c_TipoFactor.Tasa", "002", 258.68m);
+            comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta1", "1", "NO APLICA", 3592.83m);
+            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "c_TipoFactor.Tasa", "002", 550.00m);
             comprobante.SetAddenda(addenda);
-            comprobante.SetEmisor("AAA010101AAA", "ACCEM SERVICIOS EMPRESARIALES SC", Tools.Entities.c_RegimenFiscal.Item601);
-            comprobante.SetReceptor("XAXX010101000", "MIGUEL LANGARKA GENESTA", Tools.Entities.c_UsoCFDI.G03);
+            comprobante.SetEmisor("AAA010101AAA", "ACCEM SERVICIOS EMPRESARIALES SC", "601");
+            comprobante.SetReceptor("XAXX010101000", "MIGUEL LANGARKA GENESTA", "G03");
             var invoice = comprobante.GetComprobante();
             var xmlInvoice = Tools.Helpers.Serializer.SerializeDocument(invoice);
             Assert.IsTrue(xmlInvoice != "");
@@ -80,18 +78,16 @@ namespace SW.ToolsUT
       </cce11:Mercancias></cce11:ComercioExterior>");
             XmlElement addenda = doc.DocumentElement;
             Tools.Entities.Comprobante comprobante = new Tools.Entities.Comprobante();
-            comprobante.SetComprobante(Tools.Catalogs.c_Moneda.MXN, Tools.Catalogs.c_TipoDeComprobante.I, Tools.Catalogs.c_FormaPago.Item01, Tools.Catalogs.c_MetodoPago.PPD, "2000");
-            comprobante.SetConcepto(1, Tools.Catalogs.c_ClaveProdServ.Item84131500, Tools.Catalogs.c_ClaveUnidad.ZZ, "Prima neta", "1", "NO APLICA", 3592.83m);
-            comprobante.SetConceptoImpuestoTraslado(0.1600000m, Tools.Entities.c_TipoFactor.Tasa, "002", 3592.83m);
-
-            comprobante.SetConcepto(1, Tools.Catalogs.c_ClaveProdServ.Item84131500, Tools.Catalogs.c_ClaveUnidad.ZZ, "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m);
-            comprobante.SetConceptoImpuestoTraslado(0.1600000m, Tools.Entities.c_TipoFactor.Tasa, "002", 258.68m);
-
-            comprobante.SetConcepto(1, Tools.Catalogs.c_ClaveProdServ.Item84131500, Tools.Catalogs.c_ClaveUnidad.ZZ, "derecho de poliza", "1", "NO APLICA", 550.00m);
-            comprobante.SetConceptoImpuestoTraslado(0.1600000m, Tools.Entities.c_TipoFactor.Tasa, "002", 550.00m);
+            comprobante.SetComprobante("MXN", "I", "01", "PPD", "2000");
+            comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta", "1", "NO APLICA", 3592.83m);
+            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 3592.83m);
+            comprobante.SetConcepto(1, "84131500", "ZZ", "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m);
+            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 258.68m);
+            comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m);
+            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 550.00m);
             comprobante.SetComplemento(addenda);
-            comprobante.SetEmisor("AAA010101AAA", "ACCEM SERVICIOS EMPRESARIALES SC", Tools.Entities.c_RegimenFiscal.Item601);
-            comprobante.SetReceptor("XAXX010101000", "MIGUEL LANGARKA GENESTA", Tools.Entities.c_UsoCFDI.G03);
+            comprobante.SetEmisor("AAA010101AAA", "ACCEM SERVICIOS EMPRESARIALES SC", "601");
+            comprobante.SetReceptor("XAXX010101000", "MIGUEL LANGARKA GENESTA", "G03");
             var invoice = comprobante.GetComprobante();
             var xmlInvoice = Tools.Helpers.Serializer.SerializeDocument(invoice);
             Assert.IsTrue(xmlInvoice != "");
@@ -101,9 +97,10 @@ namespace SW.ToolsUT
         public void UT_GetInvoicePagos10()
         {
             SW.Tools.Entities.Pagos pago = new Tools.Entities.Pagos();
-            pago.SetPago(Tools.Catalogs.c_FormaPago.Item01, null, DateTime.Now, null, Tools.Catalogs.c_Moneda.USD, 15000.00m, null, "1", null, null, 21.5m);
-            pago.SetDoctoRelacionado("RogueOne", "Folio1", "0aded095-b84d-4364-8f8e-59c3f650e530", Tools.Catalogs.c_MetodoPago.PPD, Tools.Catalogs.c_Moneda.MXN, "1", 30000, 15000, 15000);
-            pago.SetEmisor("LAN7008173R5", "CINDEMEX SA DE CV", Tools.Entities.c_RegimenFiscal.Item601);
+            pago.SetPago("01", null, DateTime.Now, null, "USD", 15000.00m, null, "1", null, null, 21.5m);
+            pago.SetDoctoRelacionado("RogueOne", "Folio1", "0aded095-b84d-4364-8f8e-59c3f650e530", 
+                "PPD", "MXN", "1", 30000, 15000, 15000);
+            pago.SetEmisor("LAN7008173R5", "CINDEMEX SA DE CV", "601");
             pago.SetReceptor("AAQM610917QJA", "EMPLEADO SMARTERWEB");
             var invoice = pago.GetInvoice("99056");
             var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocument(invoice);
@@ -113,30 +110,33 @@ namespace SW.ToolsUT
         public void UT_StampInvoicePagos10()
         {
             SW.Tools.Entities.Pagos pago = new Tools.Entities.Pagos();
-            pago.SetPago(Tools.Catalogs.c_FormaPago.Item01, null, DateTime.Now, null, Tools.Catalogs.c_Moneda.USD, 15000.00m, null, "1", null, null, 21.5m);
-            pago.SetDoctoRelacionado("RogueOne", "Folio1", "0aded095-b84d-4364-8f8e-59c3f650e530", Tools.Catalogs.c_MetodoPago.PPD, Tools.Catalogs.c_Moneda.MXN, "1", 1, 30000, 15000);
-            pago.SetEmisor("LAN8507268IA", "CINDEMEX SA DE CV", Tools.Entities.c_RegimenFiscal.Item601);
+            pago.SetPago("01", null, DateTime.Now, null, "USD", 15000.00m, null, "1", null, null, 21.5m);
+            pago.SetDoctoRelacionado("RogueOne", "Folio1", "0aded095-b84d-4364-8f8e-59c3f650e530", 
+                "PPD", "MXN", "1", 1, 30000, 15000);
+            pago.SetEmisor("LAN8507268IA", "CINDEMEX SA DE CV", "601");
             pago.SetReceptor("AAQM610917QJA", "EMPLEADO SMARTERWEB");
             var invoice = pago.GetInvoice("99056");
             var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
             Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
             StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
+            var invoiceResultStamp = SW.Tools.Helpers.Serializer.DeserealizeDocument<SW.Tools.Entities.Comprobante>
+                (response.data.cfdi);
             Assert.IsTrue(response.status == "success");
         }
         [TestMethod]
         public void UT_StampInvoice()
         {
             Tools.Entities.Comprobante comprobante = new Tools.Entities.Comprobante();
-            comprobante.SetComprobante(Tools.Catalogs.c_Moneda.MXN, Tools.Catalogs.c_TipoDeComprobante.I, Tools.Catalogs.c_FormaPago.Item01, Tools.Catalogs.c_MetodoPago.PPD, "20000");
-            comprobante.SetConcepto(1, Tools.Catalogs.c_ClaveProdServ.Item84131500, Tools.Catalogs.c_ClaveUnidad.ZZ, "Prima neta", "1", "NO APLICA", 3592.83m);
-            comprobante.SetConceptoImpuestoTraslado(0.1600000m, Tools.Entities.c_TipoFactor.Tasa, "002", 3592.83m);
-            comprobante.SetConcepto(1, Tools.Catalogs.c_ClaveProdServ.Item84131500, Tools.Catalogs.c_ClaveUnidad.ZZ, "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m);
-            comprobante.SetConceptoImpuestoTraslado(0.1600000m, Tools.Entities.c_TipoFactor.Tasa, "002", 258.68m);
-            comprobante.SetConcepto(1, Tools.Catalogs.c_ClaveProdServ.Item84131500, Tools.Catalogs.c_ClaveUnidad.ZZ, "derecho de poliza", "1", "NO APLICA", 550.00m);
-            comprobante.SetConceptoImpuestoTraslado(0.1600000m, Tools.Entities.c_TipoFactor.Tasa, "002", 550.00m);
-            comprobante.SetEmisor("LAN8507268IA", "ACCEM SERVICIOS EMPRESARIALES SC", Tools.Entities.c_RegimenFiscal.Item601);
-            comprobante.SetReceptor("XAXX010101000", "MIGUEL LANGARKA GENESTA", Tools.Entities.c_UsoCFDI.G03);
+            comprobante.SetComprobante("MXN", "I", "01", "PPD", "20000");
+            comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta", "1", "NO APLICA", 3592.83m);
+            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 3592.83m);
+            comprobante.SetConcepto(1, "84131500", "ZZ", "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m);
+            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 258.68m);
+            comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m);
+            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 550.00m);
+            comprobante.SetEmisor("LAN8507268IA", "ACCEM SERVICIOS EMPRESARIALES SC", "601");
+            comprobante.SetReceptor("XAXX010101000", "MIGUEL LANGARKA GENESTA", "G03");
             var invoice = comprobante.GetComprobante();
             var xmlInvoice = Tools.Helpers.Serializer.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
@@ -152,6 +152,12 @@ namespace SW.ToolsUT
             var pfx = SW.Tools.Sign.CrearPFX(bytesCer, bytesKey, password);
             var xmlResult = SW.Tools.Sign.SellarCFDIv33(pfx, password, xmlInvoice);
             return xmlResult;
+        }
+        [TestMethod]
+        public void DeserailizeXml()
+        {
+            var xml = SW.Tools.Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi33Invoice.xml")));
+            var xmlInvoicess = Tools.Helpers.Serializer.DeserealizeDocument<SW.Tools.Entities.Comprobante>(xml);
         }
     }
 }

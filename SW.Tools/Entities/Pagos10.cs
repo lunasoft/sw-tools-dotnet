@@ -14,7 +14,6 @@ namespace SW.Tools.Entities
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.sat.gob.mx/Pagos", IsNullable = false)]
     public partial class Pagos
     {
-        internal List<PagosPago> PagoList;
         private PagosPago[] pagoField;
         private string versionField;
         [System.Xml.Serialization.XmlElementAttribute("Pago")]
@@ -22,14 +21,11 @@ namespace SW.Tools.Entities
         {
             get
             {
-                if (PagoList != null)
-                    return this.PagoList.ToArray();
-                else
-                    return null;
+                return this.pagoField;
             }
             set
             {
-                this.PagoList.Add(value.Last());
+                this.pagoField = value;
             }
         }
 
@@ -56,7 +52,20 @@ namespace SW.Tools.Entities
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.sat.gob.mx/Pagos")]
     public partial class PagosPago
     {
-
+        private Cat_Moneda_Info monedaP_Info;
+        [System.Xml.Serialization.XmlIgnore]
+        public Cat_Moneda_Info Moneda_Info
+        {
+            get
+            {
+                if (monedaP_Info == null)
+                {
+                    monedaP_Info = CatCFDI_Moneda.Catalog.ContainsKey(this.MonedaP.ToString()) ?
+                        CatCFDI_Moneda.Catalog[this.MonedaP.ToString()] : default(Cat_Moneda_Info);
+                }
+                return monedaP_Info;
+            }
+        }
         private PagosPagoDoctoRelacionado[] doctoRelacionadoField;
 
         private PagosPagoImpuestos[] impuestosField;
@@ -110,36 +119,31 @@ namespace SW.Tools.Entities
 
         private byte[] selloPagoField;
 
-        internal List<PagosPagoDoctoRelacionado> DoctoRelacionadoList;
 
         [System.Xml.Serialization.XmlElementAttribute("DoctoRelacionado")]
         public PagosPagoDoctoRelacionado[] DoctoRelacionado
         {
             get
             {
-                if(DoctoRelacionadoList!=null)
-                    return this.DoctoRelacionadoList.ToArray();
-                return null;
+                return this.doctoRelacionadoField;
             }
             set
             {
-                this.DoctoRelacionadoList.Add(value.Last());
+                this.doctoRelacionadoField = value;
             }
         }
 
-        internal List<PagosPagoImpuestos> ImpuestosList;
+
         [System.Xml.Serialization.XmlElementAttribute("Impuestos")]
         public PagosPagoImpuestos[] Impuestos
         {
             get
             {
-                if(this.ImpuestosList!=null)
-                    return this.ImpuestosList.ToArray();
-                return null;
+                return this.impuestosField;
             }
             set
             {
-                this.ImpuestosList.Add(value.Last());
+                this.impuestosField = value;
             }
         }
 
@@ -184,20 +188,7 @@ namespace SW.Tools.Entities
                 this.monedaPField = value;
             }
         }
-        private Cat_Moneda_Info monedaP_Info;
-        [System.Xml.Serialization.XmlIgnore]
-        public Cat_Moneda_Info Moneda_Info
-        {
-            get
-            {
-                if (monedaP_Info == null)
-                {
-                    monedaP_Info = CatCFDI_Moneda.Catalog.ContainsKey(this.MonedaP.ToString()) ?
-                        CatCFDI_Moneda.Catalog[this.MonedaP.ToString()] : default(Cat_Moneda_Info);
-                }
-                return monedaP_Info;
-            }
-        }
+
 
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public decimal TipoCambioP
@@ -432,6 +423,21 @@ namespace SW.Tools.Entities
 
         private bool impSaldoInsolutoFieldSpecified;
 
+        private Cat_Moneda_Info monedaDR_Info;
+
+        [System.Xml.Serialization.XmlIgnore]
+        public Cat_Moneda_Info Moneda_Info
+        {
+            get
+            {
+                if (monedaDR_Info == null)
+                {
+                    monedaDR_Info = CatCFDI_Moneda.Catalog.ContainsKey(this.MonedaDR.ToString()) ?
+                        CatCFDI_Moneda.Catalog[this.MonedaDR.ToString()] : default(Cat_Moneda_Info);
+                }
+                return monedaDR_Info;
+            }
+        }
 
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string IdDocumento
@@ -471,20 +477,6 @@ namespace SW.Tools.Entities
             set
             {
                 this.folioField = value;
-            }
-        }
-        private Cat_Moneda_Info monedaDR_Info;
-        [System.Xml.Serialization.XmlIgnore]
-        public Cat_Moneda_Info Moneda_Info
-        {
-            get
-            {
-                if (monedaDR_Info == null)
-                {
-                    monedaDR_Info = CatCFDI_Moneda.Catalog.ContainsKey(this.MonedaDR.ToString()) ?
-                        CatCFDI_Moneda.Catalog[this.MonedaDR.ToString()] : default(Cat_Moneda_Info);
-                }
-                return monedaDR_Info;
             }
         }
 
@@ -643,6 +635,14 @@ namespace SW.Tools.Entities
         }
     }
 
+
+
+
+
+
+
+
+
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -663,35 +663,31 @@ namespace SW.Tools.Entities
 
         private bool totalImpuestosTrasladadosFieldSpecified;
 
-        internal List<PagosPagoImpuestosRetencion> RetencionesList;
+
         [System.Xml.Serialization.XmlArrayItemAttribute("Retencion", IsNullable = false)]
         public PagosPagoImpuestosRetencion[] Retenciones
         {
             get
             {
-                if(this.RetencionesList!=null)
-                    return this.RetencionesList.ToArray();
-                return null;
+                return this.retencionesField;
             }
             set
             {
-                this.RetencionesList.Add(value.Last());
+                this.retencionesField = value;
             }
         }
 
-        internal List<PagosPagoImpuestosTraslado> TrasladosList;
+
         [System.Xml.Serialization.XmlArrayItemAttribute("Traslado", IsNullable = false)]
         public PagosPagoImpuestosTraslado[] Traslados
         {
             get
             {
-                if(TrasladosList!=null)
-                    return this.TrasladosList.ToArray();
-                return null;
+                return this.trasladosField;
             }
             set
             {
-                this.TrasladosList.Add(value.Last());
+                this.trasladosField = value;
             }
         }
 
