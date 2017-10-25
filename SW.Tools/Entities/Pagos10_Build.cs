@@ -76,7 +76,7 @@ namespace SW.Tools.Entities
         }
 
         public void SetDoctoRelacionado(string serie, string folio, string idDocumento, string metodoDePagoDr, 
-            string monedaDr, string numParcialidad, decimal tipoCambioDR, decimal impSalgoAnt=0, decimal impPagado=0, 
+            string monedaDr, string numParcialidad, decimal tipoCambioDR=-1, decimal impSalgoAnt=0, decimal impPagado=0, 
             decimal impSaldoInoluto=-1 )
         {
             if (this.Pago != null && this.Pago.Length>0)
@@ -94,9 +94,13 @@ namespace SW.Tools.Entities
                         Serie = serie,
                         ImpPagado = impPagado,
                         ImpSaldoAnt = impSalgoAnt,
-                        ImpSaldoInsoluto = impSaldoInoluto,
-                        TipoCambioDR = tipoCambioDR
+                        ImpSaldoInsoluto = impSaldoInoluto
                     });
+                    if (tipoCambioDR != -1)
+                    {
+                        doctoRela.Last().TipoCambioDR = tipoCambioDR;
+                        doctoRela.Last().TipoCambioDRSpecified = true;
+                    }
                     this.Pago.Last().DoctoRelacionado = doctoRela.ToArray();
                 }
                 else
@@ -112,9 +116,13 @@ namespace SW.Tools.Entities
                         Serie = serie,
                         ImpPagado = impPagado,
                         ImpSaldoAnt = impSalgoAnt,
-                        ImpSaldoInsoluto = impSaldoInoluto,
-                        TipoCambioDR = tipoCambioDR
+                        ImpSaldoInsoluto = impSaldoInoluto
                     };
+                    if (tipoCambioDR != -1)
+                    {
+                        this.Pago.Last().DoctoRelacionado[0].TipoCambioDR = tipoCambioDR;
+                        this.Pago.Last().DoctoRelacionado[0].TipoCambioDRSpecified = true;
+                    }
                 }
             }
             if (impSaldoInoluto == -1)
@@ -123,9 +131,6 @@ namespace SW.Tools.Entities
             Math.Round(this.Pago.Last().DoctoRelacionado.Last().ImpPagado, this.Pago.Last().DoctoRelacionado.Last().Moneda_Info.Decimales);
             Math.Round(this.Pago.Last().DoctoRelacionado.Last().ImpSaldoAnt, this.Pago.Last().DoctoRelacionado.Last().Moneda_Info.Decimales);
             Math.Round(this.Pago.Last().DoctoRelacionado.Last().ImpSaldoInsoluto, this.Pago.Last().DoctoRelacionado.Last().Moneda_Info.Decimales);
-
-            if (this.Pago.Last().DoctoRelacionado.Last().MonedaDR == "MXN" && this.Pago.Last().MonedaP != "MEX")
-                this.Pago.Last().DoctoRelacionado.Last().TipoCambioDR = 1;
 
             this.Pago.Last().DoctoRelacionado.Last().TipoCambioDRSpecified = this.Pago.Last().DoctoRelacionado.Last().TipoCambioDR <= 0 ? false : true;
             this.Pago.Last().DoctoRelacionado.Last().ImpPagadoSpecified = this.Pago.Last().DoctoRelacionado.Last().ImpPagado <= 0 ? false : true;
