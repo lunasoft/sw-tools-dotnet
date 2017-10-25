@@ -232,12 +232,14 @@ namespace SW.Tools.Entities
             this.invoice.Receptor.UsoCFDI = "P01";
         }
 
-        public Comprobante GetInvoice(string lugarExpedicion)
+        public Comprobante GetInvoice(string lugarExpedicion, string serie, string folio)
         {
             invoice.TipoDeComprobante = "P";
             invoice.SubTotal = 0;
             invoice.Moneda = "XXX";
             invoice.Total = 0;
+            invoice.Serie = serie;
+            invoice.Folio = folio;
             invoice.LugarExpedicion = lugarExpedicion;
             invoice.Fecha = DateTime.Now.CentralTime();
             invoice.Conceptos = new ComprobanteConcepto[1];
