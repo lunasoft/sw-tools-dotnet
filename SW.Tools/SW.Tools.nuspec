@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
+    <iconUrl>http://sw.com.mx/images/logo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Nuget para cfdi 33 y complementos</description>
+    <releaseNotes>Formar xml de timbrado</releaseNotes>
+    <copyright>SW SmarterWeb 2017</copyright>
+    <tags>cfdi33 pagos10 pagos comprobante sat sellado emision</tags>
+  </metadata>
+</package>
