@@ -112,7 +112,7 @@ namespace SW.ToolsUT
             SW.Tools.Entities.Pagos pago = new Tools.Entities.Pagos();
             pago.SetPago("01", null, DateTime.Now, null, "USD", 15000.00m, null, "1", null, null, 21.5m);
             pago.SetDoctoRelacionado("RogueOne", "Folio1", "0aded095-b84d-4364-8f8e-59c3f650e530", 
-                "PPD", "MXN", "1", 1, 30000, 15000);
+                "PPD", "MXN", "1", 1.0000000m, 30000.0000000m, 15000.000000000000m,15000.000000m);
             pago.SetEmisor("LAN8507268IA", "CINDEMEX SA DE CV", "601");
             pago.SetReceptor("AAQM610917QJA", "EMPLEADO SMARTERWEB");
             var invoice = pago.GetInvoice("99056", "A", "1");

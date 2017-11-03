@@ -128,10 +128,11 @@ namespace SW.Tools.Entities
             if (impSaldoInoluto == -1)
                 this.Pago.Last().DoctoRelacionado.Last().ImpSaldoInsoluto = impSalgoAnt - impPagado;
 
-            Math.Round(this.Pago.Last().DoctoRelacionado.Last().ImpPagado, this.Pago.Last().DoctoRelacionado.Last().Moneda_Info.Decimales);
-            Math.Round(this.Pago.Last().DoctoRelacionado.Last().ImpSaldoAnt, this.Pago.Last().DoctoRelacionado.Last().Moneda_Info.Decimales);
-            Math.Round(this.Pago.Last().DoctoRelacionado.Last().ImpSaldoInsoluto, this.Pago.Last().DoctoRelacionado.Last().Moneda_Info.Decimales);
-
+            this.Pago.Last().DoctoRelacionado.Last().ImpPagado = Math.Round(this.Pago.Last().DoctoRelacionado.Last().ImpPagado, this.Pago.Last().DoctoRelacionado.Last().Moneda_Info.Decimales);
+            this.Pago.Last().DoctoRelacionado.Last().ImpSaldoAnt = Math.Round(this.Pago.Last().DoctoRelacionado.Last().ImpSaldoAnt, this.Pago.Last().DoctoRelacionado.Last().Moneda_Info.Decimales);
+            this.Pago.Last().DoctoRelacionado.Last().ImpSaldoInsoluto = Math.Round(this.Pago.Last().DoctoRelacionado.Last().ImpSaldoInsoluto, this.Pago.Last().DoctoRelacionado.Last().Moneda_Info.Decimales);
+            this.Pago.Last().DoctoRelacionado.Last().TipoCambioDR= tipoCambioDR == (decimal)1 ? Math.Truncate(tipoCambioDR) : tipoCambioDR;
+            
             this.Pago.Last().DoctoRelacionado.Last().TipoCambioDRSpecified = this.Pago.Last().DoctoRelacionado.Last().TipoCambioDR <= 0 ? false : true;
             this.Pago.Last().DoctoRelacionado.Last().ImpPagadoSpecified = this.Pago.Last().DoctoRelacionado.Last().ImpPagado <= 0 ? false : true;
             this.Pago.Last().DoctoRelacionado.Last().ImpSaldoAntSpecified = this.Pago.Last().DoctoRelacionado.Last().ImpSaldoAnt <= 0 ? false : true;
