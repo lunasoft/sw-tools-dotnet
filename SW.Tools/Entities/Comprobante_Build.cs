@@ -391,6 +391,7 @@ namespace SW.Tools.Entities
                     totalCalculado = totalCalculado - decimal.Parse(implocal.GetAttribute("TotaldeRetenciones"));
             }
             this.Total = totalCalculado;
+            
             this.Fecha = DateTime.Now.CentralTime();
             if (this.Impuestos != null)
             {
