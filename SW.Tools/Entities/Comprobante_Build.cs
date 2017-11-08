@@ -11,10 +11,11 @@ namespace SW.Tools.Entities
     {
 
         public void SetConcepto(decimal cantidad, string claveProdServ, string claveUnidad, string descripcion,
-             string noIdentificacion, string unidad, decimal valorUnitario, decimal descuento = 0 )
+             string noIdentificacion, string unidad, decimal valorUnitario, decimal? importe = null, decimal descuento = 0)
         {
-            decimal importe = valorUnitario * cantidad;
-            importe = importe.TruncateDecimals(6);
+            if(!importe.HasValue)
+                importe = valorUnitario * cantidad;
+            importe = importe.Value.TruncateDecimals(6);
             if (this.Conceptos != null)
             {
                 var conceptList = this.Conceptos.ToList();
@@ -26,7 +27,7 @@ namespace SW.Tools.Entities
                     Descripcion = descripcion,
                     Descuento = descuento,
                     DescuentoSpecified = descuento != 0,
-                    Importe = importe,
+                    Importe = importe.Value,
                     NoIdentificacion = noIdentificacion,
                     Unidad = unidad,
                     ValorUnitario = valorUnitario, 
@@ -43,7 +44,7 @@ namespace SW.Tools.Entities
                     Descripcion = descripcion,
                     Descuento = descuento,
                     DescuentoSpecified = descuento != 0,
-                    Importe = importe,
+                    Importe = importe.Value,
                     NoIdentificacion = noIdentificacion,
                     Unidad = unidad,
                     ValorUnitario = valorUnitario
@@ -168,14 +169,15 @@ namespace SW.Tools.Entities
             return null;
         }
 
-        public void SetConceptoImpuestoTraslado(decimal tasaOCuota, string tipoFactor, string impuesto, decimal _base)
+        public void SetConceptoImpuestoTraslado(decimal tasaOCuota, string tipoFactor, string impuesto, decimal _base, decimal? importe=null)
         {
             if (_base <= 0)
                 throw new ToolsException("CFDI33154", Errors.CFDI33154);
-            decimal importe = _base * tasaOCuota;
-            importe = importe.TruncateDecimals(6);
+            if(!importe.HasValue)
+                importe = _base * tasaOCuota;
+            importe = importe.Value.TruncateDecimals(6);
             if (!string.IsNullOrEmpty(this.Moneda))
-                importe = importe.TruncateDecimals(this.Moneda_Info.Decimales);
+                importe = importe.Value.TruncateDecimals(this.Moneda_Info.Decimales);
             int positionConcept = this.Conceptos.Length - 1;
             if (this.Conceptos[positionConcept].Impuestos == null)
                 this.Conceptos[positionConcept].Impuestos = new ComprobanteConceptoImpuestos();
@@ -183,26 +185,27 @@ namespace SW.Tools.Entities
             {
                 var listCT = this.Conceptos[positionConcept].Impuestos.Traslados.ToList();
                 listCT.Add(new ComprobanteConceptoImpuestosTraslado()
-                { Base = _base, Importe = importe, ImporteSpecified = true, Impuesto = impuesto, TasaOCuota = tasaOCuota, TasaOCuotaSpecified = true, TipoFactor = tipoFactor });
+                { Base = _base, Importe = importe.Value, ImporteSpecified = true, Impuesto = impuesto, TasaOCuota = tasaOCuota, TasaOCuotaSpecified = true, TipoFactor = tipoFactor });
                 this.Conceptos[positionConcept].Impuestos.Traslados = listCT.ToArray();
             }
             else
             {
                 this.Conceptos[positionConcept].Impuestos.Traslados = new ComprobanteConceptoImpuestosTraslado[1];
                 this.Conceptos[positionConcept].Impuestos.Traslados[0]= new ComprobanteConceptoImpuestosTraslado()
-                { Base = _base, Importe = importe, ImporteSpecified = true, Impuesto = impuesto, TasaOCuota = tasaOCuota, TasaOCuotaSpecified = true, TipoFactor = tipoFactor };
+                { Base = _base, Importe = importe.Value, ImporteSpecified = true, Impuesto = impuesto, TasaOCuota = tasaOCuota, TasaOCuotaSpecified = true, TipoFactor = tipoFactor };
             }
-            this.SetImpuestoTraslado(importe, impuesto, tasaOCuota, tipoFactor);
+            this.SetImpuestoTraslado(importe.Value, impuesto, tasaOCuota, tipoFactor);
         }
 
-        public void SetConceptoImpuestoRetencion(decimal tasaOCuota, string impuesto, decimal _base)
+        public void SetConceptoImpuestoRetencion(decimal tasaOCuota, string impuesto, decimal _base, decimal? importe=null)
         {
             if (_base <= 0)
                 throw new ToolsException("CFDI33163", Errors.CFDI33163);
-            decimal importe = _base * tasaOCuota;
-            importe = importe.TruncateDecimals(6);
+            if(!importe.HasValue)
+                importe = _base * tasaOCuota;
+            importe = importe.Value.TruncateDecimals(6);
             if (!string.IsNullOrEmpty(this.Moneda))
-                importe = importe.TruncateDecimals(this.Moneda_Info.Decimales);
+                importe = importe.Value.TruncateDecimals(this.Moneda_Info.Decimales);
             int positionConcept = this.Conceptos.Length - 1;
             if (this.Conceptos[positionConcept].Impuestos == null)
                 this.Conceptos[positionConcept].Impuestos = new ComprobanteConceptoImpuestos();
@@ -210,16 +213,16 @@ namespace SW.Tools.Entities
             {
                 var listCR = this.Conceptos[positionConcept].Impuestos.Retenciones.ToList();
                 listCR.Add(new ComprobanteConceptoImpuestosRetencion()
-                { Base = _base, Importe = importe, Impuesto = impuesto });
+                { Base = _base, Importe = importe.Value, Impuesto = impuesto });
                 this.Conceptos[positionConcept].Impuestos.Retenciones = listCR.ToArray();
             }
             else
             {
                 this.Conceptos[positionConcept].Impuestos.Retenciones = new ComprobanteConceptoImpuestosRetencion[1];
                 this.Conceptos[positionConcept].Impuestos.Retenciones[0] = new ComprobanteConceptoImpuestosRetencion()
-                { Base = _base, Importe = importe, Impuesto = impuesto };
+                { Base = _base, Importe = importe.Value, Impuesto = impuesto };
             }
-            this.SetImpuestoRetencion(importe, impuesto);
+            this.SetImpuestoRetencion(importe.Value, impuesto);
         }
 
         public void SetCFDIRelacionado(string tipoRelacion, string uuid)
