@@ -353,19 +353,24 @@ namespace SW.Tools.Entities
         }
 
         public void SetComprobante(string moneda,  string tipoDeComprobante, string formaPago, string metodoPago,
-            string lugarExpedicion, string serie=null, string folio=null, string condicionesDePago=null, decimal tipoCambio = 1, string confirmacion = null)
+            string lugarExpedicion, string serie=null, string folio=null, string condicionesDePago=null, decimal? tipoCambio = null, string confirmacion = null)
         {
             this.Serie = serie;
             this.Folio = folio;
             this.FormaPago = formaPago;
+            this.FormaPagoSpecified = string.IsNullOrEmpty(this.FormaPago) ? false : true;
             this.CondicionesDePago = condicionesDePago;
             this.Moneda = moneda;
-            this.TipoCambio = tipoCambio;
             this.TipoDeComprobante = tipoDeComprobante;
             this.MetodoPago = metodoPago;
+            this.MetodoPagoSpecified = string.IsNullOrEmpty(this.MetodoPago) ? false : true;
             this.lugarExpedicionField = lugarExpedicion;
             this.Confirmacion = confirmacion;
+            this.TipoCambio = tipoCambio.HasValue ? tipoCambio.Value : 0;
+            this.TipoCambioSpecified = tipoCambio.HasValue ? true : false;
+            
         }
+
 
         public Comprobante GetComprobante()
         {
