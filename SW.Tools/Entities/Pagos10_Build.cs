@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using SW.Tools.Helpers;
-using SW.Tools.Catalogs;
 using System.Xml;
 
 namespace SW.Tools.Entities
@@ -54,7 +51,7 @@ namespace SW.Tools.Entities
             }
             this.Pago.Last().Monto = Math.Round(monto, this.Pago.Last().Moneda_Info.Decimales);
             this.Pago.Last().TipoCambioP = this.Pago.Last().MonedaP != "MXN" ? tipoCambioP : 0;
-            this.Pago.Last().TipoCambioPSpecified = this.Pago.Last().TipoCambioP != 0 ? true : false;
+            this.Pago.Last().TipoCambioPSpecified = this.Pago.Last().TipoCambioP != 0;
         }
 
         public void SetTipoCadPago(string tipoCatPago, byte[] selloPago, byte[] cerPago, string cadPago)
@@ -133,10 +130,10 @@ namespace SW.Tools.Entities
             this.Pago.Last().DoctoRelacionado.Last().ImpSaldoInsoluto = Math.Round(this.Pago.Last().DoctoRelacionado.Last().ImpSaldoInsoluto, this.Pago.Last().DoctoRelacionado.Last().Moneda_Info.Decimales);
             this.Pago.Last().DoctoRelacionado.Last().TipoCambioDR= tipoCambioDR == (decimal)1 ? Math.Truncate(tipoCambioDR) : tipoCambioDR;
             
-            this.Pago.Last().DoctoRelacionado.Last().TipoCambioDRSpecified = this.Pago.Last().DoctoRelacionado.Last().TipoCambioDR <= 0 ? false : true;
-            this.Pago.Last().DoctoRelacionado.Last().ImpPagadoSpecified = this.Pago.Last().DoctoRelacionado.Last().ImpPagado <= 0 ? false : true;
-            this.Pago.Last().DoctoRelacionado.Last().ImpSaldoAntSpecified = this.Pago.Last().DoctoRelacionado.Last().ImpSaldoAnt <= 0 ? false : true;
-            this.Pago.Last().DoctoRelacionado.Last().ImpSaldoInsolutoSpecified = this.Pago.Last().DoctoRelacionado.Last().ImpSaldoInsoluto < 0 ? false : true;
+            this.Pago.Last().DoctoRelacionado.Last().TipoCambioDRSpecified = this.Pago.Last().DoctoRelacionado.Last().TipoCambioDR > 0;
+            this.Pago.Last().DoctoRelacionado.Last().ImpPagadoSpecified = this.Pago.Last().DoctoRelacionado.Last().ImpPagado > 0;
+            this.Pago.Last().DoctoRelacionado.Last().ImpSaldoAntSpecified = this.Pago.Last().DoctoRelacionado.Last().ImpSaldoAnt > 0;
+            this.Pago.Last().DoctoRelacionado.Last().ImpSaldoInsolutoSpecified = this.Pago.Last().DoctoRelacionado.Last().ImpSaldoInsoluto >= 0;
         }
 
         public void SetImpuestoRetenciones(decimal importe, string impuesto, bool isNewImpuestoNode=false)
