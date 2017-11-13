@@ -181,20 +181,27 @@ namespace SW.Tools.Entities
             int positionConcept = this.Conceptos.Length - 1;
             if (this.Conceptos[positionConcept].Impuestos == null)
                 this.Conceptos[positionConcept].Impuestos = new ComprobanteConceptoImpuestos();
+            ComprobanteConceptoImpuestosTraslado impuestoObj;
+            if (tipoFactor.Trim().ToLower() == "exento")
+            {
+                impuestoObj = new ComprobanteConceptoImpuestosTraslado()
+                { Base = _base, ImporteSpecified = false, Impuesto = impuesto, TasaOCuotaSpecified = false, TipoFactor = tipoFactor };
+            }
+            else
+                impuestoObj = new ComprobanteConceptoImpuestosTraslado()
+                { Base = _base, Importe = importe.Value, ImporteSpecified = true, Impuesto = impuesto, TasaOCuota = tasaOCuota, TasaOCuotaSpecified = true, TipoFactor = tipoFactor };
             if (this.Conceptos[positionConcept].Impuestos.Traslados != null)
             {
                 var listCT = this.Conceptos[positionConcept].Impuestos.Traslados.ToList();
-                listCT.Add(new ComprobanteConceptoImpuestosTraslado()
-                { Base = _base, Importe = importe.Value, ImporteSpecified = true, Impuesto = impuesto, TasaOCuota = tasaOCuota, TasaOCuotaSpecified = true, TipoFactor = tipoFactor });
+                listCT.Add(impuestoObj);
                 this.Conceptos[positionConcept].Impuestos.Traslados = listCT.ToArray();
             }
             else
             {
                 this.Conceptos[positionConcept].Impuestos.Traslados = new ComprobanteConceptoImpuestosTraslado[1];
-                this.Conceptos[positionConcept].Impuestos.Traslados[0]= new ComprobanteConceptoImpuestosTraslado()
-                { Base = _base, Importe = importe.Value, ImporteSpecified = true, Impuesto = impuesto, TasaOCuota = tasaOCuota, TasaOCuotaSpecified = true, TipoFactor = tipoFactor };
+                this.Conceptos[positionConcept].Impuestos.Traslados[0] = impuestoObj;
             }
-            this.SetImpuestoTraslado(importe.Value, impuesto, tasaOCuota, tipoFactor);
+            this.SetImpuestoTraslado(importe.Value, impuesto, tasaOCuota, tipoFactor.Trim().ToLower()=="exento" ? "Tasa" : tipoFactor);
         }
 
         public void SetConceptoImpuestoRetencion(decimal tasaOCuota, string impuesto, decimal _base, string tipoFactor,  decimal? importe=null)
@@ -301,8 +308,10 @@ namespace SW.Tools.Entities
                     var listImpTras = this.Impuestos.Traslados.ToList();
                     listImpTras.Add(new ComprobanteImpuestosTraslado()
                     { Importe = importe, Impuesto = impuesto, TasaOCuota = tasaOCuota, TipoFactor = tipoFactor });
+                    this.Impuestos.Traslados = listImpTras.ToArray();
                 }   
             }
+
         }
 
         private void SetImpuestoRetencion(decimal importe, string impuesto)
@@ -324,9 +333,10 @@ namespace SW.Tools.Entities
                 }
                 else
                 {
-                    var listImpTras = this.Impuestos.Retenciones.ToList();
-                    listImpTras.Add(new ComprobanteImpuestosRetencion()
+                    var listImpRetencion = this.Impuestos.Retenciones.ToList();
+                    listImpRetencion.Add(new ComprobanteImpuestosRetencion()
                     { Importe = importe, Impuesto = impuesto});
+                    this.Impuestos.Retenciones = listImpRetencion.ToArray();
                 }
             }
         }
