@@ -9,13 +9,13 @@ namespace SW.Tools.Entities
 {
     public partial class Comprobante
     {
-
         public void SetConcepto(decimal cantidad, string claveProdServ, string claveUnidad, string descripcion,
              string noIdentificacion, string unidad, decimal valorUnitario, decimal? importe = null, decimal descuento = 0)
         {
             if(!importe.HasValue)
                 importe = valorUnitario * cantidad;
-            importe = importe.Value.TruncateDecimals(6);
+            if (BitConverter.GetBytes(decimal.GetBits(importe.Value)[3])[2] > 6)
+                importe = importe.Value.TruncateDecimals(6);
             if (this.Conceptos != null)
             {
                 var conceptList = this.Conceptos.ToList();
@@ -175,7 +175,9 @@ namespace SW.Tools.Entities
                 throw new ToolsException("CFDI33154", Errors.CFDI33154);
             if(!importe.HasValue)
                 importe = _base * tasaOCuota;
-            importe = importe.Value.TruncateDecimals(6);
+            if (BitConverter.GetBytes(decimal.GetBits(importe.Value)[3])[2]>6)
+                importe = importe.Value.TruncateDecimals(6);
+
             if (!string.IsNullOrEmpty(this.Moneda))
                 importe = importe.Value.TruncateDecimals(this.Moneda_Info.Decimales);
             int positionConcept = this.Conceptos.Length - 1;
@@ -210,7 +212,8 @@ namespace SW.Tools.Entities
                 throw new ToolsException("CFDI33163", Errors.CFDI33163);
             if(!importe.HasValue)
                 importe = _base * tasaOCuota;
-            importe = importe.Value.TruncateDecimals(6);
+            if (BitConverter.GetBytes(decimal.GetBits(importe.Value)[3])[2] > 6)
+                importe = importe.Value.TruncateDecimals(6);
             if (!string.IsNullOrEmpty(this.Moneda))
                 importe = importe.Value.TruncateDecimals(this.Moneda_Info.Decimales);
             int positionConcept = this.Conceptos.Length - 1;
@@ -377,8 +380,7 @@ namespace SW.Tools.Entities
             this.lugarExpedicionField = lugarExpedicion;
             this.Confirmacion = confirmacion;
             this.TipoCambio = tipoCambio.HasValue ? tipoCambio.Value : 0;
-            this.TipoCambioSpecified = tipoCambio.HasValue;
-            
+            this.TipoCambioSpecified = tipoCambio.HasValue;   
         }
 
 
