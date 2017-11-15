@@ -241,7 +241,7 @@ namespace SW.Tools.Entities
             else
             {
                 this.CfdiRelacionados = new ComprobanteCfdiRelacionados();
-                this.CfdiRelacionados.CfdiRelacionado = new ComprobanteCfdiRelacionadosCfdiRelacionado[0];
+                this.CfdiRelacionados.CfdiRelacionado = new ComprobanteCfdiRelacionadosCfdiRelacionado[1];
                 this.CfdiRelacionados.TipoRelacion= tipoRelacion;
                 this.CfdiRelacionados.CfdiRelacionado[0] = new ComprobanteCfdiRelacionadosCfdiRelacionado() { UUID = uuid };
             }

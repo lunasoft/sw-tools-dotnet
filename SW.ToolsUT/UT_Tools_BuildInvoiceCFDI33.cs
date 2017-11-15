@@ -136,6 +136,7 @@ namespace SW.ToolsUT
             comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.000000m);
             comprobante.SetEmisor("LAN8507268IA", "ACCEM SERVICIOS EMPRESARIALES SC", "601");
             comprobante.SetReceptor("XAXX010101000", "MIGUEL LANGARKA GENESTA", "G03");
+            comprobante.SetCFDIRelacionado("ashuias", "ohjiashuias");
             var invoice = comprobante.GetComprobante();
             var xmlInvoice = Tools.Helpers.Serializer.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
