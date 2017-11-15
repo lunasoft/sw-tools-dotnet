@@ -177,9 +177,6 @@ namespace SW.Tools.Entities
                 importe = _base * tasaOCuota;
             if (BitConverter.GetBytes(decimal.GetBits(importe.Value)[3])[2]>6)
                 importe = importe.Value.TruncateDecimals(6);
-
-            if (!string.IsNullOrEmpty(this.Moneda))
-                importe = importe.Value.TruncateDecimals(this.Moneda_Info.Decimales);
             int positionConcept = this.Conceptos.Length - 1;
             if (this.Conceptos[positionConcept].Impuestos == null)
                 this.Conceptos[positionConcept].Impuestos = new ComprobanteConceptoImpuestos();
@@ -214,8 +211,6 @@ namespace SW.Tools.Entities
                 importe = _base * tasaOCuota;
             if (BitConverter.GetBytes(decimal.GetBits(importe.Value)[3])[2] > 6)
                 importe = importe.Value.TruncateDecimals(6);
-            if (!string.IsNullOrEmpty(this.Moneda))
-                importe = importe.Value.TruncateDecimals(this.Moneda_Info.Decimales);
             int positionConcept = this.Conceptos.Length - 1;
             if (this.Conceptos[positionConcept].Impuestos == null)
                 this.Conceptos[positionConcept].Impuestos = new ComprobanteConceptoImpuestos();
