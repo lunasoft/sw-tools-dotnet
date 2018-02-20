@@ -53,6 +53,8 @@ namespace SW.ToolsUT
             comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta1", "1", "NO APLICA", 3592.83m);
             comprobante.SetConceptoImpuestoTraslado(0.1600000m, "c_TipoFactor.Tasa", "002", 550.00m);
             comprobante.SetAddenda(addenda);
+            comprobante.SetCFDIRelacionado("01", Guid.NewGuid().ToString());
+            comprobante.SetCFDIRelacionado("01", Guid.NewGuid().ToString());
             comprobante.SetEmisor("AAA010101AAA", "ACCEM SERVICIOS EMPRESARIALES SC", "601");
             comprobante.SetReceptor("XAXX010101000", "MIGUEL LANGARKA GENESTA", "G03");
             var invoice = comprobante.GetComprobante();
@@ -130,11 +132,30 @@ namespace SW.ToolsUT
             Tools.Entities.Comprobante comprobante = new Tools.Entities.Comprobante();
             comprobante.SetComprobante("MXN", "I", "01", "PPD", "20000");
             comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta", "1", "NO APLICA", 3592.83m);
-            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 3592.83m);
+            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 3592.830000m);
+            comprobante.SetConcepto(1, "84131500", "ZZ", "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m);
+            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 258.6800000m);
+            comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.000000m);
+            comprobante.SetEmisor("LAN8507268IA", "ACCEM SERVICIOS EMPRESARIALES SC", "601");
+            comprobante.SetReceptor("XAXX010101000", "MIGUEL LANGARKA GENESTA", "G03");
+            comprobante.SetCFDIRelacionado("01", Guid.NewGuid().ToString());
+            var invoice = comprobante.GetComprobante();
+            var xmlInvoice = Tools.Helpers.Serializer.SerializeDocument(invoice);
+            xmlInvoice = SignInvoice(xmlInvoice);
+            Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
+            StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
+            Assert.IsTrue(response.status == "success");
+        }
+        [TestMethod]
+        public void UT_StampInvoice_Exento()
+        {
+            Tools.Entities.Comprobante comprobante = new Tools.Entities.Comprobante();
+            comprobante.SetComprobante("MXN", "I", "01", "PPD", "20000");
+            comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta", "1", "NO APLICA", 3592.83m);
+            comprobante.SetConceptoImpuestoTraslado(default(decimal), "Exento", "002", 3592.83m);
             comprobante.SetConcepto(1, "84131500", "ZZ", "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m);
             comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 258.68m);
             comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m);
-            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 550.00m);
             comprobante.SetEmisor("LAN8507268IA", "ACCEM SERVICIOS EMPRESARIALES SC", "601");
             comprobante.SetReceptor("XAXX010101000", "MIGUEL LANGARKA GENESTA", "G03");
             var invoice = comprobante.GetComprobante();
