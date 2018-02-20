@@ -200,7 +200,8 @@ namespace SW.Tools.Entities
                 this.Conceptos[positionConcept].Impuestos.Traslados = new ComprobanteConceptoImpuestosTraslado[1];
                 this.Conceptos[positionConcept].Impuestos.Traslados[0] = impuestoObj;
             }
-            this.SetImpuestoTraslado(importe.Value, impuesto, tasaOCuota, tipoFactor.Trim().ToLower()=="exento" ? "Tasa" : tipoFactor);
+            if (tipoFactor.Trim().ToLower() != "exento")
+                this.SetImpuestoTraslado(importe.Value, impuesto, tasaOCuota, tipoFactor);
         }
 
         public void SetConceptoImpuestoRetencion(decimal tasaOCuota, string impuesto, decimal _base, string tipoFactor,  decimal? importe=null)
@@ -227,7 +228,8 @@ namespace SW.Tools.Entities
                 this.Conceptos[positionConcept].Impuestos.Retenciones[0] = new ComprobanteConceptoImpuestosRetencion()
                 { Base = _base, Importe = importe.Value, Impuesto = impuesto, TasaOCuota = tasaOCuota, TipoFactor = tipoFactor };
             }
-            this.SetImpuestoRetencion(importe.Value, impuesto);
+            if (tipoFactor.Trim().ToLower() != "exento")
+                this.SetImpuestoRetencion(importe.Value, impuesto);
         }
 
         public void SetCFDIRelacionado(string tipoRelacion, string uuid)
@@ -237,6 +239,7 @@ namespace SW.Tools.Entities
                 var listCfdiRelaci = this.CfdiRelacionados.CfdiRelacionado.ToList();
                 listCfdiRelaci.Add(new ComprobanteCfdiRelacionadosCfdiRelacionado()
                 { UUID = uuid });
+                this.CfdiRelacionados.CfdiRelacionado = listCfdiRelaci.ToArray();
             }
             else
             {
