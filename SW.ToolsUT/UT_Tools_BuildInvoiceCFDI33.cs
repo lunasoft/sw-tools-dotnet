@@ -130,11 +130,11 @@ namespace SW.ToolsUT
             Tools.Entities.Comprobante comprobante = new Tools.Entities.Comprobante();
             comprobante.SetComprobante("MXN", "I", "01", "PPD", "20000");
             comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta", "1", 3592.83m);
-            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 3592.83m);
+            comprobante.SetConceptoImpuestoTraslado(0.160000m, "Tasa", "002", 3592.83m);
             comprobante.SetConcepto(1, "84131500", "ZZ", "Recargo por pago fraccionado", "1", 258.68m);
-            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 258.68m);
+            comprobante.SetConceptoImpuestoTraslado(0.160000m, "Tasa", "002", 258.68m);
             comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", 550.00m);
-            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 550.00m);
+            comprobante.SetConceptoImpuestoTraslado(0.160000m, "Tasa", "002", 550.00m);
             comprobante.SetEmisor("LAN8507268IA", "ACCEM SERVICIOS EMPRESARIALES SC", "601");
             comprobante.SetReceptor("XAXX010101000", "MIGUEL LANGARKA GENESTA", "G03");
             var invoice = comprobante.GetComprobante();
