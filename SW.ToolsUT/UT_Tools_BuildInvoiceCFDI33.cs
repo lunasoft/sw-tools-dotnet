@@ -46,11 +46,11 @@ namespace SW.ToolsUT
             Tools.Entities.Comprobante comprobante = new Tools.Entities.Comprobante();
             comprobante.SetComprobante("MXN", "I", "01", "PPD", "2000");
             comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta1", "1", 3592.83m);
-            comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta1", "1", 3592.83m);
+            comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta1", "1", "NO APLICA", 3592.83m);
             comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 3592.83m);
-            comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta1", "1", 3592.83m);
+            comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta1", "1", "NO APLICA", 3592.83m);
             comprobante.SetConceptoImpuestoTraslado(0.1600000m, "c_TipoFactor.Tasa", "002", 258.68m);
-            comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta1", "1", 3592.83m);
+            comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta1", "1", "NO APLICA", 3592.83m);
             comprobante.SetConceptoImpuestoTraslado(0.1600000m, "c_TipoFactor.Tasa", "002", 550.00m);
             comprobante.SetAddenda(addenda);
             comprobante.SetEmisor("AAA010101AAA", "ACCEM SERVICIOS EMPRESARIALES SC", "601");
@@ -79,11 +79,11 @@ namespace SW.ToolsUT
             XmlElement addenda = doc.DocumentElement;
             Tools.Entities.Comprobante comprobante = new Tools.Entities.Comprobante();
             comprobante.SetComprobante("MXN", "I", "01", "PPD", "2000");
-            comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta", "1", 3592.83m, null, 0);
-            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 3592.83m, null);
-            comprobante.SetConcepto(1, "84131500", "ZZ", "Recargo por pago fraccionado", "1",  258.68m, 258.68m);
-            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 258.68m, 20.20m);
-            comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", 550.00m);
+            comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta", "1", "NO APLICA", 3592.83m,null,0);
+            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 3592.83m,null);
+            comprobante.SetConcepto(1, "84131500", "ZZ", "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m,258.68m);
+            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 258.68m,20.20m);
+            comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m);
             comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 550.00m);
             comprobante.SetComplemento(addenda);
             comprobante.SetEmisor("AAA010101AAA", "ACCEM SERVICIOS EMPRESARIALES SC", "601");
@@ -98,11 +98,11 @@ namespace SW.ToolsUT
         {
             SW.Tools.Entities.Pagos pago = new Tools.Entities.Pagos();
             pago.SetPago("01", null, DateTime.Now, null, "USD", 15000.00m, null, "1", null, null, 21.5m);
-            pago.SetDoctoRelacionado("RogueOne", "Folio1", "0aded095-b84d-4364-8f8e-59c3f650e530",
+            pago.SetDoctoRelacionado("RogueOne", "Folio1", "0aded095-b84d-4364-8f8e-59c3f650e530", 
                 "PPD", "MXN", "1", 30000, 15000, 15000);
             pago.SetEmisor("LAN7008173R5", "CINDEMEX SA DE CV", "601");
             pago.SetReceptor("AAQM610917QJA", "EMPLEADO SMARTERWEB");
-            var invoice = pago.GetInvoice("99056", "A", "1");
+            var invoice = pago.GetInvoice("99056","A","1");
             var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocument(invoice);
         }
 
@@ -111,8 +111,8 @@ namespace SW.ToolsUT
         {
             SW.Tools.Entities.Pagos pago = new Tools.Entities.Pagos();
             pago.SetPago("01", null, DateTime.Now, null, "USD", 15000.00m, null, "1", null, null, 21.5m);
-            pago.SetDoctoRelacionado("RogueOne", "Folio1", "0aded095-b84d-4364-8f8e-59c3f650e530",
-                "PPD", "MXN", "1", 1.0000000m, 30000.0000000m, 15000.000000000000m, 15000.000000m);
+            pago.SetDoctoRelacionado("RogueOne", "Folio1", "0aded095-b84d-4364-8f8e-59c3f650e530", 
+                "PPD", "MXN", "1", 1.0000000m, 30000.0000000m, 15000.000000000000m,15000.000000m);
             pago.SetEmisor("LAN8507268IA", "CINDEMEX SA DE CV", "601");
             pago.SetReceptor("AAQM610917QJA", "EMPLEADO SMARTERWEB");
             var invoice = pago.GetInvoice("99056", "A", "1");
@@ -129,12 +129,12 @@ namespace SW.ToolsUT
         {
             Tools.Entities.Comprobante comprobante = new Tools.Entities.Comprobante();
             comprobante.SetComprobante("MXN", "I", "01", "PPD", "20000");
-            comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta", "1", 3592.83m);
-            comprobante.SetConceptoImpuestoTraslado(0.160000m, "Tasa", "002", 3592.83m);
-            comprobante.SetConcepto(1, "84131500", "ZZ", "Recargo por pago fraccionado", "1", 258.68m);
-            comprobante.SetConceptoImpuestoTraslado(0.160000m, "Tasa", "002", 258.68m);
-            comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", 550.00m);
-            comprobante.SetConceptoImpuestoTraslado(0.160000m, "Tasa", "002", 550.00m);
+            comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta", "1", "NO APLICA", 3592.83m);
+            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 3592.83m);
+            comprobante.SetConcepto(1, "84131500", "ZZ", "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m);
+            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 258.68m);
+            comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m);
+            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 550.00m);
             comprobante.SetEmisor("LAN8507268IA", "ACCEM SERVICIOS EMPRESARIALES SC", "601");
             comprobante.SetReceptor("XAXX010101000", "MIGUEL LANGARKA GENESTA", "G03");
             var invoice = comprobante.GetComprobante();
