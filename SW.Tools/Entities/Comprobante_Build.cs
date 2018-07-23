@@ -11,7 +11,7 @@ namespace SW.Tools.Entities
     {
 
         public void SetConcepto(decimal cantidad, string claveProdServ, string claveUnidad, string descripcion,
-             string noIdentificacion, string unidad, decimal valorUnitario, decimal? importe = null, decimal descuento = 0)
+            string unidad, decimal valorUnitario, decimal? importe = null, decimal descuento = 0, string noIdentificacion = "")
         {
             if(!importe.HasValue)
                 importe = valorUnitario * cantidad;
@@ -29,6 +29,7 @@ namespace SW.Tools.Entities
                     DescuentoSpecified = descuento != 0,
                     Importe = importe.Value,
                     NoIdentificacion = noIdentificacion,
+                    NoIdentificationSpecified = string.IsNullOrEmpty(noIdentificacion),
                     Unidad = unidad,
                     ValorUnitario = valorUnitario, 
                 });
@@ -46,7 +47,7 @@ namespace SW.Tools.Entities
                     DescuentoSpecified = descuento != 0,
                     Importe = importe.Value,
                     NoIdentificacion = noIdentificacion,
-                    NoIdentificationSpecified = noIdentificacion != "",
+                    NoIdentificationSpecified = string.IsNullOrEmpty(noIdentificacion),
                     Unidad = unidad,
                     ValorUnitario = valorUnitario
                 };
