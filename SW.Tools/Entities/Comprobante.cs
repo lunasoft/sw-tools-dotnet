@@ -961,8 +961,10 @@ namespace SW.Tools.Entities
         private decimal importeField;
 
         private decimal descuentoField;
-
+        
         private bool descuentoFieldSpecified;
+   
+        private bool noIdentificationFieldSpecified;
 
         /// <remarks/>
         public ComprobanteConceptoImpuestos Impuestos
@@ -1170,6 +1172,21 @@ namespace SW.Tools.Entities
                 this.descuentoFieldSpecified = value;
             }
         }
+
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool NoIdentificationSpecified
+        {
+            get
+            {
+                return this.noIdentificationFieldSpecified;
+            }
+            set
+            {
+                this.noIdentificationFieldSpecified = value;
+            }
+        }
+
+
     }
 
     /// <remarks/>
