@@ -9,13 +9,13 @@ namespace SW.Tools.Entities
 {
     public partial class Comprobante
     {
+
         public void SetConcepto(decimal cantidad, string claveProdServ, string claveUnidad, string descripcion,
-             string noIdentificacion, string unidad, decimal valorUnitario, decimal? importe = null, decimal descuento = 0)
+            string unidad, decimal valorUnitario, decimal? importe = null, decimal descuento = 0, string noIdentificacion = null)
         {
             if(!importe.HasValue)
                 importe = valorUnitario * cantidad;
-            if (BitConverter.GetBytes(decimal.GetBits(importe.Value)[3])[2] > 6)
-                importe = importe.Value.TruncateDecimals(6);
+            importe = importe.Value.TruncateDecimals(6);
             if (this.Conceptos != null)
             {
                 var conceptList = this.Conceptos.ToList();
@@ -29,6 +29,7 @@ namespace SW.Tools.Entities
                     DescuentoSpecified = descuento != 0,
                     Importe = importe.Value,
                     NoIdentificacion = noIdentificacion,
+                    NoIdentificationSpecified = !string.IsNullOrEmpty(noIdentificacion),
                     Unidad = unidad,
                     ValorUnitario = valorUnitario, 
                 });
@@ -46,6 +47,7 @@ namespace SW.Tools.Entities
                     DescuentoSpecified = descuento != 0,
                     Importe = importe.Value,
                     NoIdentificacion = noIdentificacion,
+                    NoIdentificationSpecified = !string.IsNullOrEmpty(noIdentificacion),
                     Unidad = unidad,
                     ValorUnitario = valorUnitario
                 };
@@ -175,33 +177,26 @@ namespace SW.Tools.Entities
                 throw new ToolsException("CFDI33154", Errors.CFDI33154);
             if(!importe.HasValue)
                 importe = _base * tasaOCuota;
-            if (BitConverter.GetBytes(decimal.GetBits(importe.Value)[3])[2]>6)
-                importe = importe.Value.TruncateDecimals(6);
+            importe = importe.Value.TruncateDecimals(6);
+            if (!string.IsNullOrEmpty(this.Moneda))
+                importe = importe.Value.TruncateDecimals(this.Moneda_Info.Decimales);
             int positionConcept = this.Conceptos.Length - 1;
             if (this.Conceptos[positionConcept].Impuestos == null)
                 this.Conceptos[positionConcept].Impuestos = new ComprobanteConceptoImpuestos();
-            ComprobanteConceptoImpuestosTraslado impuestoObj;
-            if (tipoFactor.Trim().ToLower() == "exento")
-            {
-                impuestoObj = new ComprobanteConceptoImpuestosTraslado()
-                { Base = _base, ImporteSpecified = false, Impuesto = impuesto, TasaOCuotaSpecified = false, TipoFactor = tipoFactor };
-            }
-            else
-                impuestoObj = new ComprobanteConceptoImpuestosTraslado()
-                { Base = _base, Importe = importe.Value, ImporteSpecified = true, Impuesto = impuesto, TasaOCuota = tasaOCuota, TasaOCuotaSpecified = true, TipoFactor = tipoFactor };
             if (this.Conceptos[positionConcept].Impuestos.Traslados != null)
             {
                 var listCT = this.Conceptos[positionConcept].Impuestos.Traslados.ToList();
-                listCT.Add(impuestoObj);
+                listCT.Add(new ComprobanteConceptoImpuestosTraslado()
+                { Base = _base, Importe = importe.Value, ImporteSpecified = true, Impuesto = impuesto, TasaOCuota = tasaOCuota, TasaOCuotaSpecified = true, TipoFactor = tipoFactor });
                 this.Conceptos[positionConcept].Impuestos.Traslados = listCT.ToArray();
             }
             else
             {
                 this.Conceptos[positionConcept].Impuestos.Traslados = new ComprobanteConceptoImpuestosTraslado[1];
-                this.Conceptos[positionConcept].Impuestos.Traslados[0] = impuestoObj;
+                this.Conceptos[positionConcept].Impuestos.Traslados[0]= new ComprobanteConceptoImpuestosTraslado()
+                { Base = _base, Importe = importe.Value, ImporteSpecified = true, Impuesto = impuesto, TasaOCuota = tasaOCuota, TasaOCuotaSpecified = true, TipoFactor = tipoFactor };
             }
-            if (tipoFactor.Trim().ToLower() != "exento")
-                this.SetImpuestoTraslado(importe.Value, impuesto, tasaOCuota, tipoFactor);
+            this.SetImpuestoTraslado(importe.Value, impuesto, tasaOCuota, tipoFactor);
         }
 
         public void SetConceptoImpuestoRetencion(decimal tasaOCuota, string impuesto, decimal _base, string tipoFactor,  decimal? importe=null)
@@ -210,8 +205,9 @@ namespace SW.Tools.Entities
                 throw new ToolsException("CFDI33163", Errors.CFDI33163);
             if(!importe.HasValue)
                 importe = _base * tasaOCuota;
-            if (BitConverter.GetBytes(decimal.GetBits(importe.Value)[3])[2] > 6)
-                importe = importe.Value.TruncateDecimals(6);
+            importe = importe.Value.TruncateDecimals(6);
+            if (!string.IsNullOrEmpty(this.Moneda))
+                importe = importe.Value.TruncateDecimals(this.Moneda_Info.Decimales);
             int positionConcept = this.Conceptos.Length - 1;
             if (this.Conceptos[positionConcept].Impuestos == null)
                 this.Conceptos[positionConcept].Impuestos = new ComprobanteConceptoImpuestos();
@@ -228,8 +224,7 @@ namespace SW.Tools.Entities
                 this.Conceptos[positionConcept].Impuestos.Retenciones[0] = new ComprobanteConceptoImpuestosRetencion()
                 { Base = _base, Importe = importe.Value, Impuesto = impuesto, TasaOCuota = tasaOCuota, TipoFactor = tipoFactor };
             }
-            if (tipoFactor.Trim().ToLower() != "exento")
-                this.SetImpuestoRetencion(importe.Value, impuesto);
+            this.SetImpuestoRetencion(importe.Value, impuesto);
         }
 
         public void SetCFDIRelacionado(string tipoRelacion, string uuid)
@@ -239,12 +234,11 @@ namespace SW.Tools.Entities
                 var listCfdiRelaci = this.CfdiRelacionados.CfdiRelacionado.ToList();
                 listCfdiRelaci.Add(new ComprobanteCfdiRelacionadosCfdiRelacionado()
                 { UUID = uuid });
-                this.CfdiRelacionados.CfdiRelacionado = listCfdiRelaci.ToArray();
             }
             else
             {
                 this.CfdiRelacionados = new ComprobanteCfdiRelacionados();
-                this.CfdiRelacionados.CfdiRelacionado = new ComprobanteCfdiRelacionadosCfdiRelacionado[1];
+                this.CfdiRelacionados.CfdiRelacionado = new ComprobanteCfdiRelacionadosCfdiRelacionado[0];
                 this.CfdiRelacionados.TipoRelacion= tipoRelacion;
                 this.CfdiRelacionados.CfdiRelacionado[0] = new ComprobanteCfdiRelacionadosCfdiRelacionado() { UUID = uuid };
             }
@@ -309,10 +303,8 @@ namespace SW.Tools.Entities
                     var listImpTras = this.Impuestos.Traslados.ToList();
                     listImpTras.Add(new ComprobanteImpuestosTraslado()
                     { Importe = importe, Impuesto = impuesto, TasaOCuota = tasaOCuota, TipoFactor = tipoFactor });
-                    this.Impuestos.Traslados = listImpTras.ToArray();
                 }   
             }
-
         }
 
         private void SetImpuestoRetencion(decimal importe, string impuesto)
@@ -334,10 +326,9 @@ namespace SW.Tools.Entities
                 }
                 else
                 {
-                    var listImpRetencion = this.Impuestos.Retenciones.ToList();
-                    listImpRetencion.Add(new ComprobanteImpuestosRetencion()
+                    var listImpTras = this.Impuestos.Retenciones.ToList();
+                    listImpTras.Add(new ComprobanteImpuestosRetencion()
                     { Importe = importe, Impuesto = impuesto});
-                    this.Impuestos.Retenciones = listImpRetencion.ToArray();
                 }
             }
         }
@@ -378,7 +369,8 @@ namespace SW.Tools.Entities
             this.lugarExpedicionField = lugarExpedicion;
             this.Confirmacion = confirmacion;
             this.TipoCambio = tipoCambio.HasValue ? tipoCambio.Value : 0;
-            this.TipoCambioSpecified = tipoCambio.HasValue;   
+            this.TipoCambioSpecified = tipoCambio.HasValue;
+            
         }
 
 
