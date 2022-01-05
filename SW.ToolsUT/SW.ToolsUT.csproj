@@ -76,6 +76,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Resources\CSD_Pruebas_CFDI_EKU9003173C9.cer" />
+    <None Include="Resources\CSD_Pruebas_CFDI_EKU9003173C9.key" />
     <None Include="Resources\CSD_Pruebas_CFDI_LAN7008173R5.cer">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -90,6 +92,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\cfdi33_cp20.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\cfdi33Invoice.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

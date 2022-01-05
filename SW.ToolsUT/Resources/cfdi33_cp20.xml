@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cfdi:Comprobante xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd http://www.sat.gob.mx/CartaPorte20 http://www.sat.gob.mx/sitio_internet/cfd/CartaPorte/CartaPorte20.xsd" xmlns:cartaporte20="http://www.sat.gob.mx/CartaPorte20" Version="3.3" Serie="RogueOne" Folio="HNFK231" Fecha="2022-01-04T00:14:54" FormaPago="01" SubTotal="25000.00" Moneda="MXN" TipoCambio="1" Total="28000.00" TipoDeComprobante="I" MetodoPago="PUE" LugarExpedicion="06300" xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" NoCertificado="20001000000300022816" Certificado="MIIFuzCCA6OgAwIBAgIUMzAwMDEwMDAwMDA0MDAwMDI0MzQwDQYJKoZIhvcNAQELBQAwggErMQ8wDQYDVQQDDAZBQyBVQVQxLjAsBgNVBAoMJVNFUlZJQ0lPIERFIEFETUlOSVNUUkFDSU9OIFRSSUJVVEFSSUExGjAYBgNVBAsMEVNBVC1JRVMgQXV0aG9yaXR5MSgwJgYJKoZIhvcNAQkBFhlvc2Nhci5tYXJ0aW5lekBzYXQuZ29iLm14MR0wGwYDVQQJDBQzcmEgY2VycmFkYSBkZSBjYWRpejEOMAwGA1UEEQwFMDYzNzAxCzAJBgNVBAYTAk1YMRkwFwYDVQQIDBBDSVVEQUQgREUgTUVYSUNPMREwDwYDVQQHDAhDT1lPQUNBTjERMA8GA1UELRMIMi41LjQuNDUxJTAjBgkqhkiG9w0BCQITFnJlc3BvbnNhYmxlOiBBQ0RNQS1TQVQwHhcNMTkwNjE3MTk0NDE0WhcNMjMwNjE3MTk0NDE0WjCB4jEnMCUGA1UEAxMeRVNDVUVMQSBLRU1QRVIgVVJHQVRFIFNBIERFIENWMScwJQYDVQQpEx5FU0NVRUxBIEtFTVBFUiBVUkdBVEUgU0EgREUgQ1YxJzAlBgNVBAoTHkVTQ1VFTEEgS0VNUEVSIFVSR0FURSBTQSBERSBDVjElMCMGA1UELRMcRUtVOTAwMzE3M0M5IC8gWElRQjg5MTExNlFFNDEeMBwGA1UEBRMVIC8gWElRQjg5MTExNk1HUk1aUjA1MR4wHAYDVQQLExVFc2N1ZWxhIEtlbXBlciBVcmdhdGUwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCN0peKpgfOL75iYRv1fqq+oVYsLPVUR/GibYmGKc9InHFy5lYF6OTYjnIIvmkOdRobbGlCUxORX/tLsl8Ya9gm6Yo7hHnODRBIDup3GISFzB/96R9K/MzYQOcscMIoBDARaycnLvy7FlMvO7/rlVnsSARxZRO8Kz8Zkksj2zpeYpjZIya/369+oGqQk1cTRkHo59JvJ4Tfbk/3iIyf4H/Ini9nBe9cYWo0MnKob7DDt/vsdi5tA8mMtA953LapNyCZIDCRQQlUGNgDqY9/8F5mUvVgkcczsIgGdvf9vMQPSf3jjCiKj7j6ucxl1+FwJWmbvgNmiaUR/0q4m2rm78lFAgMBAAGjHTAbMAwGA1UdEwEB/wQCMAAwCwYDVR0PBAQDAgbAMA0GCSqGSIb3DQEBCwUAA4ICAQBcpj1TjT4jiinIujIdAlFzE6kRwYJCnDG08zSp4kSnShjxADGEXH2chehKMV0FY7c4njA5eDGdA/G2OCTPvF5rpeCZP5Dw504RZkYDl2suRz+wa1sNBVpbnBJEK0fQcN3IftBwsgNFdFhUtCyw3lus1SSJbPxjLHS6FcZZ51YSeIfcNXOAuTqdimusaXq15GrSrCOkM6n2jfj2sMJYM2HXaXJ6rGTEgYmhYdwxWtil6RfZB+fGQ/H9I9WLnl4KTZUS6C9+NLHh4FPDhSk19fpS2S/56aqgFoGAkXAYt9Fy5ECaPcULIfJ1DEbsXKyRdCv3JY89+0MNkOdaDnsemS2o5Gl08zI4iYtt3L40gAZ60NPh31kVLnYNsmvfNxYyKp+AeJtDHyW9w7ftM0Hoi+BuRmcAQSKFV3pk8j51la+jrRBrAUv8blbRcQ5BiZUwJzHFEKIwTsRGoRyEx96sNnB03n6GTwjIGz92SmLdNl95r9rkvp+2m4S6q1lPuXaFg7DGBrXWC8iyqeWE2iobdwIIuXPTMVqQb12m1dAkJVRO5NdHnP/MpqOvOgLqoZBNHGyBg4Gqm4sCJHCxA1c8Elfa2RQTCk0tAzllL4vOnI1GHkGJn65xokGsaU4B4D36xh7eWrfj4/pgWHmtoDAYa8wzSwo2GVCZOs+mtEgOQB91/g==" Sello="Q7GSPyQt0MLhUZgN+M0gqVvlf3AKMT+K7cvyIefHfNCQo+3JFepA/RepD/iBRQ0sMfTTAg64lqtj+wAWZUVjLva8mKuTgPxTlkuLrJXABcFH4FmrgYTU07eg+4clloKxyIJyoRNHMvE5I8B3ruSRBWefIv8MPRBTAHYV/Kq8rn8KN/IiUwzE6eSDv32GyCtqR1kTID8qNqGA4MBTWPka8x/zpO7eCjY62bgntWeolf01L0GMQIRNZ6jSQwvq3wkvGoGY9z3B4lgesEP8+P/NDmKP0vuSWomC+/k1b/Spc/HRttlaZ978Zb3NeYrBgvf3JyyAs9ggI5p3etT/81sGJg==">
+  <cfdi:Emisor Rfc="EKU9003173C9" Nombre="SW TRANSPORTES" RegimenFiscal="601" />
+  <cfdi:Receptor Rfc="AAA010101AAA" Nombre="SW SMARTERWEB" UsoCFDI="G03" />
+  <cfdi:Conceptos>
+    <cfdi:Concepto ClaveProdServ="78101500" NoIdentificacion="01" Cantidad="1" ClaveUnidad="E48" Unidad="SERVICIO" Descripcion="FLETE" ValorUnitario="25000.00" Importe="25000.00">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="25000.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="4000.00" />
+        </cfdi:Traslados>
+        <cfdi:Retenciones>
+          <cfdi:Retencion Base="25000.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.040000" Importe="1000.00" />
+        </cfdi:Retenciones>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+  </cfdi:Conceptos>
+  <cfdi:Impuestos TotalImpuestosRetenidos="1000.00" TotalImpuestosTrasladados="4000.00">
+    <cfdi:Retenciones>
+      <cfdi:Retencion Impuesto="002" Importe="1000.00" />
+    </cfdi:Retenciones>
+    <cfdi:Traslados>
+      <cfdi:Traslado Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="4000.00" />
+    </cfdi:Traslados>
+  </cfdi:Impuestos>
+  <cfdi:Complemento>
+    <cartaporte20:CartaPorte Version="2.0" TranspInternac="No" TotalDistRec="2">
+      <cartaporte20:Ubicaciones>
+        <cartaporte20:Ubicacion IDUbicacion="OR101010" TipoUbicacion="Origen" RFCRemitenteDestinatario="EKU9003173C9" FechaHoraSalidaLlegada="2021-11-01T00:00:00">
+          <cartaporte20:Domicilio Calle="calle" NumeroExterior="211" Colonia="0347" Localidad="23" Referencia="casa blanca 1" Municipio="004" Estado="COA" Pais="MEX" CodigoPostal="25350" />
+        </cartaporte20:Ubicacion>
+        <cartaporte20:Ubicacion IDUbicacion="DE202020" TipoUbicacion="Destino" RFCRemitenteDestinatario="AAA010101AAA" FechaHoraSalidaLlegada="2021-11-01T01:00:00" DistanciaRecorrida="1">
+          <cartaporte20:Domicilio Calle="calle" NumeroExterior="214" Colonia="0347" Localidad="23" Referencia="casa blanca 2" Municipio="004" Estado="COA" Pais="MEX" CodigoPostal="25350" />
+        </cartaporte20:Ubicacion>
+        <cartaporte20:Ubicacion IDUbicacion="DE202021" TipoUbicacion="Destino" RFCRemitenteDestinatario="AAA010101AAA" FechaHoraSalidaLlegada="2021-11-01T02:00:00" DistanciaRecorrida="1">
+          <cartaporte20:Domicilio Calle="calle" NumeroExterior="220" Colonia="0347" Localidad="23" Referencia="casa blanca 3" Municipio="004" Estado="COA" Pais="MEX" CodigoPostal="25350" />
+        </cartaporte20:Ubicacion>
+      </cartaporte20:Ubicaciones>
+      <cartaporte20:Mercancias PesoBrutoTotal="2.0" UnidadPeso="XBX" NumTotalMercancias="2">
+        <cartaporte20:Mercancia BienesTransp="11121900" Descripcion="Productos de perfumería" Cantidad="1.0" ClaveUnidad="XBX" PesoEnKg="1.0" MaterialPeligroso="Sí" CveMaterialPeligroso="1266" Embalaje="4H2">
+          <cartaporte20:CantidadTransporta Cantidad="1" IDOrigen="OR101010" IDDestino="DE202020" />
+        </cartaporte20:Mercancia>
+        <cartaporte20:Mercancia BienesTransp="11121900" Descripcion="Productos de perfumería" Cantidad="1.0" ClaveUnidad="XBX" PesoEnKg="1.0" MaterialPeligroso="Sí" CveMaterialPeligroso="1266" Embalaje="4H2">
+          <cartaporte20:CantidadTransporta Cantidad="1" IDOrigen="OR101010" IDDestino="DE202021" />
+        </cartaporte20:Mercancia>
+        <cartaporte20:Autotransporte PermSCT="TPAF01" NumPermisoSCT="NumPermisoSCT">
+          <cartaporte20:IdentificacionVehicular ConfigVehicular="VL" PlacaVM="plac892" AnioModeloVM="2020" />
+          <cartaporte20:Seguros AseguraRespCivil="SW Seguros" PolizaRespCivil="123456789" AseguraCarga="SW Seguros" AseguraMedAmbiente="SW Seguros Ambientales" PolizaMedAmbiente="123456789" />
+          <cartaporte20:Remolques>
+            <cartaporte20:Remolque SubTipoRem="CTR021" Placa="ABC123">
+            </cartaporte20:Remolque>
+          </cartaporte20:Remolques>
+        </cartaporte20:Autotransporte>
+      </cartaporte20:Mercancias>
+      <cartaporte20:FiguraTransporte>
+        <cartaporte20:TiposFigura TipoFigura="01" RFCFigura="VAAM130719H60" NumLicencia="a234567890">
+        </cartaporte20:TiposFigura>
+      </cartaporte20:FiguraTransporte>
+    </cartaporte20:CartaPorte>
+  </cfdi:Complemento>
+</cfdi:Comprobante>
