@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SmarterWeb")]
 [assembly: AssemblyProduct("SW.Tools")]
-[assembly: AssemblyCopyright("Copyright © SmarterWeb 2017")]
+[assembly: AssemblyCopyright("Copyright © SmarterWeb 2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.0.0.13")]
-[assembly: AssemblyFileVersion("0.0.0.13")]
+
+[assembly: AssemblyVersion("0.0.0.15")]
+[assembly: AssemblyFileVersion("0.0.0.15")]

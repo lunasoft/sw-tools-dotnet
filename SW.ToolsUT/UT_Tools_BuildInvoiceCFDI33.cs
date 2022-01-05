@@ -22,8 +22,8 @@ namespace SW.ToolsUT
         private string url;
         public UT_Tools_BuildInvoiceCFDI33()
         {
-            userStamp = "demo";
-            passwordStamp = "123456789";
+            userStamp = "pruebas_ut@sw.com.mx";
+            passwordStamp = "swpass";
             url = "http://services.test.sw.com.mx";
         }
         [TestMethod]
@@ -114,8 +114,8 @@ namespace SW.ToolsUT
             SW.Tools.Entities.Pagos pago = new Tools.Entities.Pagos();
             pago.SetPago("01", null, DateTime.Now, null, "USD", 15000.00m, null, "1", null, null, 21.5m);
             pago.SetDoctoRelacionado("RogueOne", "Folio1", "0aded095-b84d-4364-8f8e-59c3f650e530", 
-                "PPD", "MXN", "1", 1.0000000m, 30000.0000000m, 15000.000000000000m,15000.000000m);
-            pago.SetEmisor("LAN8507268IA", "CINDEMEX SA DE CV", "601");
+                "PPD", "MXN", "1", 1.000000m, 30000.000000m, 15000.000000m,15000.000000m);
+            pago.SetEmisor("EKU9003173C9", "CINDEMEX SA DE CV", "601");
             pago.SetReceptor("AAQM610917QJA", "EMPLEADO SMARTERWEB");
             var invoice = pago.GetInvoice("99056", "A", "1");
             var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocument(invoice);
@@ -132,31 +132,13 @@ namespace SW.ToolsUT
             Tools.Entities.Comprobante comprobante = new Tools.Entities.Comprobante();
             comprobante.SetComprobante("MXN", "I", "01", "PPD", "20000");
             comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta", "1", "NO APLICA", 3592.83m);
-            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 3592.830000m);
+            comprobante.SetConceptoImpuestoTraslado(0.160000m, "Tasa", "002", 3592.83m);
             comprobante.SetConcepto(1, "84131500", "ZZ", "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m);
-            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 258.6800000m);
-            comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.000000m);
-            comprobante.SetEmisor("LAN8507268IA", "ACCEM SERVICIOS EMPRESARIALES SC", "601");
-            comprobante.SetReceptor("XAXX010101000", "MIGUEL LANGARKA GENESTA", "G03");
-            comprobante.SetCFDIRelacionado("01", Guid.NewGuid().ToString());
-            var invoice = comprobante.GetComprobante();
-            var xmlInvoice = Tools.Helpers.Serializer.SerializeDocument(invoice);
-            xmlInvoice = SignInvoice(xmlInvoice);
-            Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
-            StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
-            Assert.IsTrue(response.status == "success");
-        }
-        [TestMethod]
-        public void UT_StampInvoice_Exento()
-        {
-            Tools.Entities.Comprobante comprobante = new Tools.Entities.Comprobante();
-            comprobante.SetComprobante("MXN", "I", "01", "PPD", "20000");
-            comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta", "1", "NO APLICA", 3592.83m);
-            comprobante.SetConceptoImpuestoTraslado(default(decimal), "Exento", "002", 3592.83m);
-            comprobante.SetConcepto(1, "84131500", "ZZ", "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m);
-            comprobante.SetConceptoImpuestoTraslado(0.1600000m, "Tasa", "002", 258.68m);
+            comprobante.SetConceptoImpuestoTraslado(0.160000m, "Tasa", "002", 258.68m);
             comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m);
-            comprobante.SetEmisor("LAN8507268IA", "ACCEM SERVICIOS EMPRESARIALES SC", "601");
+            comprobante.SetConceptoImpuestoTraslado(0.160000m, "Tasa", "002", 550.00m);
+            comprobante.SetEmisor("EKU9003173C9", "ACCEM SERVICIOS EMPRESARIALES SC", "601");
+
             comprobante.SetReceptor("XAXX010101000", "MIGUEL LANGARKA GENESTA", "G03");
             var invoice = comprobante.GetComprobante();
             var xmlInvoice = Tools.Helpers.Serializer.SerializeDocument(invoice);
@@ -167,8 +149,8 @@ namespace SW.ToolsUT
         }
         private string SignInvoice(string xmlInvoice)
         {
-            byte[] bytesCer = File.ReadAllBytes(@"Resources\CSD_Prueba_CFDI_LAN8507268IA.cer");
-            byte[] bytesKey = File.ReadAllBytes(@"Resources\CSD_Prueba_CFDI_LAN8507268IA.key");
+            byte[] bytesCer = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.cer");
+            byte[] bytesKey = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.key");
             string password = "12345678a";
             var pfx = SW.Tools.Sign.CrearPFX(bytesCer, bytesKey, password);
             var xmlResult = SW.Tools.Sign.SellarCFDIv33(pfx, password, xmlInvoice);
