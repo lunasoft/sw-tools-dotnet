@@ -38,6 +38,9 @@
     <Reference Include="cadenaoriginal33, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\cadenaoriginal33.dll.1.4.3\lib\net40\cadenaoriginal33.dll</HintPath>
     </Reference>
+    <Reference Include="cadenaoriginal40, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cadenaoriginal40.dll.0.0.2\lib\net40\cadenaoriginal40.dll</HintPath>
+    </Reference>
     <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\packages\Mono.Security.3.2.3.0\lib\net40\Mono.Security.dll</HintPath>
       <Private>True</Private>

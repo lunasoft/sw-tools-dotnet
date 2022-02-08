@@ -84,7 +84,39 @@ namespace SW.Tools
                 xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(ms.ToArray()));
             }
             return xml;
+        }
+        public static string SellarCFDIv40(byte[] certificatePfx, string password, string xml)
+        {
+            xml = Fiscal.RemoverCaracteresInvalidosXml(xml);
+            X509Certificate2 x509Certificate = new X509Certificate2(certificatePfx, password
+                 , X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.Exportable);
 
+            //Set values Certificate
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml);
+            doc.DocumentElement.SetAttribute("NoCertificado", CertificateNumber(x509Certificate));
+            doc.DocumentElement.SetAttribute("Certificado", Convert.ToBase64String(x509Certificate.GetRawCertData()));
+            using (MemoryStream ms = new MemoryStream())
+            {
+                doc.Save(ms);
+                ms.Seek(0, SeekOrigin.Begin);
+                xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(ms.ToArray()));
+            }
+            //Get original string
+            string originalString = CadenaOriginalCFDIv40(xml);
+            //Sign Document
+            var signResult = GetSignature(password, certificatePfx, originalString, "SHA256");
+            //Set Values Signature
+            doc = new XmlDocument();
+            doc.LoadXml(xml);
+            doc.DocumentElement.SetAttribute("Sello", signResult);
+            using (MemoryStream ms = new MemoryStream())
+            {
+                doc.Save(ms);
+                ms.Seek(0, SeekOrigin.Begin);
+                xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(ms.ToArray()));
+            }
+            return xml;
         }
         public static string CadenaOriginalCFDIv33(string strXml)
         {
@@ -106,8 +138,27 @@ namespace SW.Tools
 
                 throw new Exception("El XML proporcionado no es válido.", ex);
             }
+        }
+        public static string CadenaOriginalCFDIv40(string strXml)
+        {
+            try
+            {
+                var xslt_cadenaoriginal_4_0 = new XslCompiledTransform();
+                xslt_cadenaoriginal_4_0.Load(typeof(cadenaoriginal_4_0));
+                string resultado = null;
+                StringWriter writer = new StringWriter();
+                XmlReader xml = XmlReader.Create(new StringReader(strXml));
+                xslt_cadenaoriginal_4_0.Transform(xml, null, writer);
+                resultado = writer.ToString().Trim();
+                writer.Close();
 
-            
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("El XML proporcionado no es válido.", ex);
+            }
         }
         #endregion
         #region Privates

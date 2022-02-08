@@ -53,6 +53,21 @@ namespace SW.ToolsUT
             Assert.IsTrue(selloOriginal.Equals(sello));
         }
         [TestMethod]
+        public void UT_Tools_Sign_SellarCFDIv40_OK()
+        {
+            string selloOriginal = @"h4On+n0hpaZ13iDhyhXk9xDLRO3H3+4JWaTgw8S07ctKvrloHHP4K3tHNeT55ckDDxG6uXOvmpYA6nJ5aqH+h0LzJN/NDLAeaipxGgAZbelrN+gZ/AwgfIVaioVJ0f5pqpE4ReDUOcrtH8diXmeY2/yVw1hggXVJpUVf/y3uW9YvmsGyefAZh3zuupmWe9D3Xde/hqzYfhmsP86R5dROixiHkSIPjsCD4t2PnmxOZeGuKE7eHAB+766zoH/drKhru9hVWhn3+BtU/xFYRFQPu5lVmpbj9y5C+gWix+Rlp/krBNzLbdSBDCK5wqBfuC+vQZH7Z/h+EtHPms16tgCrtQ==";
+            byte[] bytesCer = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.cer");
+            byte[] bytesKey = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.key");
+            string password = "12345678a";
+            var pfx = SW.Tools.Sign.CrearPFX(bytesCer, bytesKey, password);
+            var xml = SW.Tools.Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi40.xml")));
+            var xmlResult = SW.Tools.Sign.SellarCFDIv40(pfx, password, xml);
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xmlResult);
+            var sello = doc.DocumentElement.GetAttribute("Sello");
+            Assert.IsTrue(selloOriginal.Equals(sello));
+        }
+        [TestMethod]
         public void UT_Tools_CadenaOriginalCFDIv33_OK()
         {
             var xml = SW.Tools.Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi33.xml")));
@@ -78,6 +93,23 @@ namespace SW.ToolsUT
             var xml = SW.Tools.Fiscal.RemoverCaracteresInvalidosXml( Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi33.xml")));
             string CadenaOriginal = "||3.3|RogueOne|HNFK231|2017-09-13T13:49:07|01|20001000000300022816|200.00|MXN|1|603.20|I|PUE|06300|LAN8507268IA|MB IDEAS DIGITALES SC|601|AAA010101AAA|SW SMARTERWEB|G03|50211503|UT421511|1|H87|Pieza|Cigarros|200.00|200.00|200.00|002|Tasa|0.160000|32.00|232.00|003|Tasa|1.600000|371.20|002|Tasa|0.160000|32.00|003|Tasa|1.600000|371.20|403.20||";
             var result_ = SW.Tools.Sign.CadenaOriginalCFDIv33(xml);
+            Assert.IsTrue(CadenaOriginal.Equals(result_));
+        }
+        [TestMethod]
+        public void UT_tools_CadenaOriginalCFDIv40_OK()
+        {
+            var xml = SW.Tools.Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi40.xml")));
+            string CadenaOriginal = "||4.0|Serie|Folio|2022-02-08T00:18:10|30001000000400002434|CondicionesDePago|0|0|AMD|1|0|T|01|20000|EKU9003173C9|ESCUELA KEMPER URGATE SA DE CV|601|URE180429TM6|UNIVERSIDAD ROBOTICA ESPAÑOLA SA DE CV|65000|601|G01|50211503|UT421511|1|H87|Pieza|Cigarros|0.00|0.00|01|21 47 3807 8003832|50211503|123|1|Pieza|cosas|200.00|200.00||";
+            var result_ = SW.Tools.Fiscal.RemoverCaracteresInvalidosXml(SW.Tools.Sign.CadenaOriginalCFDIv40(xml));
+            Assert.IsTrue(CadenaOriginal.Equals(result_));
+        }
+        [TestMethod]
+        [ExpectedException(typeof(AssertFailedException), "Assert.IsTrue failed.")]
+        public void UT_tools_CadenaOriginalCFDIv40_Error()
+        {
+            var xml = SW.Tools.Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi40.xml")));
+            string CadenaOriginal = "||4.0|Serie|Folio|2022-02-08T00:18:11|30001000000400002434|CondicionesDePago|0|0|AMD|1|0|T|01|20000|EKU9003173C9|ESCUELA KEMPER URGATE SA DE CV|601|URE180429TM6|UNIVERSIDAD ROBOTICA ESPAÑOLA SA DE CV|65000|601|G01|50211503|UT421511|1|H87|Pieza|Cigarros|0.00|0.00|01|21 47 3807 8003832|50211503|123|1|Pieza|cosas|200.00|200.00||";
+            var result_ = SW.Tools.Fiscal.RemoverCaracteresInvalidosXml(SW.Tools.Sign.CadenaOriginalCFDIv40(xml));
             Assert.IsTrue(CadenaOriginal.Equals(result_));
         }
     }
