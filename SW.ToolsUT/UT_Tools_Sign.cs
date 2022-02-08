@@ -53,6 +53,21 @@ namespace SW.ToolsUT
             Assert.IsTrue(selloOriginal.Equals(sello));
         }
         [TestMethod]
+        public void UT_Tools_Sign_SellarCFDIv40_OK()
+        {
+            string selloOriginal = @"h4On+n0hpaZ13iDhyhXk9xDLRO3H3+4JWaTgw8S07ctKvrloHHP4K3tHNeT55ckDDxG6uXOvmpYA6nJ5aqH+h0LzJN/NDLAeaipxGgAZbelrN+gZ/AwgfIVaioVJ0f5pqpE4ReDUOcrtH8diXmeY2/yVw1hggXVJpUVf/y3uW9YvmsGyefAZh3zuupmWe9D3Xde/hqzYfhmsP86R5dROixiHkSIPjsCD4t2PnmxOZeGuKE7eHAB+766zoH/drKhru9hVWhn3+BtU/xFYRFQPu5lVmpbj9y5C+gWix+Rlp/krBNzLbdSBDCK5wqBfuC+vQZH7Z/h+EtHPms16tgCrtQ==";
+            byte[] bytesCer = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.cer");
+            byte[] bytesKey = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.key");
+            string password = "12345678a";
+            var pfx = SW.Tools.Sign.CrearPFX(bytesCer, bytesKey, password);
+            var xml = SW.Tools.Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi40.xml")));
+            var xmlResult = SW.Tools.Sign.SellarCFDIv40(pfx, password, xml);
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xmlResult);
+            var sello = doc.DocumentElement.GetAttribute("Sello");
+            Assert.IsTrue(selloOriginal.Equals(sello));
+        }
+        [TestMethod]
         public void UT_Tools_CadenaOriginalCFDIv33_OK()
         {
             var xml = SW.Tools.Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi33.xml")));
