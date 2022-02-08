@@ -80,5 +80,22 @@ namespace SW.ToolsUT
             var result_ = SW.Tools.Sign.CadenaOriginalCFDIv33(xml);
             Assert.IsTrue(CadenaOriginal.Equals(result_));
         }
+        [TestMethod]
+        public void UT_tools_CadenaOriginalCFDIv40_OK()
+        {
+            var xml = SW.Tools.Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi40.xml")));
+            string CadenaOriginal = "||4.0|Serie|Folio|2022-02-08T00:18:10|30001000000400002434|CondicionesDePago|0|0|AMD|1|0|T|01|20000|EKU9003173C9|ESCUELA KEMPER URGATE SA DE CV|601|URE180429TM6|UNIVERSIDAD ROBOTICA ESPAÑOLA SA DE CV|65000|601|G01|50211503|UT421511|1|H87|Pieza|Cigarros|0.00|0.00|01|21 47 3807 8003832|50211503|123|1|Pieza|cosas|200.00|200.00||";
+            var result_ = SW.Tools.Fiscal.RemoverCaracteresInvalidosXml(SW.Tools.Sign.CadenaOriginalCFDIv40(xml));
+            Assert.IsTrue(CadenaOriginal.Equals(result_));
+        }
+        [TestMethod]
+        [ExpectedException(typeof(AssertFailedException), "Assert.IsTrue failed.")]
+        public void UT_tools_CadenaOriginalCFDIv40_Error()
+        {
+            var xml = SW.Tools.Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi40.xml")));
+            string CadenaOriginal = "||4.0|Serie|Folio|2022-02-08T00:18:11|30001000000400002434|CondicionesDePago|0|0|AMD|1|0|T|01|20000|EKU9003173C9|ESCUELA KEMPER URGATE SA DE CV|601|URE180429TM6|UNIVERSIDAD ROBOTICA ESPAÑOLA SA DE CV|65000|601|G01|50211503|UT421511|1|H87|Pieza|Cigarros|0.00|0.00|01|21 47 3807 8003832|50211503|123|1|Pieza|cosas|200.00|200.00||";
+            var result_ = SW.Tools.Fiscal.RemoverCaracteresInvalidosXml(SW.Tools.Sign.CadenaOriginalCFDIv40(xml));
+            Assert.IsTrue(CadenaOriginal.Equals(result_));
+        }
     }
 }
