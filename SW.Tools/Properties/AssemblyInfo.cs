@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SW.Tools")]
-[assembly: AssemblyDescription("SDK Signature CFDI 3.3")]
+[assembly: AssemblyDescription("SDK Signature CFDI 3.3/4.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SmarterWeb")]
 [assembly: AssemblyProduct("SW.Tools")]
@@ -33,5 +33,5 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("0.0.0.15")]
-[assembly: AssemblyFileVersion("0.0.0.15")]
+[assembly: AssemblyVersion("0.1.0.1")]
+[assembly: AssemblyFileVersion("0.1.0.1")]
