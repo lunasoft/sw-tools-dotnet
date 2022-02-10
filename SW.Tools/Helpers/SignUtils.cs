@@ -52,7 +52,7 @@ namespace SW.Tools.Helpers
                  , X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.Exportable);
                 var nCertificate = CertificateNumber(x509Certificate);
                 var certificate = Convert.ToBase64String(x509Certificate.GetRawCertData());
-                var originalString = version != "4.0" ? GetCadenaOriginal(SignXml(xml, nCertificate, certificate), "3.3") : GetCadenaOriginal(xml);
+                var originalString = version != "4.0" ? GetCadenaOriginal(SignXml(xml, nCertificate, certificate), "3.3") : GetCadenaOriginal(SignXml(xml, nCertificate, certificate));
                 var signResult = GetSignature(password, pfx, originalString, "SHA256");
 
                 return SignXml(xml, signResult);
