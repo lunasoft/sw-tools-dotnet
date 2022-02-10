@@ -43,25 +43,11 @@ namespace SW.Tools
         }
         public static string CadenaOriginalCFDIv33(string strXml)
         {
-            try
-            {
-                return SignUtils.GetCadenaOriginal(strXml, "3.3");
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("", ex);
-            }
+            return SignUtils.GetCadenaOriginal(strXml, "3.3");
         }
         public static string CadenaOriginalCFDIv40(string strXml)
         {
-            try
-            {
-                return SignUtils.GetCadenaOriginal(strXml);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("El XML proporcionado no es válido.", ex);
-            }
+            return SignUtils.GetCadenaOriginal(strXml);
         }
         #endregion
     }
