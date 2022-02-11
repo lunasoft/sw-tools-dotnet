@@ -62,7 +62,7 @@
     <Compile Include="Catalogs\CatCFDI_c_TipoDeComprobante.cs" />
     <Compile Include="Catalogs\Cat_Moneda_Info.cs" />
     <Compile Include="Catalogs\c_ClaveProdServ.cs" />
-    <Compile Include="DotNetUtilitiesCustom.cs" />
+    <Compile Include="Helpers\DotNetUtilitiesCustom.cs" />
     <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="Catalogs\c_Moneda_Element.cs" />
     <Compile Include="Entities\Complements\RFCINC.cs" />
@@ -81,6 +81,7 @@
     <Compile Include="Helpers\Encodings.cs" />
     <Compile Include="Helpers\EnumUtils.cs" />
     <Compile Include="Helpers\Serializer.cs" />
+    <Compile Include="Helpers\SignUtils.cs" />
     <Compile Include="Helpers\Xml.cs" />
     <Compile Include="Helpers\XmlExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
