@@ -115,13 +115,7 @@ namespace SW.Tools.Helpers
             try
             {
                 var xslt_cadenaoriginal = new XslCompiledTransform();
-                using (var reader = new StringReader(Resources.Resources.Retenciones_cadenaoriginal))
-                {
-                    using(XmlReader xsltReader = XmlReader.Create(reader))
-                    {
-                        xslt_cadenaoriginal.Load(xsltReader);
-                    }
-                }
+                xslt_cadenaoriginal.Load(typeof(cadenaoriginal_retenciones_2_0));
                 StringWriter writer = new StringWriter();
                 XmlReader xmlReader = XmlReader.Create(new StringReader(xml));
                 xslt_cadenaoriginal.Transform(xmlReader, null, writer);
