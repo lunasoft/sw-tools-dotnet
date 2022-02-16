@@ -52,9 +52,29 @@ namespace SW.Tools.Helpers
                  , X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.Exportable);
                 var nCertificate = CertificateNumber(x509Certificate);
                 var certificate = Convert.ToBase64String(x509Certificate.GetRawCertData());
-                var originalString = version != "4.0" ? GetCadenaOriginal(SignXml(xml, nCertificate, certificate), "3.3") : GetCadenaOriginal(SignXml(xml, nCertificate, certificate));
+                xml = SignXml(xml, nCertificate, certificate);
+                var originalString = version != "4.0" ? GetCadenaOriginal(xml, "3.3") : GetCadenaOriginal(xml);
                 var signResult = GetSignature(password, pfx, originalString, "SHA256");
 
+                return SignXml(xml, signResult);
+            }
+            catch(Exception e)
+            {
+                throw new Exception("No se pudo realizar el sellado.", e);
+            }
+        }
+        internal static string SignRetencion(byte[] pfx, string password, string xml)
+        {
+            try
+            {
+                X509Certificate2 x509Certificate = new X509Certificate2(pfx, password
+                 , X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.Exportable);
+                var nCertificate = CertificateNumber(x509Certificate);
+                var certificate = Convert.ToBase64String(x509Certificate.GetRawCertData());
+                xml = SignXml(xml, nCertificate, certificate);
+                var originalString = GetCadenaOriginalRetencion(xml);
+                var signResult = GetSignature(password, pfx, originalString, "SHA256");
+                
                 return SignXml(xml, signResult);
             }
             catch(Exception e)
@@ -89,7 +109,31 @@ namespace SW.Tools.Helpers
             {
                 throw new Exception("El XML proporcionado no es válido.", e);
             }
-            
+        }
+        internal static string GetCadenaOriginalRetencion(string xml)
+        {
+            try
+            {
+                var xslt_cadenaoriginal = new XslCompiledTransform();
+                using (var reader = new StringReader(Resources.Resources.Retenciones_cadenaoriginal))
+                {
+                    using(XmlReader xsltReader = XmlReader.Create(reader))
+                    {
+                        xslt_cadenaoriginal.Load(xsltReader);
+                    }
+                }
+                StringWriter writer = new StringWriter();
+                XmlReader xmlReader = XmlReader.Create(new StringReader(xml));
+                xslt_cadenaoriginal.Transform(xmlReader, null, writer);
+                string resultado = writer.ToString().Trim();
+                writer.Close();
+
+                return resultado;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("El XML proporcionado no es válido.", e);
+            }
         }
         private static string SignXml(string xml, string nCertificate, string certificate)
         {

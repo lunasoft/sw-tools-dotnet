@@ -41,6 +41,12 @@ namespace SW.Tools
 
             return SignUtils.SignCfdi(certificatePfx, password, xml);
         }
+        public static string SellarRetencionv20(byte[] certificatePfx, string password, string xml)
+        {
+            xml = Fiscal.RemoverCaracteresInvalidosXml(xml);
+
+            return SignUtils.SignRetencion(certificatePfx, password, xml);
+        }
         public static string CadenaOriginalCFDIv33(string strXml)
         {
             return SignUtils.GetCadenaOriginal(strXml, "3.3");
@@ -49,6 +55,7 @@ namespace SW.Tools
         {
             return SignUtils.GetCadenaOriginal(strXml);
         }
+        
         #endregion
     }
 }
