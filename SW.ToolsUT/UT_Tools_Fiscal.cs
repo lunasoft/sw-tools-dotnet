@@ -54,9 +54,9 @@ namespace SW.ToolsUT
         [TestMethod]
         public void UT_Tools_AntiguedadSemanas_Error()
         {
-            string dateFrom = "01/08/2008";
+            string dateFrom = "08/01/2008";
             DateTime dtFrom = Convert.ToDateTime(dateFrom);
-            string dateTo = "01/07/2008";
+            string dateTo = "07/01/2008";
             DateTime dtTo = Convert.ToDateTime(dateTo);
             var result = SW.Tools.Fiscal.AntiguedadSemanas(dtFrom, dtTo);
             Assert.IsTrue(result.Contains("-"));
@@ -65,9 +65,9 @@ namespace SW.ToolsUT
         [TestMethod]
         public void UT_Tools_AntiguedadAnosMesesDias_Ok()
         {
-            string dateFrom = "01/06/2008";
+            string dateFrom = "06/01/2008";
             DateTime dtFrom = Convert.ToDateTime(dateFrom);
-            string dateTo = "01/08/2008";
+            string dateTo = "08/01/2008";
             DateTime dtTo = Convert.ToDateTime(dateTo);
 
             var result = SW.Tools.Fiscal.AntiguedadAnosMesesDias(dtFrom, dtTo);
@@ -79,9 +79,9 @@ namespace SW.ToolsUT
         [ExpectedException(typeof(Exception), "Date ranges are not valid.")]
         public void UT_Tools_AntiguedadAnosMesesDias_ERROR()
         {
-            string dateFrom = "01/09/2008";
+            string dateFrom = "09/09/2008";
             DateTime dtFrom = Convert.ToDateTime(dateFrom);
-            string dateTo = "01/08/2008";
+            string dateTo = "08/08/2008";
             DateTime dtTo = Convert.ToDateTime(dateTo);
             var result = SW.Tools.Fiscal.AntiguedadAnosMesesDias(dtFrom, dtTo);
             Assert.IsTrue(result.ToString() != null);
