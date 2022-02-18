@@ -69,5 +69,15 @@ namespace SW.Tools.Resources {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] cadenaoriginaltfd {
+            get {
+                object obj = ResourceManager.GetObject("cadenaoriginaltfd", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

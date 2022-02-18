@@ -2,7 +2,6 @@
 using Org.BouncyCastle.Crypto.Parameters;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -95,15 +94,7 @@ namespace SW.Tools.Helpers
                 {
                     xslt_cadenaoriginal.Load(typeof(cadenaoriginal_4_0));
                 }
-
-                string resultado = null;
-                StringWriter writer = new StringWriter();
-                XmlReader xmlReader = XmlReader.Create(new StringReader(xml));
-                xslt_cadenaoriginal.Transform(xmlReader, null, writer);
-                resultado = writer.ToString().Trim();
-                writer.Close();
-
-                return resultado;
+                return TransformXml(xslt_cadenaoriginal, xml);
             }
             catch(Exception e)
             {
@@ -116,18 +107,35 @@ namespace SW.Tools.Helpers
             {
                 var xslt_cadenaoriginal = new XslCompiledTransform();
                 xslt_cadenaoriginal.Load(typeof(cadenaoriginal_retenciones_2_0));
-                StringWriter writer = new StringWriter();
-                XmlReader xmlReader = XmlReader.Create(new StringReader(xml));
-                xslt_cadenaoriginal.Transform(xmlReader, null, writer);
-                string resultado = writer.ToString().Trim();
-                writer.Close();
-
-                return resultado;
+                return TransformXml(xslt_cadenaoriginal, xml);
             }
             catch (Exception e)
             {
                 throw new Exception("El XML proporcionado no es válido.", e);
             }
+        }
+        internal static string GetCadenaOriginalTfd(string xml)
+        {
+            try
+            {
+                var xslt_cadenaoriginal = new XslCompiledTransform();
+                xslt_cadenaoriginal.Load(typeof(cadenaoriginal_TFD_1_1));
+                return TransformXml(xslt_cadenaoriginal, xml);
+            }
+            catch(Exception e)
+            {
+                throw new Exception("El XML proporcionado no es valido.", e);
+            }
+        }
+        internal static string TransformXml(XslCompiledTransform xslt, string xml)
+        {
+            StringWriter writer = new StringWriter();
+            XmlReader xmlReader = XmlReader.Create(new StringReader(xml));
+            xslt.Transform(xmlReader, null, writer);
+            string resultado = writer.ToString().Trim();
+            writer.Close();
+
+            return resultado;
         }
         private static string SignXml(string xml, string nCertificate, string certificate)
         {
