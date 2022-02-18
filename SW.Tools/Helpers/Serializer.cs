@@ -1,8 +1,7 @@
 ﻿using SW.Tools.Entities;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
@@ -29,6 +28,20 @@ namespace SW.Tools.Helpers
                 var a = ex;
                 return string.Empty;
             }
+        }
+        public static string SerializeJson<T>(T obj)
+        {
+            DataContractJsonSerializer js = new DataContractJsonSerializer(typeof(T));
+            MemoryStream stream = new MemoryStream();
+            js.WriteObject(stream, obj);
+            stream.Position = 0;
+            StreamReader reader = new StreamReader(stream);
+            string json = reader.ReadToEnd();
+
+            reader.Close();
+            stream.Close();
+
+            return json;
         }
         public static T DeserealizeDocument<T>(string xml)
         {
