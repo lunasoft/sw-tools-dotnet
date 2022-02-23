@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="UT_Tools_BuildInvoiceCFDI33.cs" />
     <Compile Include="UT_Tools_Fiscal.cs" />
+    <Compile Include="UT_Tools_Convertion.cs" />
     <Compile Include="UT_Tools_Sign.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -94,12 +95,15 @@
     <None Include="Resources\CSD_Prueba_CFDI_LAN8507268IA.key">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="Resources\stampResponseV4.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\stampResponsev2.json">
+    <Content Include="Resources\stampResponsev2.txt">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <Content Include="Resources\retencion20.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

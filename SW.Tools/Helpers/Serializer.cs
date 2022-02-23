@@ -35,13 +35,21 @@ namespace SW.Tools.Helpers
             MemoryStream stream = new MemoryStream();
             js.WriteObject(stream, obj);
             stream.Position = 0;
-            StreamReader reader = new StreamReader(stream);
+            StreamReader reader = new StreamReader(stream, Encoding.UTF8);
             string json = reader.ReadToEnd();
-
             reader.Close();
             stream.Close();
 
-            return json;
+            return Fiscal.RemoverCaracteresInvalidosJson(json);
+        }
+        public static T DeserializeJson<T>(string json)
+        {
+            using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(json)))
+            {
+                DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(T));
+                T obj = (T)deserializer.ReadObject(ms);
+                return obj;
+            }
         }
         public static T DeserealizeDocument<T>(string xml)
         {

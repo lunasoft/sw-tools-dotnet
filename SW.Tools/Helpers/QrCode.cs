@@ -3,6 +3,7 @@ using Gma.QrCodeNet.Encoding.Windows.Render;
 using System;
 using System.Drawing;
 using System.IO;
+using System.Text;
 
 namespace SW.Tools.Helpers
 {
@@ -10,9 +11,10 @@ namespace SW.Tools.Helpers
     {
         internal static string GetQrCode(string total, string sello, string rfcEmisor, string rfcReceptor, string uuid)
         {
-            string prefix = @"https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?";
-            var fe = sello.Substring(sello.Length - 8);
-            var path = String.Format("id={0}&re={1}&rr={2}&tt={3}&fe={4}", uuid, rfcEmisor, rfcReceptor, total, fe);
+            string prefix = "https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?";
+            sello = sello.Substring(sello.Length - 8);
+            total = Convert.ToDecimal(total).ToString("000000000000000000.000000");
+            var path = String.Format("&id={0}&re={1}&rr={2}&tt={3}&fe={4}", uuid, rfcEmisor, rfcReceptor, total, sello);
             return Convert.ToBase64String(GetQrCode(prefix + path));
         }
         internal static byte[] GetQrCode(string content)

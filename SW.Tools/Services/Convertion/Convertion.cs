@@ -1,9 +1,8 @@
-﻿using SW.Tools.Services.Tool;
-using System;
+﻿using System;
 
-namespace SW.Tool
+namespace SW.Tools.Services.Convertion
 {
-    public static class Tool
+    public static class Convertion
     {
         public static string ConvertResponseToV4(string response)
         {
@@ -11,9 +10,9 @@ namespace SW.Tool
             {
                 if (String.IsNullOrEmpty(response))
                 {
-                    return "El response no es valido.";
+                    throw new Exception("No se ha recibido la respuesta.");
                 }
-                return ToolService.ConvertResponse(response);
+                return ConvertionService.ConvertResponse(response);
             }
             catch(Exception e)
             {

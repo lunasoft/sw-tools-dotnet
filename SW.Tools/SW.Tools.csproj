@@ -58,6 +58,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -103,9 +104,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\Tool\ToolService.cs" />
+    <Compile Include="Services\Convertion\ConvertionService.cs" />
     <Compile Include="Sign.cs" />
-    <Compile Include="Services\Tool\Tool.cs" />
+    <Compile Include="Services\Convertion\Convertion.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
