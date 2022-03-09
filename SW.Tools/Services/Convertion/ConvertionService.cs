@@ -4,7 +4,7 @@ using System.Xml;
 
 namespace SW.Tools.Services.Convertion
 {
-    internal static class ConvertionService
+    internal class ConvertionService
     {
         internal static string ConvertResponse(string response)
         {

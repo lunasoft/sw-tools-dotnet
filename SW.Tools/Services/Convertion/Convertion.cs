@@ -2,7 +2,7 @@
 
 namespace SW.Tools.Services.Convertion
 {
-    public static class Convertion
+    public class Convertion
     {
         public static string ConvertResponseToV4(string response)
         {
