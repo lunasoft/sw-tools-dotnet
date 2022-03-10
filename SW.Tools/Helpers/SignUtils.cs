@@ -2,7 +2,6 @@
 using Org.BouncyCastle.Crypto.Parameters;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -19,25 +18,13 @@ namespace SW.Tools.Helpers
         {
             try
             {
-                var certificate = new Mono.Security.X509.X509Certificate(bytesCER);
+                var certificate = new X509Certificate2(bytesCER, password);
 
                 char[] arrayOfChars = password.ToCharArray();
                 AsymmetricKeyParameter privateKey = Org.BouncyCastle.Security.PrivateKeyFactory.DecryptKey(arrayOfChars, bytesKEY);
-
-                RSA subjectKey = DotNetUtilitiesCustom.ToRSA((RsaPrivateCrtKeyParameters)privateKey);
-
-                Mono.Security.X509.PKCS12 p12 = new Mono.Security.X509.PKCS12();
-                p12.Password = password;
-
-                ArrayList list = new ArrayList();
-                // we use a fixed array to avoid endianess issues 
-                // (in case some tools requires the ID to be 1).
-                list.Add(new byte[4] { 1, 0, 0, 0 });
-                Hashtable attributes = new Hashtable(1);
-                attributes.Add(Mono.Security.X509.PKCS9.localKeyId, list);
-                p12.AddCertificate(certificate, attributes);
-                p12.AddPkcs8ShroudedKeyBag(subjectKey, attributes);
-                return p12.GetBytes();
+                RSACryptoServiceProvider subjectKey = ToRSA((RsaPrivateCrtKeyParameters)privateKey);
+                certificate.PrivateKey = subjectKey;
+                return certificate.Export(X509ContentType.Pfx, password);
             }
             catch(Exception e)
             {
@@ -58,11 +45,25 @@ namespace SW.Tools.Helpers
 
                 return SignXml(xml, signResult);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw new Exception("No se pudo realizar el sellado.", e);
             }
         }
+        public static RSACryptoServiceProvider ToRSA(RsaPrivateCrtKeyParameters privKey)
+        {
+            return CreateRSAProvider(ToRSAParameters(privKey));
+        }
+        private static RSACryptoServiceProvider CreateRSAProvider(RSAParameters rp)
+        {
+            CspParameters csp = new CspParameters();
+            csp.KeyContainerName = string.Format("BouncyCastle-{0}", Guid.NewGuid());
+            csp.Flags = CspProviderFlags.UseMachineKeyStore;
+            RSACryptoServiceProvider rsaCsp = new RSACryptoServiceProvider(csp);
+            rsaCsp.ImportParameters(rp);
+            return rsaCsp;
+        }
+        
         internal static string SignRetencion(byte[] pfx, string password, string xml)
         {
             try
@@ -95,15 +96,7 @@ namespace SW.Tools.Helpers
                 {
                     xslt_cadenaoriginal.Load(typeof(cadenaoriginal_4_0));
                 }
-
-                string resultado = null;
-                StringWriter writer = new StringWriter();
-                XmlReader xmlReader = XmlReader.Create(new StringReader(xml));
-                xslt_cadenaoriginal.Transform(xmlReader, null, writer);
-                resultado = writer.ToString().Trim();
-                writer.Close();
-
-                return resultado;
+                return TransformXml(xslt_cadenaoriginal, xml);
             }
             catch(Exception e)
             {
@@ -116,18 +109,35 @@ namespace SW.Tools.Helpers
             {
                 var xslt_cadenaoriginal = new XslCompiledTransform();
                 xslt_cadenaoriginal.Load(typeof(cadenaoriginal_retenciones_2_0));
-                StringWriter writer = new StringWriter();
-                XmlReader xmlReader = XmlReader.Create(new StringReader(xml));
-                xslt_cadenaoriginal.Transform(xmlReader, null, writer);
-                string resultado = writer.ToString().Trim();
-                writer.Close();
-
-                return resultado;
+                return TransformXml(xslt_cadenaoriginal, xml);
             }
             catch (Exception e)
             {
                 throw new Exception("El XML proporcionado no es válido.", e);
             }
+        }
+        internal static string GetCadenaOriginalTfd(string xml)
+        {
+            try
+            {
+                var xslt_cadenaoriginal = new XslCompiledTransform();
+                xslt_cadenaoriginal.Load(typeof(cadenaoriginal_TFD_1_1));
+                return TransformXml(xslt_cadenaoriginal, xml);
+            }
+            catch(Exception e)
+            {
+                throw new Exception("El XML proporcionado no es valido.", e);
+            }
+        }
+        internal static string TransformXml(XslCompiledTransform xslt, string xml)
+        {
+            StringWriter writer = new StringWriter();
+            XmlReader xmlReader = XmlReader.Create(new StringReader(xml));
+            xslt.Transform(xmlReader, null, writer);
+            string resultado = writer.ToString().Trim();
+            writer.Close();
+
+            return resultado;
         }
         private static string SignXml(string xml, string nCertificate, string certificate)
         {
@@ -184,58 +194,6 @@ namespace SW.Tools.Helpers
             }
             return sb.ToString();
         }
-        private static string CertificateNumber(Mono.Security.X509.X509Certificate cert)
-        {
-            var sn = cert.SerialNumber;
-            Array.Reverse(sn);
-            string hexadecimalString = ToHexString(sn);
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i <= hexadecimalString.Length - 2; i += 2)
-            {
-                sb.Append(Convert.ToString(Convert.ToChar(Int32.Parse(hexadecimalString.Substring(i, 2), System.Globalization.NumberStyles.HexNumber))));
-            }
-            return sb.ToString();
-        }
-        private static string CertificateName(Mono.Security.X509.X509Certificate certificate)
-        {
-            string nameCertificate = "";
-            string taxIdCertificate = "";
-            string[] subjects = certificate.SubjectName.Trim().Split(',');
-            foreach (var strTemp in subjects.ToList())
-            {
-                string[] strConceptoTemp = strTemp.Split('=');
-                if (strConceptoTemp[0].Trim() == "OID.2.5.4.41")
-                {
-                    nameCertificate = strConceptoTemp[1].Trim().Split('/')[0];
-                    //Bug Fix replace "
-                    nameCertificate = nameCertificate.Replace("\"", "");
-                }
-                if (strConceptoTemp[0].Trim() == "OID.2.5.4.45")
-                {
-                    taxIdCertificate = strConceptoTemp[1].Trim().Split('/')[0];
-                    //Bug Fix replace "
-                    taxIdCertificate = taxIdCertificate.Replace("\"", "");
-                }
-            }
-            return nameCertificate.Trim().ToUpper();
-        }
-        private static string CertificateTaxId(Mono.Security.X509.X509Certificate certificate)
-        {
-            string taxIdCertificate = "";
-            string[] subjects = certificate.SubjectName.Trim().Split(',');
-            foreach (var strTemp in subjects.ToList())
-            {
-                string[] strConceptoTemp = strTemp.Split('=');
-                if (strConceptoTemp[0].Trim() == "OID.2.5.4.45")
-                {
-                    taxIdCertificate = strConceptoTemp[1].Trim().Split('/')[0];
-                    //Bug Fix replace "
-                    taxIdCertificate = taxIdCertificate.Replace("\"", "");
-                    break;
-                }
-            }
-            return taxIdCertificate.Trim().ToUpper();
-        }
         private static RSAParameters ToRSAParameters(RsaPrivateCrtKeyParameters privKey)
         {
             RSAParameters rp = new RSAParameters();
@@ -248,15 +206,6 @@ namespace SW.Tools.Helpers
             rp.DQ = privKey.DQ.ToByteArrayUnsigned();
             rp.InverseQ = privKey.QInv.ToByteArrayUnsigned();
             return rp;
-        }
-        private static RSA ToRSA(RsaPrivateCrtKeyParameters privKey, int keySize)
-        {
-            RSAParameters rp = ToRSAParameters(privKey);
-            CspParameters rsaParams = new CspParameters();
-            rsaParams.Flags = CspProviderFlags.UseMachineKeyStore;
-            RSACryptoServiceProvider rsaCsp = new RSACryptoServiceProvider(keySize, rsaParams);
-            rsaCsp.ImportParameters(rp);
-            return rsaCsp;
         }
         private static string ToHexString(byte[] data)
         {

@@ -24,6 +24,15 @@ namespace SW.Tools
 ", "");
             return str;
         }
+        public static string RemoverCaracteresInvalidosJson(string json)
+        {
+            json = json.Replace("\\/", "/");
+            json = json.Replace("\r\n", "");
+            json = json.Replace("\n", "");
+            json = json.Replace(@"
+", "");
+            return json;
+        }
         /// <summary>
         /// Validacion de Rfc ( Mexico Fisica/Moral )
         /// </summary>
