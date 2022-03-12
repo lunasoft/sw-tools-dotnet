@@ -7,7 +7,8 @@ using System.IO;
 using SW.Services.Authentication;
 using SW.Services.Stamp;
 using SW.Services.Cancelation;
-
+using SW.Tools.Services.Fiscal;
+using SW.Tools.Services.Sign;
 
 namespace SW.ToolsUT
 {
@@ -152,14 +153,14 @@ namespace SW.ToolsUT
             byte[] bytesCer = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.cer");
             byte[] bytesKey = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.key");
             string password = "12345678a";
-            var pfx = SW.Tools.Sign.CrearPFX(bytesCer, bytesKey, password);
-            var xmlResult = SW.Tools.Sign.SellarCFDIv33(pfx, password, xmlInvoice);
+            var pfx = Sign.CrearPFX(bytesCer, bytesKey, password);
+            var xmlResult = Sign.SellarCFDIv33(pfx, password, xmlInvoice);
             return xmlResult;
         }
         [TestMethod]
         public void DeserailizeXml()
         {
-            var xml = SW.Tools.Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi33Invoice.xml")));
+            var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi33Invoice.xml")));
             var xmlInvoicess = Tools.Helpers.Serializer.DeserealizeDocument<SW.Tools.Entities.Comprobante>(xml);
         }
     }

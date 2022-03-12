@@ -87,7 +87,7 @@
     <Compile Include="Entities\ToolsException.cs" />
     <Compile Include="Entities\YearsMonthsDays.cs" />
     <Compile Include="Errors.cs" />
-    <Compile Include="Fiscal.cs" />
+    <Compile Include="Services\Fiscal\Fiscal.cs" />
     <Compile Include="Helpers\Coins.cs" />
     <Compile Include="Helpers\DateTime.cs" />
     <Compile Include="Helpers\Encodings.cs" />
@@ -104,8 +104,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\Convertion\ConvertionService.cs" />
-    <Compile Include="Sign.cs" />
+    <Compile Include="Services\Sign\Sign.cs" />
     <Compile Include="Services\Convertion\Convertion.cs" />
+    <Compile Include="Services\Sign\SignService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
