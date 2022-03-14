@@ -118,6 +118,23 @@ namespace SW.Tools.Services.Sign
                 throw;
             }
         }
+        /// <summary>
+        /// Obtener cadena original Retencion 2.0
+        /// </summary>
+        /// <param name="xml"></param>
+        /// <returns></returns>
+        public static string CadenaOriginalRetencionv20(string xml)
+        {
+            try
+            {
+                xml = Fiscal.Fiscal.RemoverCaracteresInvalidosXml(xml);
+                return SignService.GetCadenaOriginalRetencion(xml);
+            }
+            catch
+            {
+                throw;
+            }
+        }
         #endregion
     }
 }

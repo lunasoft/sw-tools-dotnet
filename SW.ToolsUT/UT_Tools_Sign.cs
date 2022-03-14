@@ -113,7 +113,7 @@ namespace SW.ToolsUT
             Assert.IsTrue(CadenaOriginal.Equals(result_));
         }
         [TestMethod]
-        public void UT_tools_CadenaOriginalCFDIv40_OK()
+        public void UT_Tools_CadenaOriginalCFDIv40_OK()
         {
             var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi40.xml")));
             string CadenaOriginal = "||4.0|Serie|Folio|2022-02-08T00:18:10|30001000000400002434|CondicionesDePago|0|0|AMD|1|0|T|01|20000|EKU9003173C9|ESCUELA KEMPER URGATE SA DE CV|601|URE180429TM6|UNIVERSIDAD ROBOTICA ESPAÑOLA SA DE CV|65000|601|G01|50211503|UT421511|1|H87|Pieza|Cigarros|0.00|0.00|01|21 47 3807 8003832|50211503|123|1|Pieza|cosas|200.00|200.00||";
@@ -122,11 +122,28 @@ namespace SW.ToolsUT
         }
         [TestMethod]
         [ExpectedException(typeof(AssertFailedException), "Assert.IsTrue failed.")]
-        public void UT_tools_CadenaOriginalCFDIv40_Error()
+        public void UT_Tools_CadenaOriginalCFDIv40_Error()
         {
             var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi40.xml")));
             string CadenaOriginal = "||4.0|Serie|Folio|2022-02-08T00:18:11|30001000000400002434|CondicionesDePago|0|0|AMD|1|0|T|01|20000|EKU9003173C9|ESCUELA KEMPER URGATE SA DE CV|601|URE180429TM6|UNIVERSIDAD ROBOTICA ESPAÑOLA SA DE CV|65000|601|G01|50211503|UT421511|1|H87|Pieza|Cigarros|0.00|0.00|01|21 47 3807 8003832|50211503|123|1|Pieza|cosas|200.00|200.00||";
             var result_ = Fiscal.RemoverCaracteresInvalidosXml(Sign.CadenaOriginalCFDIv40(xml));
+            Assert.IsTrue(CadenaOriginal.Equals(result_));
+        }
+        [TestMethod]
+        public void UT_Tools_CadenaOriginalRetencionv20_OK()
+        {
+            var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\retencion20.xml")));
+            string CadenaOriginal = "||2.0|30001000000400002434|9|2022-02-15T02:48:02|45110|01|EKU9003173C9|ESCUELA KEMPER URGATE SA DE CV|601|Nacional|URE180429TM6|UNIVERSIDAD ROBOTICA ESPAÑOLA SA DE CV|65000|01|03|2021|2000.00|2000.00|0|580.00|2000|002|580.00|01||";
+            var result_ = Fiscal.RemoverCaracteresInvalidosXml(Sign.CadenaOriginalRetencionv20(xml));
+            Assert.IsTrue(CadenaOriginal.Equals(result_));
+        }
+        [TestMethod]
+        [ExpectedException(typeof(AssertFailedException), "Assert.IsTrue failed.")]
+        public void UT_Tools_CadenaOriginalRetencionv20_Error()
+        {
+            var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\retencion20.xml")));
+            string CadenaOriginal = "||2.0|30001000000400002234|9|2022-02-15T02:48:02|45110|01|EKU9003173C9|ESCUELA KEMPER URGATE SA DE CV|Nacional|URE180429TM6|UNIVERSIDAD ROBOTICA ESPAÑOLA SA DE CV|65000|01|03|2021|2000.00|2000.00|0|580.00|2000|002|580.00|01||";
+            var result_ = Fiscal.RemoverCaracteresInvalidosXml(Sign.CadenaOriginalRetencionv20(xml));
             Assert.IsTrue(CadenaOriginal.Equals(result_));
         }
     }
