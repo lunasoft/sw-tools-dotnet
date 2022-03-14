@@ -110,7 +110,7 @@ namespace SW.Tools.Services.Sign
             }
             catch(CryptographicException e)
             {
-                throw new Exception("Error al sellar el XML.", e);
+                throw new CryptographicException("Error al sellar el XML.", e);
             }
             catch(Exception e)
             {
