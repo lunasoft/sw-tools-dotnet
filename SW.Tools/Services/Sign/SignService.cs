@@ -3,6 +3,7 @@ using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;
 using SW.Tools.Helpers;
 using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Xml.Xsl;
@@ -97,6 +98,23 @@ namespace SW.Tools.Services.Sign
             catch (Exception e)
             {
                 throw new Exception("El XML proporcionado no es válido.", e);
+            }
+        }
+        internal static string SignCancelacion(List<string> folios, string rfcEmisor, byte[] pfx, string password, bool isRetencion)
+        {
+            string xml;
+            try
+            {
+                xml = Xml.CreateCancelationXML(folios, rfcEmisor, isRetencion);
+                return SignUtils.SignXml(xml, pfx, password);
+            }
+            catch(CryptographicException e)
+            {
+                throw new Exception("Error al sellar el XML.", e);
+            }
+            catch(Exception e)
+            {
+                throw new Exception("Los folios no tienen un formato valido.", e);
             }
         }
     }

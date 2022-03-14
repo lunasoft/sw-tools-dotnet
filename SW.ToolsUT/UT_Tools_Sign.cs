@@ -6,6 +6,10 @@ using System.Text;
 using System.Xml;
 using SW.Tools.Services.Sign;
 using SW.Tools.Services.Fiscal;
+using System.Collections.Generic;
+using SW.Services.Cancelation;
+using SW.ToolsUT.Helpers;
+using System.Security.Cryptography;
 
 namespace SW.ToolsUT
 {
@@ -145,6 +149,68 @@ namespace SW.ToolsUT
             string CadenaOriginal = "||2.0|30001000000400002234|9|2022-02-15T02:48:02|45110|01|EKU9003173C9|ESCUELA KEMPER URGATE SA DE CV|Nacional|URE180429TM6|UNIVERSIDAD ROBOTICA ESPAÑOLA SA DE CV|65000|01|03|2021|2000.00|2000.00|0|580.00|2000|002|580.00|01||";
             var result_ = Fiscal.RemoverCaracteresInvalidosXml(Sign.CadenaOriginalRetencionv20(xml));
             Assert.IsTrue(CadenaOriginal.Equals(result_));
+        }
+        [TestMethod]
+        public void UT_Tools_SellarCancelacion_OK()
+        {
+            var build = new BuildSettings();
+            var pfx = Sign.CrearPFX(build.BytesCer, build.BytesKey, build.CerPassword);
+            List<string> folios = new List<string>();
+            folios.Add(String.Format("{0},01,{1}", "b6a15ce8-0fb8-401a-bfe7-8930983e182e", Guid.NewGuid()));
+            folios.Add(String.Format("{0},02", "63187375-3433-4ae8-ad5a-3323872026fc"));
+            var xml = Sign.SellarCancelacion(folios, build.RfcEmisor, pfx, build.CerPassword);
+            Cancelation cancelation = new Cancelation(build.Url, build.Token);
+            var cancelacion = cancelation.CancelarByXML(Encoding.UTF8.GetBytes(xml));
+            Assert.IsTrue(cancelacion.status == "success");
+        }
+        [TestMethod]
+        [ExpectedException(typeof(Exception), "Los folios no tienen un formato valido.")]
+        public void UT_Tools_SellarCancelacion_Error()
+        {
+            var build = new BuildSettings();
+            var pfx = Sign.CrearPFX(build.BytesCer, build.BytesKey, build.CerPassword);
+            List<string> folios = new List<string>();
+            folios.Add("8ce06ab8-f2df-4629-a47c-383e76168a21");
+            try
+            {
+                var xml = Sign.SellarCancelacion(folios, build.RfcEmisor, pfx, build.CerPassword);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        [TestMethod]
+        [ExpectedException(typeof(CryptographicException), "Error al sellar el XML.")]
+        public void UT_Tools_SellarCancelacion_Error_2()
+        {
+            var build = new BuildSettings();
+            List<string> folios = new List<string>();
+            folios.Add("63187375-3433-4ae8-ad5a-3323872026fc,02");
+            try
+            {
+                var xml = Sign.SellarCancelacion(folios, build.RfcEmisor, Encoding.Default.GetBytes("My pfx"), build.CerPassword);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        [TestMethod]
+        [ExpectedException(typeof(Exception), "El listado de folios esta vacio.")]
+        public void UT_Tools_SellarCancelacion_Error_3()
+        {
+            var build = new BuildSettings();
+            var pfx = Sign.CrearPFX(build.BytesCer, build.BytesKey, build.CerPassword);
+            List<string> folios = new List<string>();
+            try
+            {
+                var xml = Sign.SellarCancelacion(folios, build.RfcEmisor, pfx, build.CerPassword);
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿using System.IO;
-using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace SW.Tools.Helpers
 {
@@ -22,6 +24,30 @@ namespace SW.Tools.Helpers
             xmlInvoice = xmlInvoice.Replace(@"
 ", "");
             return xmlInvoice;
+        }
+        /// <summary>
+        /// Crear XML de cancelacion, recibe una lista de folios con el formato uuid,motivo,uuidSustitucion
+        /// </summary>
+        /// <param name="foliosFiscales">Lista de folios a cancelar con el formato uuid,motivo,uuidSustitucion</param>
+        /// <param name="rfcEmisor">RFC Emisor</param>
+        /// <param name="isRetencion">Especifica si es un XML de retencion</param>
+        /// <returns></returns>
+        public static string CreateCancelationXML(List<string> foliosFiscales, string rfcEmisor, bool isRetencion = false)
+        {
+            XNamespace satCancelacionXmlNamespace = isRetencion ? "http://www.sat.gob.mx/esquemas/retencionpago/1" : "http://cancelacfd.sat.gob.mx";
+            var xmlSolicitud = new XElement(satCancelacionXmlNamespace + "Cancelacion",
+                                            new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
+                                            new XAttribute(XNamespace.Xmlns + "xsd", "http://www.w3.org/2001/XMLSchema"),
+                                            new XAttribute("Fecha", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")),
+                                            new XAttribute("RfcEmisor", rfcEmisor),
+                                            from uuid in foliosFiscales
+                                            select new XElement(satCancelacionXmlNamespace + "Folios",
+                                                new XElement(satCancelacionXmlNamespace + "Folio",
+                                                new XAttribute("UUID", uuid.Split(',').ElementAt(0)),
+                                                new XAttribute("Motivo", uuid.Split(',').ElementAt(1)),
+                                                new XAttribute("FolioSustitucion", uuid.Split(',').Length > 2 ? uuid.Split(',').ElementAt(2) : String.Empty)
+                                                )));
+            return xmlSolicitud.ToString();
         }
     }
 }
