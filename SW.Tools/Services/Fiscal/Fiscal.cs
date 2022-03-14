@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
-namespace SW.Tools
+namespace SW.Tools.Services.Fiscal
 {
     public class Fiscal
     {
@@ -70,9 +67,6 @@ namespace SW.Tools
             {
                 throw new Exception("El RFC proporcionado no es correcto, favor de válidar antes de continuar.", ex);
             }
-
-
-           
         }
         /// <summary>
         /// Calculates Seniority Employee in Weeks (Antiguedad Laboral) P{0}W Ex: P100W P(([1-9][0-9]{0,3})|[0])W

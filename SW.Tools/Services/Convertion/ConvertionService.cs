@@ -1,5 +1,6 @@
 ﻿using SW.Tools.Entities.StampResponse;
 using SW.Tools.Helpers;
+using System;
 using System.Xml;
 
 namespace SW.Tools.Services.Convertion
@@ -8,10 +9,17 @@ namespace SW.Tools.Services.Convertion
     {
         internal static string ConvertResponse(string response)
         {
-            var stampResponse = Serializer.DeserializeJson<StampResponseV2>(response);
-            var result = ConvertResponse(stampResponse.data.cfdi, stampResponse.data.tfd);
-            result.status = stampResponse.status;
-            return Serializer.SerializeJson<StampResponseV4>(result);
+            try
+            {
+                var stampResponse = Serializer.DeserializeJson<StampResponseV2>(response);
+                var result = ConvertResponse(stampResponse.data.cfdi, stampResponse.data.tfd);
+                result.status = stampResponse.status;
+                return Serializer.SerializeJson<StampResponseV4>(result);
+            }
+            catch(Exception e)
+            {
+                throw new Exception("No se ha realizado la conversion, response no valido.", e);
+            }
         }
         private static StampResponseV4 ConvertResponse(string cfdi, string tfd)
         {

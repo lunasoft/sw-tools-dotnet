@@ -4,6 +4,11 @@ namespace SW.Tools.Services.Convertion
 {
     public class Convertion
     {
+        /// <summary>
+        /// Convertir respuesta de timbrado V2 a V4
+        /// </summary>
+        /// <param name="response">Respuesta V2</param>
+        /// <returns></returns>
         public static string ConvertResponseToV4(string response)
         {
             try
@@ -14,9 +19,9 @@ namespace SW.Tools.Services.Convertion
                 }
                 return ConvertionService.ConvertResponse(response);
             }
-            catch(Exception e)
+            catch
             {
-                throw new Exception("Error en la conversion.", e);
+                throw;
             }
         }
     }

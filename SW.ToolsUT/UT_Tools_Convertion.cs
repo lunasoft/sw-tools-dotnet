@@ -36,6 +36,20 @@ namespace SW.ToolsUT
             Assert.IsTrue(dataResult.selloSAT == dataBaseV4.selloSAT);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(Exception), "No se ha realizado la conversion, response no valido.")]
+        public void UT_Tools_Convertion_ConvertResponseToV4_Error()
+        {
+            try
+            {
+                var result = Convertion.ConvertResponseToV4("Este es un JSON V2");
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         private static T GetResponse<T>(string json)
         {
             return Serializer.DeserializeJson<T>(json);

@@ -1,4 +1,5 @@
 ﻿using SW.Tools.Entities;
+using SW.Tools.Services.Fiscal;
 using System;
 using System.IO;
 using System.Runtime.Serialization.Json;
