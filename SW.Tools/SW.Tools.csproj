@@ -72,6 +72,8 @@
     <Compile Include="Catalogs\CatCFDI_c_TipoDeComprobante.cs" />
     <Compile Include="Catalogs\Cat_Moneda_Info.cs" />
     <Compile Include="Catalogs\c_ClaveProdServ.cs" />
+    <Compile Include="Entities\Cancelacion\Cancelacion.cs" />
+    <Compile Include="Entities\Cancelacion\CancelacionMotivo.cs" />
     <Compile Include="Entities\StampResponse\StampResponse.cs" />
     <Compile Include="Helpers\DotNetUtilitiesCustom.cs" />
     <Compile Include="DateTimeExtensions.cs" />

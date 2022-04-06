@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using SW.Services.Cancelation;
 using SW.ToolsUT.Helpers;
 using System.Security.Cryptography;
+using SW.Tools.Entities.Cancelacion;
 
 namespace SW.ToolsUT
 {
@@ -155,22 +156,34 @@ namespace SW.ToolsUT
         {
             var build = new BuildSettings();
             var pfx = Sign.CrearPFX(build.BytesCer, build.BytesKey, build.CerPassword);
-            List<string> folios = new List<string>();
-            folios.Add(String.Format("{0},01,{1}", "b6a15ce8-0fb8-401a-bfe7-8930983e182e", Guid.NewGuid()));
-            folios.Add(String.Format("{0},02", "63187375-3433-4ae8-ad5a-3323872026fc"));
+            List<Cancelacion> folios = new List<Cancelacion>();
+            folios.Add(new Cancelacion()
+            {
+                Folio = Guid.Parse("b6a15ce8-0fb8-401a-bfe7-8930983e182e"),
+                Motivo = CancelacionMotivo.Motivo01,
+                FolioSustitucion = Guid.Parse("63187375-3433-4ae8-ad5a-3323872026fc")
+            });
+            folios.Add(new Cancelacion()
+            {
+                Folio = Guid.Parse("63187375-3433-4ae8-ad5a-3323872026fc"),
+                Motivo = CancelacionMotivo.Motivo02
+            });
             var xml = Sign.SellarCancelacion(folios, build.RfcEmisor, pfx, build.CerPassword);
             Cancelation cancelation = new Cancelation(build.Url, build.Token);
             var cancelacion = cancelation.CancelarByXML(Encoding.UTF8.GetBytes(xml));
             Assert.IsTrue(cancelacion.status == "success");
         }
         [TestMethod]
-        [ExpectedException(typeof(Exception), "Los folios no tienen un formato valido.")]
+        [ExpectedException(typeof(Exception), "Los folios no tienen un formato válido.")]
         public void UT_Tools_SellarCancelacion_Error()
         {
             var build = new BuildSettings();
             var pfx = Sign.CrearPFX(build.BytesCer, build.BytesKey, build.CerPassword);
-            List<string> folios = new List<string>();
-            folios.Add("8ce06ab8-f2df-4629-a47c-383e76168a21");
+            List<Cancelacion> folios = new List<Cancelacion>();
+            folios.Add(new Cancelacion()
+            {
+                Motivo = CancelacionMotivo.Motivo02
+            });
             try
             {
                 var xml = Sign.SellarCancelacion(folios, build.RfcEmisor, pfx, build.CerPassword);
@@ -185,8 +198,11 @@ namespace SW.ToolsUT
         public void UT_Tools_SellarCancelacion_Error_2()
         {
             var build = new BuildSettings();
-            List<string> folios = new List<string>();
-            folios.Add("63187375-3433-4ae8-ad5a-3323872026fc,02");
+            List<Cancelacion> folios = new List<Cancelacion>();
+            folios.Add(new Cancelacion() { 
+                Folio = Guid.NewGuid(),
+                Motivo = CancelacionMotivo.Motivo02
+            });
             try
             {
                 var xml = Sign.SellarCancelacion(folios, build.RfcEmisor, Encoding.Default.GetBytes("My pfx"), build.CerPassword);
@@ -202,7 +218,48 @@ namespace SW.ToolsUT
         {
             var build = new BuildSettings();
             var pfx = Sign.CrearPFX(build.BytesCer, build.BytesKey, build.CerPassword);
-            List<string> folios = new List<string>();
+            List<Cancelacion> folios = new List<Cancelacion>();
+            try
+            {
+                var xml = Sign.SellarCancelacion(folios, build.RfcEmisor, pfx, build.CerPassword);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        [TestMethod]
+        [ExpectedException(typeof(Exception), "El motivo de cancelación no es válido.")]
+        public void UT_Tools_SellarCancelacion_Error_4()
+        {
+            var build = new BuildSettings();
+            var pfx = Sign.CrearPFX(build.BytesCer, build.BytesKey, build.CerPassword);
+            List<Cancelacion> folios = new List<Cancelacion>();
+            folios.Add(new Cancelacion()
+            {
+                Folio = Guid.NewGuid(),
+                Motivo = CancelacionMotivo.Motivo01
+            });
+            try
+            {
+                var xml = Sign.SellarCancelacion(folios, build.RfcEmisor, pfx, build.CerPassword);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        [TestMethod]
+        [ExpectedException(typeof(Exception), "No se ha especificado un motivo de cancelacion.")]
+        public void UT_Tools_SellarCancelacion_Error_5()
+        {
+            var build = new BuildSettings();
+            var pfx = Sign.CrearPFX(build.BytesCer, build.BytesKey, build.CerPassword);
+            List<Cancelacion> folios = new List<Cancelacion>();
+            folios.Add(new Cancelacion()
+            {
+                Folio = Guid.NewGuid()
+            });
             try
             {
                 var xml = Sign.SellarCancelacion(folios, build.RfcEmisor, pfx, build.CerPassword);
