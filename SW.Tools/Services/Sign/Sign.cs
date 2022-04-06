@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SW.Tools.Entities.Cancelacion;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SW.Tools.Services.Sign
 {
@@ -145,16 +147,13 @@ namespace SW.Tools.Services.Sign
         /// <param name="password">Contrasena certificado PFX</param>
         /// <param name="isRetencion">Especifica si es un XML de retencion</param>
         /// <returns></returns>
-        public static string SellarCancelacion(List<string> folios, string rfcEmisor, byte[] pfx, string password, bool isRetencion = false)
+        public static string SellarCancelacion(List<Cancelacion> folios, string rfcEmisor, byte[] pfx, string password, bool isRetencion = false)
         {
             try
             {
                 if (folios.Count > 0)
                 {
-                    if (folios.Count > 10000)
-                    {
-                        throw new Exception("Se ha excedido el limite de folios a cancelar.");
-                    }
+                    SignService.ValidarCancelacion(folios);
                     return SignService.SignCancelacion(folios, rfcEmisor, pfx, password, isRetencion);
                 }
                 throw new Exception("El listado de folios esta vacio.");
