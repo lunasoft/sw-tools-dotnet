@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SW.Tools.Entities.Cancelacion;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
@@ -32,7 +33,7 @@ namespace SW.Tools.Helpers
         /// <param name="rfcEmisor">RFC Emisor</param>
         /// <param name="isRetencion">Especifica si es un XML de retencion</param>
         /// <returns></returns>
-        public static string CreateCancelationXML(List<string> foliosFiscales, string rfcEmisor, bool isRetencion = false)
+        public static string CreateCancelationXML(List<Cancelacion> foliosFiscales, string rfcEmisor, bool isRetencion = false)
         {
             XNamespace satCancelacionXmlNamespace = isRetencion ? "http://www.sat.gob.mx/esquemas/retencionpago/1" : "http://cancelacfd.sat.gob.mx";
             var xmlSolicitud = new XElement(satCancelacionXmlNamespace + "Cancelacion",
@@ -43,9 +44,9 @@ namespace SW.Tools.Helpers
                                             from uuid in foliosFiscales
                                             select new XElement(satCancelacionXmlNamespace + "Folios",
                                                 new XElement(satCancelacionXmlNamespace + "Folio",
-                                                new XAttribute("UUID", uuid.Split(',').ElementAt(0)),
-                                                new XAttribute("Motivo", uuid.Split(',').ElementAt(1)),
-                                                new XAttribute("FolioSustitucion", uuid.Split(',').Length > 2 ? uuid.Split(',').ElementAt(2) : String.Empty)
+                                                new XAttribute("UUID", uuid.Folio.ToString()),
+                                                new XAttribute("Motivo", Convert.ToInt16(uuid.Motivo).ToString().PadLeft(2, '0')),
+                                                new XAttribute("FolioSustitucion", uuid.FolioSustitucion != null ? uuid.FolioSustitucion.ToString() : String.Empty)
                                                 )));
             return xmlSolicitud.ToString();
         }
