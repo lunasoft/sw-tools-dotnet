@@ -1,4 +1,7 @@
-﻿using System;
+﻿using SW.Tools.Entities.Cancelacion;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SW.Tools.Services.Sign
 {
@@ -129,6 +132,31 @@ namespace SW.Tools.Services.Sign
             {
                 xml = Fiscal.Fiscal.RemoverCaracteresInvalidosXml(xml);
                 return SignService.GetCadenaOriginalRetencion(xml);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        /// <summary>
+        /// Crear y sellar XML de cancelacion
+        /// </summary>
+        /// <param name="folios">Lista de folios a cancelar con el formato uuid,motivo,uuidSustitucion</param>
+        /// <param name="rfcEmisor">RFC Emisor</param>
+        /// <param name="pfx">Certificado PFX</param>
+        /// <param name="password">Contrasena certificado PFX</param>
+        /// <param name="isRetencion">Especifica si es un XML de retencion</param>
+        /// <returns></returns>
+        public static string SellarCancelacion(List<Cancelacion> folios, string rfcEmisor, byte[] pfx, string password, bool isRetencion = false)
+        {
+            try
+            {
+                if (folios.Count > 0)
+                {
+                    SignService.ValidarCancelacion(folios);
+                    return SignService.SignCancelacion(folios, rfcEmisor, pfx, password, isRetencion);
+                }
+                throw new Exception("El listado de folios esta vacio.");
             }
             catch
             {
