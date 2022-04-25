@@ -59,5 +59,25 @@ namespace SW.Tools.Resources {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] cadenaoriginalretenciones20 {
+            get {
+                object obj = ResourceManager.GetObject("cadenaoriginalretenciones20", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] cadenaoriginaltfd {
+            get {
+                object obj = ResourceManager.GetObject("cadenaoriginaltfd", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

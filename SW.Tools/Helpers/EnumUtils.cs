@@ -1,4 +1,5 @@
 ﻿using SW.Tools.Catalogs;
+using SW.Tools.Cfdi;
 using SW.Tools.Entities;
 using System;
 using System.Collections.Generic;
@@ -26,25 +27,25 @@ namespace SW.Tools.Helpers
             return attribute.Name;
         }
 
-        public static string GetString(this c_FormaPago value)
+        public static string GetString(this Catalogs.c_FormaPago value)
         {
-            return GetXmlEnumAttributeValueFromEnum<c_FormaPago>(value);
+            return GetXmlEnumAttributeValueFromEnum<Catalogs.c_FormaPago>(value);
         }
-        public static string GetString(this c_Moneda value)
+        public static string GetString(this Catalogs.c_Moneda value)
         {
-            return GetXmlEnumAttributeValueFromEnum<c_Moneda>(value);
+            return GetXmlEnumAttributeValueFromEnum<Catalogs.c_Moneda>(value);
         }
         public static string GetString(this c_Pais value)
         {
             return GetXmlEnumAttributeValueFromEnum<c_Pais>(value);
         }
-        public static string GetString(this c_MetodoPago value)
+        public static string GetString(this Catalogs.c_MetodoPago value)
         {
-            return GetXmlEnumAttributeValueFromEnum<c_MetodoPago>(value);
+            return GetXmlEnumAttributeValueFromEnum<Catalogs.c_MetodoPago>(value);
         }
-        public static string GetString(this c_TipoDeComprobante value)
+        public static string GetString(this Catalogs.c_TipoDeComprobante value)
         {
-            return GetXmlEnumAttributeValueFromEnum<c_TipoDeComprobante>(value);
+            return GetXmlEnumAttributeValueFromEnum<Catalogs.c_TipoDeComprobante>(value);
         }
         public static string GetString(this c_UsoCFDI value)
         {
@@ -53,10 +54,6 @@ namespace SW.Tools.Helpers
         public static string GetString(this c_Impuesto value)
         {
             return GetXmlEnumAttributeValueFromEnum<c_Impuesto>(value);
-        }
-        public static string GetString(this c_TipoCadenaPago value)
-        {
-            return GetXmlEnumAttributeValueFromEnum<c_TipoCadenaPago>(value);
         }
         public static string GetString(this c_TipoFactor value)
         {
@@ -74,14 +71,14 @@ namespace SW.Tools.Helpers
         {
             return GetXmlEnumAttributeValueFromEnum<c_ClaveUnidad>(value);
         }
-        public static string GetString(this c_TipoRelacion value)
-        {
-            return GetXmlEnumAttributeValueFromEnum<c_TipoRelacion>(value);
-        }
-        public static string GetString(this c_TasaOCuota value)
-        {
-            return GetXmlEnumAttributeValueFromEnum<c_TasaOCuota>(value);
-        }
+        //public static string GetString(this string value)
+        //{
+        //    return GetXmlEnumAttributeValueFromEnum<string>(value);
+        //}
+        //public static string GetString(this c_TasaOCuota value)
+        //{
+        //    return GetXmlEnumAttributeValueFromEnum<c_TasaOCuota>(value);
+        //}
         public static TEnum GetEnumValue<TEnum>(string value)
         {
             try

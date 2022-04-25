@@ -1,11 +1,8 @@
 ﻿using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;
-using SW.Tools.Entities.Cancelacion;
 using SW.Tools.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Xml.Xsl;
@@ -100,41 +97,6 @@ namespace SW.Tools.Services.Sign
             catch (Exception e)
             {
                 throw new Exception("El XML proporcionado no es válido.", e);
-            }
-        }
-        internal static string SignCancelacion(List<Cancelacion> folios, string rfcEmisor, byte[] pfx, string password, bool isRetencion)
-        {
-            try
-            {
-                string xml;
-                xml = Xml.CreateCancelationXML(folios, rfcEmisor, isRetencion);
-                return SignUtils.SignXml(xml, pfx, password);
-            }
-            catch(CryptographicException e)
-            {
-                throw new CryptographicException("Error al sellar el XML.", e);
-            }
-            catch(Exception e)
-            {
-                throw new Exception("Los folios no tienen un formato valido.", e);
-            }
-        }
-        internal static void ValidarCancelacion(List<Cancelacion> folios)
-        {
-            if (folios.Count > 500)
-            {
-                throw new Exception("Se ha excedido el limite de folios a cancelar.");
-            }
-            if (folios.Any(l => l.Motivo == 0))
-            {
-                throw new Exception("No se ha especificado un motivo de cancelacion.");
-            }
-            if (folios.Any(l => l.Motivo == CancelacionMotivo.Motivo01 && l.FolioSustitucion is null))
-            {
-                throw new Exception("El motivo de cancelación no es válido.");
-            }
-            if (folios.Any(l => l.Folio == Guid.Empty)){
-                throw new Exception("Los folios no tienen un formato válido.");
             }
         }
     }
