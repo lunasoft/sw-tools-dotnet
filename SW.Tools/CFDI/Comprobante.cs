@@ -2263,7 +2263,9 @@ namespace SW.Tools.Cfdi
 
         private decimal tasaOCuotaField;
 
-     
+        private bool importeFieldSpecified;
+
+        private bool tasaOCuotaFieldSpecified;
 
         private decimal importeField;
 
@@ -2322,10 +2324,24 @@ namespace SW.Tools.Cfdi
             set
             {
                 this.tasaOCuotaField = value;
+                
+            }
+        }
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool TasaOCuotaSpecified
+        {
+            get
+            {
+                return this.tasaOCuotaFieldSpecified;
+            }
+            set
+            {
+                this.tasaOCuotaFieldSpecified = value;
             }
         }
 
-       
+
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public decimal Importe
@@ -2337,10 +2353,24 @@ namespace SW.Tools.Cfdi
             set
             {
                 this.importeField = value;
+               
+            }
+        }
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ImporteSpecified
+        {
+            get
+            {
+                return this.importeFieldSpecified;
+            }
+            set
+            {
+                this.importeFieldSpecified = value;
             }
         }
 
-    }
+        }
 
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]

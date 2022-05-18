@@ -37,11 +37,11 @@ namespace SW.ToolsUT
             
             comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01");
             comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta", "1", "NO APLICA", 3592.83m,"02", 3592.83m);
-            comprobante.SetConceptoImpuestoTraslado(0.160000m, "Tasa", "002", 3592.83m, 574.85m);
+            comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 3592.83m, 0.160000m, 574.85m);
             comprobante.SetConcepto(1, "84131500", "ZZ", "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m, "02", 258.68m);
-            comprobante.SetConceptoImpuestoTraslado(0.160000m, "Tasa", "002", 258.68m, 41.38m);
+            comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 258.68m, 0.160000m, 41.38m);
             comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m, "02", 550.00m);
-            comprobante.SetConceptoImpuestoTraslado(0.160000m, "Tasa", "002", 550.00m, 88.00m);
+            comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 550.00m, 0.160000m, 88.00m);
             comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
             comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "65000", "601");
             var invoice = comprobante.GetComprobante();
@@ -59,7 +59,7 @@ namespace SW.ToolsUT
 
             comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01");
             comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m, "02", 550.00m);
-            comprobante.SetConceptoImpuestoTraslado(0.160000m, "Tasa", "002", 550.00m, 88.00m);
+            comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 550.00m, 0.160000m, 88.00m);
             comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
             comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "65000", "601");
             comprobante.SetInformacionGlobal("01", "04", "2022");
@@ -78,7 +78,7 @@ namespace SW.ToolsUT
 
             comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01");
             comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m, "02", 550.00m);
-            comprobante.SetConceptoImpuestoTraslado(0.160000m, "Tasa", "002", 550.00m, 88.00m);
+            comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 550.00m, 0.160000m, 88.00m);
             comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
             comprobante.SetAcuentaTerceros("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "601", "29133");
             comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "65000", "601");
@@ -96,11 +96,11 @@ namespace SW.ToolsUT
 
             comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01");
             comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta", "1", "NO APLICA", 3592.83m, "02", 3592.83m);
-            comprobante.SetConceptoImpuestoTraslado(0.160000m, "Tasa", "002", 3592.83m, 574.85m);
+            comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 3592.83m, 0.160000m,  574.85m);
             comprobante.SetConcepto(1, "84131500", "ZZ", "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m, "02", 258.68m);
-            comprobante.SetConceptoImpuestoTraslado(0.160000m, "Tasa", "002", 258.68m, 41.38m);
+            comprobante.SetConceptoImpuestoTraslado("Tasa", "002", 258.68m, 0.160000m, 41.38m);
             comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m, "02", 550.00m);
-            comprobante.SetConceptoImpuestoTraslado(0.160000m, "Tasa", "002", 550.00m, 88.00m);
+            comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 550.00m, 0.160000m,  88.00m);
             comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
             string[] lista = new string[2];
             lista[0] = "0aded095-b84d-4364-8f8e-59c3f650e530";
