@@ -102,6 +102,10 @@
     <None Include="Resources\CSD_Prueba_CFDI_LAN8507268IA.key">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="Resources\retencion10.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\stampResponseV4.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

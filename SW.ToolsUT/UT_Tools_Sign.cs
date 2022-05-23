@@ -90,6 +90,21 @@ namespace SW.ToolsUT
             Assert.IsTrue(selloOriginal.Equals(sello));
         }
         [TestMethod]
+        public void UT_Tools_Sign_SellarRetencionv10_OK()
+        {
+            string selloOriginal = @"QoeC1EjhMBQIRCsPNzLWpBVqFuWyhpRXC94fQ49X1G0j0FYkLGnGcdvrC0kvNkHO3i9oUQvu1bDyYYlELsQpk2xCyLbP93B38rTFox63dbIceq4Qke4MSZiq5CdZjoWL2C1y2EIKmXKqsnl2R22ImN/bEblgUjaPPHLGTePdUO5nRuSpWZDujXo1PZSJSaKM4XM1pA4+BOalUpYiODZBsxkfmCQ1MnVlhMFGvyUdCBnkRtn2vJbCSj5WBpywmzeAJ+u7IFLOJVWX2WGylyBAO2i4dU1o1X2tc6Ax7otHfFOPKwFn1QNce4e90PmlT+uS9ZupiLA8KG60pIiS4/BalA==";
+            byte[] bytesCer = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.cer");
+            byte[] bytesKey = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.key");
+            string password = "12345678a";
+            var pfx = Sign.CrearPFX(bytesCer, bytesKey, password);
+            var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\retencion10.xml")));
+            var xmlResult = Sign.SellarRetencionv10(pfx, password, xml);
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xmlResult);
+            var sello = doc.DocumentElement.GetAttribute("Sello");
+            Assert.IsTrue(selloOriginal.Equals(sello));
+        }
+        [TestMethod]
         public void UT_Tools_CadenaOriginalCFDIv33_OK()
         {
             var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi33.xml")));
@@ -149,6 +164,14 @@ namespace SW.ToolsUT
             var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\retencion20.xml")));
             string CadenaOriginal = "||2.0|30001000000400002234|9|2022-02-15T02:48:02|45110|01|EKU9003173C9|ESCUELA KEMPER URGATE SA DE CV|Nacional|URE180429TM6|UNIVERSIDAD ROBOTICA ESPAÑOLA SA DE CV|65000|01|03|2021|2000.00|2000.00|0|580.00|2000|002|580.00|01||";
             var result_ = Fiscal.RemoverCaracteresInvalidosXml(Sign.CadenaOriginalRetencionv20(xml));
+            Assert.IsTrue(CadenaOriginal.Equals(result_));
+        }
+        [TestMethod]
+        public void UT_Tools_CadenaOriginalRetencionv10_OK()
+        {
+            var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\retencion10.xml")));
+            string CadenaOriginal = "||1.0|30001000000400002434|R-1|2022-05-22T12:49:36-06:00|02|Derechos de autor por regalias de obra intelectual|EKU9003173C9|ESCUELA KEMPER URGATE|Extranjero|SMARTERWEB|5|5|2022|1000|1000.00|0.00|400|02|400|Pago definitivo|1.0|NO|XEXX010101000|XEXX010101HNEXXXA4|SMARTERWEB|3|Derechos de autor por regalias de obra intelectual||";
+            var result_ = Fiscal.RemoverCaracteresInvalidosXml(Sign.CadenaOriginalRetencionv10(xml));
             Assert.IsTrue(CadenaOriginal.Equals(result_));
         }
         [TestMethod]
