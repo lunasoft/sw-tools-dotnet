@@ -88,6 +88,25 @@ namespace SW.Tools.Services.Sign
             }
         }
         /// <summary>
+        /// Sellar XML Retenciones 1.0
+        /// </summary>
+        /// <param name="certificatePfx">Certificado PFX</param>
+        /// <param name="password">Contrasena PFX</param>
+        /// <param name="xml">XML a sellar</param>
+        /// <returns></returns>
+        public static string SellarRetencionv10(byte[] certificatePfx, string password, string xml)
+        {
+            try
+            {
+                xml = Fiscal.Fiscal.RemoverCaracteresInvalidosXml(xml);
+                return SignService.SignRetencion(certificatePfx, password, xml, "1.0");
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        /// <summary>
         /// Obtener cadena original CFDI 3.3
         /// </summary>
         /// <param name="strXml">XML</param>
@@ -124,7 +143,7 @@ namespace SW.Tools.Services.Sign
         /// <summary>
         /// Obtener cadena original Retencion 2.0
         /// </summary>
-        /// <param name="xml"></param>
+        /// <param name="xml">XML Retencion 2.0</param>
         /// <returns></returns>
         public static string CadenaOriginalRetencionv20(string xml)
         {
@@ -132,6 +151,23 @@ namespace SW.Tools.Services.Sign
             {
                 xml = Fiscal.Fiscal.RemoverCaracteresInvalidosXml(xml);
                 return SignService.GetCadenaOriginalRetencion(xml);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        /// <summary>
+        /// Obtener cadena original Retencion 1.0
+        /// </summary>
+        /// <param name="xml">XML Retencion 1.0</param>
+        /// <returns></returns>
+        public static string CadenaOriginalRetencionv10(string xml)
+        {
+            try
+            {
+                xml = Fiscal.Fiscal.RemoverCaracteresInvalidosXml(xml);
+                return SignService.GetCadenaOriginalRetencion(xml, "1.0");
             }
             catch
             {

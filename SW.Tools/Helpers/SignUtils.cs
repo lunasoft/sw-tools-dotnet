@@ -52,12 +52,19 @@ namespace SW.Tools.Helpers
 
             return resultado;
         }
-        internal static string SignXml(string xml, string nCertificate, string certificate)
+        internal static string SignXml(string xml, string nCertificate, string certificate, bool isRetencion10 = false)
         {
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(xml);
-            doc.DocumentElement.SetAttribute("NoCertificado", nCertificate);
-            doc.DocumentElement.SetAttribute("Certificado", certificate);
+            if (isRetencion10)
+            {
+                doc.DocumentElement.SetAttribute("NumCert", nCertificate);
+                doc.DocumentElement.SetAttribute("Cert", certificate);
+            } else
+            {
+                doc.DocumentElement.SetAttribute("NoCertificado", nCertificate);
+                doc.DocumentElement.SetAttribute("Certificado", certificate);
+            }
             using (MemoryStream ms = new MemoryStream())
             {
                 doc.Save(ms);
