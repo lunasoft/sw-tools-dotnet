@@ -30,115 +30,92 @@ namespace SW.ToolsUT
             url = "http://services.test.sw.com.mx";
         }
 
-        //[TestMethod]
-        //public void UT_StampInvoice()
-        //{
-        //    Comprobante comprobante = new Comprobante();
-            
-        //    comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01");
-        //    comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta", "1", "NO APLICA", 3592.83m,"02", 3592.83m);
-        //    comprobante.SetConceptoImpuestoTraslado(0.160000m, "Tasa", "002", 3592.83m, 574.85m);
-        //    comprobante.SetConcepto(1, "84131500", "ZZ", "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m, "02", 258.68m);
-        //    comprobante.SetConceptoImpuestoTraslado(0.160000m, "Tasa", "002", 258.68m, 41.38m);
-        //    comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m, "02", 550.00m);
-        //    comprobante.SetConceptoImpuestoTraslado(0.160000m, "Tasa", "002", 550.00m, 88.00m);
-        //    comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
-        //    comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "65000", "601");
-        //    var invoice = comprobante.GetComprobante();
-        //    var xmlInvoice = Serializer.SerializeDocument(invoice);
-        //    xmlInvoice = SignInvoice(xmlInvoice);
-        //    Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
-        //    StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
-        //    Assert.IsTrue(response.status == "success");
-        //}
-
-        //[TestMethod]
-        //public void UT_CFDI40_InformacionGlobal()
-        //{
-        //    Comprobante comprobante = new Comprobante();
-
-        //    comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01");
-        //    comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m, "02", 550.00m);
-        //    comprobante.SetConceptoImpuestoTraslado(0.160000m, "Tasa", "002", 550.00m, 88.00m);
-        //    comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
-        //    comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "65000", "601");
-        //    comprobante.SetInformacionGlobal("01", "04", "2022");
-        //    var invoice = comprobante.GetComprobante();
-        //    var xmlInvoice = Serializer.SerializeDocument(invoice);
-        //    xmlInvoice = SignInvoice(xmlInvoice);
-        //    Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
-        //    StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
-        //    Assert.IsTrue(response.status == "success");
-        //}
-        //[TestMethod]
-      
-        //public void UT_CFDI40_AcuentaTerceros()
-        //{
-        //    Comprobante comprobante = new Comprobante();
-
-        //    comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01");
-        //    comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m, "02", 550.00m);
-        //    comprobante.SetConceptoImpuestoTraslado(0.160000m, "Tasa", "002", 550.00m, 88.00m);
-        //    comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
-        //    comprobante.SetAcuentaTerceros("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "601", "29133");
-        //    comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "65000", "601");
-        //    var invoice = comprobante.GetComprobante();
-        //    var xmlInvoice = Serializer.SerializeDocument(invoice);
-        //    xmlInvoice = SignInvoice(xmlInvoice);
-        //    Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
-        //    StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
-        //    Assert.IsTrue(response.status == "success");
-        //}
-        //[TestMethod]
-        //public void UT_CFDI40_CFDIRelacionados()
-        //{
-        //    Comprobante comprobante = new Comprobante();
-
-        //    comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01");
-        //    comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta", "1", "NO APLICA", 3592.83m, "02", 3592.83m);
-        //    comprobante.SetConceptoImpuestoTraslado(0.160000m, "Tasa", "002", 3592.83m, 574.85m);
-        //    comprobante.SetConcepto(1, "84131500", "ZZ", "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m, "02", 258.68m);
-        //    comprobante.SetConceptoImpuestoTraslado(0.160000m, "Tasa", "002", 258.68m, 41.38m);
-        //    comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m, "02", 550.00m);
-        //    comprobante.SetConceptoImpuestoTraslado(0.160000m, "Tasa", "002", 550.00m, 88.00m);
-        //    comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
-        //    string[] lista = new string[2];
-        //    lista[0] = "0aded095-b84d-4364-8f8e-59c3f650e530";
-        //    lista[1] = "2da2a676-f424-4898-a190-79253fdf5f7a";
-        //    comprobante.SetCFDIRelacionado("03", lista);
-        //    comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "65000", "601");
-        //    var invoice = comprobante.GetComprobante();
-        //    var xmlInvoice = Serializer.SerializeDocument(invoice);
-        //    xmlInvoice = SignInvoice(xmlInvoice);
-        //    Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
-        //    StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
-        //    Assert.IsTrue(response.status == "success");
-        //}
         [TestMethod]
-        public void UT_CFDI40_testbug()
+        public void UT_StampInvoice()
         {
-            Comprobante comprobante2 = new Comprobante();
+            Comprobante comprobante = new Comprobante();
 
-            comprobante2.SetComprobante("MXN", "I", "99", "PPD", "62930", "01");
-
-            comprobante2.SetConcepto(1, "93151512", "E48", "TEST7114EXENTO Nombre", "TEST7114EXENTO", "NO APLICA", 100.00m, "02", 100.00m);
-
-            comprobante2.SetConceptoImpuestoTraslado("Exento", "002", 100.00m,null,null);
-
-            comprobante2.SetConcepto(1, "93151512", "E48", "TEST7114EXENTO Nombre", "TEST7114EXENTO", "NO APLICA", 100.00m, "02", 100.00m);
-
-            comprobante2.SetConceptoImpuestoTraslado("Exento", "002", 100.00m,null,null);
-
-            comprobante2.SetEmisor("JES900109Q90", "JIMENEZ ESTRADA SALAS", "603");
-
-            comprobante2.SetReceptor("PAGR750324J39", "ROSA GABRIELA PADILLA GUTIERREZ", "D04", "44220", "605");
-
-
-
-            var invoice = comprobante2.GetComprobante();
+            comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01");
+            comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta", "1", "NO APLICA", 3592.83m, "02", 3592.83m);
+            comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 3592.83m, 0.160000m, 574.85m);
+            comprobante.SetConcepto(1, "84131500", "ZZ", "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m, "02", 258.68m);
+            comprobante.SetConceptoImpuestoTraslado( "Tasa", "002",  258.68m, 0.160000m, 41.38m);
+            comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m, "02", 550.00m);
+            comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 550.00m, 0.160000m, 88.00m);
+            comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
+            comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "65000", "601");
+            var invoice = comprobante.GetComprobante();
             var xmlInvoice = Serializer.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
+            Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
+            StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
+            Assert.IsTrue(response.status == "success");
         }
+
+        [TestMethod]
+        public void UT_CFDI40_InformacionGlobal()
+        {
+            Comprobante comprobante = new Comprobante();
+
+            comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01");
+            comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m, "02", 550.00m);
+            comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 550.00m, 0.160000m, 88.00m);
+            comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
+            comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "65000", "601");
+            comprobante.SetInformacionGlobal("01", "04", "2022");
+            var invoice = comprobante.GetComprobante();
+            var xmlInvoice = Serializer.SerializeDocument(invoice);
+            xmlInvoice = SignInvoice(xmlInvoice);
+            Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
+            StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
+            Assert.IsTrue(response.status == "success");
+        }
+        [TestMethod]
+
+        public void UT_CFDI40_AcuentaTerceros()
+        {
+            Comprobante comprobante = new Comprobante();
+
+            comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01");
+            comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m, "02", 550.00m);
+            comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 550.00m, 0.160000m, 88.00m);
+            comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
+            comprobante.SetAcuentaTerceros("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "601", "29133");
+            comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "65000", "601");
+            var invoice = comprobante.GetComprobante();
+            var xmlInvoice = Serializer.SerializeDocument(invoice);
+            xmlInvoice = SignInvoice(xmlInvoice);
+            Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
+            StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
+            Assert.IsTrue(response.status == "success");
+        }
+        [TestMethod]
+        public void UT_CFDI40_CFDIRelacionados()
+        {
+            Comprobante comprobante = new Comprobante();
+
+            comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01");
+            comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta", "1", "NO APLICA", 3592.83m, "02", 3592.83m);
+            comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 3592.83m, 0.160000m, 574.85m);
+            comprobante.SetConcepto(1, "84131500", "ZZ", "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m, "02", 258.68m);
+            comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 258.68m, 0.160000m, 41.38m);
+            comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m, "02", 550.00m);
+            comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 550.00m, 0.160000m, 88.00m);
+            comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
+            string[] lista = new string[2];
+            lista[0] = "0aded095-b84d-4364-8f8e-59c3f650e530";
+            lista[1] = "2da2a676-f424-4898-a190-79253fdf5f7a";
+            comprobante.SetCFDIRelacionado("03", lista);
+            comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "65000", "601");
+            var invoice = comprobante.GetComprobante();
+            var xmlInvoice = Serializer.SerializeDocument(invoice);
+            xmlInvoice = SignInvoice(xmlInvoice);
+            Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
+            StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
+            Assert.IsTrue(response.status == "success");
+        }
+        [TestMethod]
+       
         private string SignInvoice(string xmlInvoice)
         {
             byte[] bytesCer = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.cer");
