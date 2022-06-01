@@ -30,32 +30,32 @@ namespace SW.ToolsUT
             url = "http://services.test.sw.com.mx";
         }
 
-        [TestMethod]
-        public void UT_StampInvoicePagos20()
-        {
-            SW.Tools.Cfdi.Complementos.Pagos20.Pagos pago = new SW.Tools.Cfdi.Complementos.Pagos20.Pagos();
-            pago.SetPago("01", null, DateTime.Now, null, "MXN", 200.00m, null, null, null, null,1m);
-            pago.SetDoctoRelacionado(null, null, "bfc36522-4b8e-45c4-8f14-d11b289f9eb7",
-                "MXN", "1","01", 1m, 200.00m, 200.00m, 0.00m);
-            pago.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
-            pago.SetReceptor("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "29133", "606");
-            pago.SetTotales("200.00" );
-            var invoice = pago.GetInvoice("99056","01","01", "A", "1");
-            var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocument(invoice);
-            xmlInvoice = SignInvoice(xmlInvoice);
-            
-            Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
-            StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
-            var invoiceResultStamp = SW.Tools.Helpers.Serializer.DeserealizeDocument<SW.Tools.Cfdi.Comprobante>
-                (response.data.cfdi);
-            Assert.IsTrue(response.status == "success");
+        //        [TestMethod]
+        //        public void UT_StampInvoicePagos20()
+        //        {
+        //            SW.Tools.Cfdi.Complementos.Pagos20.Pagos pago = new SW.Tools.Cfdi.Complementos.Pagos20.Pagos();
+        //            pago.SetPago("01", null, DateTime.Now, null, "MXN", 200.00m, null, null, null, null,1m);
+        //            pago.SetDoctoRelacionado(null, null, "bfc36522-4b8e-45c4-8f14-d11b289f9eb7",
+        //                "MXN", "1","01", 1m, 200.00m, 200.00m, 0.00m);
+        //            pago.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
+        //            pago.SetReceptor("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "29133", "606");
+        //            pago.SetTotales("200.00" );
+        //            var invoice = pago.GetInvoice("99056","01","01", "A", "1");
+        //            var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocument(invoice);
+        //            xmlInvoice = SignInvoice(xmlInvoice);
 
-        }
+        //            Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
+        //            StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
+        //            var invoiceResultStamp = SW.Tools.Helpers.Serializer.DeserealizeDocument<SW.Tools.Cfdi.Comprobante>
+        //                (response.data.cfdi);
+        //            Assert.IsTrue(response.status == "success");
+
+        //        }
         [TestMethod]
         public void UT2_StampInvoicePagos20()
         {
             SW.Tools.Cfdi.Complementos.Pagos20.Pagos pago = new SW.Tools.Cfdi.Complementos.Pagos20.Pagos();
-            pago.SetPago("01", null, DateTime.Now, null, "MXN", 200.00m, null, null, null, null,1m);
+            pago.SetPago("01", null, DateTime.Now, null, "MXN", 200.00m, null, null, null, null, 1m);
             pago.SetDoctoRelacionado(null, null, "bfc36522-4b8e-45c4-8f14-d11b289f9eb7",
                 "MXN", "1", "01", 1m, 200.00m, 200.00m, 0.00m);
             pago.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
@@ -63,7 +63,7 @@ namespace SW.ToolsUT
             pago.SetTotales("200.00");
             string[] lista = new string[1];
             lista[0] = "0aded095-b84d-4364-8f8e-59c3f650e530";
-            var invoice = pago.GetInvoice("99056", "01", "01", "A", "1","04",lista);
+            var invoice = pago.GetInvoice("99056", "01", "01", "A", "1", "04", lista);
             var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
             Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
@@ -73,51 +73,52 @@ namespace SW.ToolsUT
             Assert.IsTrue(response.status == "success");
 
         }
+        //        [TestMethod]
+        //        public void UT3_StampInvoicePagos20()
+        //        {
+        //            SW.Tools.Cfdi.Complementos.Pagos20.Pagos pago = new SW.Tools.Cfdi.Complementos.Pagos20.Pagos();
+        //            pago.SetPago("01", null, DateTime.Now, null, "MXN", 200.00m, null, null, null, null, 1m);
+        //            pago.SetDoctoRelacionado(null, null, "bfc36522-4b8e-45c4-8f14-d11b289f9eb7",
+        //                "MXN", "1", "02", 1m, 200.00m, 200.00m, 0.00m);
+        //            pago.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
+        //            pago.SetReceptor("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "29133", "606");
+        //            pago.SetTotales("200.00",null,null,null,"100.00","16.00");
+        //            pago.SetImpuestoTrasladoDR(0.160000m, "Tasa", "002", 100.00m, 16.00m);
+        //            pago.SetImpuestoTraslados(100.00m,16.00m,"002", 0.160000m, "Tasa");
+        //            var invoice = pago.GetInvoice("99056", "01", "01", "A", "1");
+        //            var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocument(invoice);
+        //            xmlInvoice = SignInvoice(xmlInvoice);
+        //            Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
+        //            StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
+        //            var invoiceResultStamp = SW.Tools.Helpers.Serializer.DeserealizeDocument<SW.Tools.Cfdi.Comprobante>
+        //                (response.data.cfdi);
+        //            Assert.IsTrue(response.status == "success");
+
+        //        }
         [TestMethod]
-        public void UT3_StampInvoicePagos20()
-        {
-            SW.Tools.Cfdi.Complementos.Pagos20.Pagos pago = new SW.Tools.Cfdi.Complementos.Pagos20.Pagos();
-            pago.SetPago("01", null, DateTime.Now, null, "MXN", 200.00m, null, null, null, null, 1m);
-            pago.SetDoctoRelacionado(null, null, "bfc36522-4b8e-45c4-8f14-d11b289f9eb7",
-                "MXN", "1", "02", 1m, 200.00m, 200.00m, 0.00m);
-            pago.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
-            pago.SetReceptor("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "29133", "606");
-            pago.SetTotales("200.00",null,null,null,"100.00","16.00");
-            pago.SetImpuestoTrasladoDR(0.160000m, "Tasa", "002", 100.00m, 16.00m);
-            pago.SetImpuestoTraslados(100.00m,16.00m,"002", 0.160000m, "Tasa");
-            var invoice = pago.GetInvoice("99056", "01", "01", "A", "1");
-            var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocument(invoice);
-            xmlInvoice = SignInvoice(xmlInvoice);
-            Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
-            StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
-            var invoiceResultStamp = SW.Tools.Helpers.Serializer.DeserealizeDocument<SW.Tools.Cfdi.Comprobante>
-                (response.data.cfdi);
-            Assert.IsTrue(response.status == "success");
+    public void UT4_StampInvoicePagos20()
+    {
+        SW.Tools.Cfdi.Complementos.Pagos20.Pagos pago = new SW.Tools.Cfdi.Complementos.Pagos20.Pagos();
+        pago.SetPago("03", "551515122345647888", DateTime.Now, "010203056598051664", "MXN", 200.00m, "NomBancoOrdExt1", "NumOperacion1", "BBA830831LJ2", "BMI9704113PA", 1m);
+        
+        pago.SetDoctoRelacionado(null, null, "bfc36522-4b8e-45c4-8f14-d11b289f9eb7",
+            "MXN", "1", "02", 1m, 200.00m, 200.00m, 0.00m);
+        pago.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
+        pago.SetReceptor("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "29133", "606");
 
-        }
-        [TestMethod]
-        public void UT4_StampInvoicePagos20()
-        {
-            SW.Tools.Cfdi.Complementos.Pagos20.Pagos pago = new SW.Tools.Cfdi.Complementos.Pagos20.Pagos();
-            pago.SetPago("03", "551515122345647888", DateTime.Now, "010203056598051664", "MXN", 200.00m, "NomBancoOrdExt1", "NumOperacion1", "BBA830831LJ2", "BMI9704113PA", 1m);
-            pago.SetDoctoRelacionado(null, null, "bfc36522-4b8e-45c4-8f14-d11b289f9eb7",
-                "MXN", "1", "02", 1m, 200.00m, 200.00m, 0.00m);
-            pago.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
-            pago.SetReceptor("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "29133", "606");
-            
-            pago.SetTotales("200.00", null, null, null, "100.00", "16.00");
-            pago.SetImpuestoTrasladoDR(0.160000m, "Tasa", "002", 100.00m, 16.00m);
-            pago.SetImpuestoTraslados(100.00m, 16.00m, "002", 0.160000m, "Tasa");
-            var invoice = pago.GetInvoice("99056", "01", "01", "A", "1");
-            var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocument(invoice);
-            xmlInvoice = SignInvoice(xmlInvoice);
-            Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
-            StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
-            var invoiceResultStamp = SW.Tools.Helpers.Serializer.DeserealizeDocument<SW.Tools.Cfdi.Comprobante>
-                (response.data.cfdi);
-            Assert.IsTrue(response.status == "success");
+        pago.SetTotales("200.00", null, null, null, "100.00", "16.00");
+        pago.SetImpuestoTrasladoDR(0.160000m, "Tasa", "002", 100.00m, 16.00m);
+        pago.SetImpuestoTraslados(100.00m, 16.00m, "002", 0.160000m, "Tasa");
+        var invoice = pago.GetInvoice("99056", "01", "01", "A", "1");
+        var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocument(invoice);
+        xmlInvoice = SignInvoice(xmlInvoice);
+        Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
+        StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
+        var invoiceResultStamp = SW.Tools.Helpers.Serializer.DeserealizeDocument<SW.Tools.Cfdi.Comprobante>
+            (response.data.cfdi);
+        Assert.IsTrue(response.status == "success");
 
-        }
+    }
 
         private string SignInvoice(string xmlInvoice)
         {

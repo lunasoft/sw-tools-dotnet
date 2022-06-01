@@ -32,7 +32,7 @@ namespace SW.Tools.Cfdi
                     ObjetoImp = ObjetoImp
                 });
                 this.Conceptos = conceptList.ToArray();
-                
+
             }
             else
             {
@@ -121,7 +121,7 @@ namespace SW.Tools.Cfdi
             {
                 this.Conceptos.Last().Parte = new ComprobanteConceptoParte[1];
 
-                
+
                 this.Conceptos.Last().Parte[0] = new ComprobanteConceptoParte()
                 {
                     InformacionAduanera = GetInofrmacionAduaneraArray(informacionAduaneraNumeroPedimento),
@@ -181,7 +181,7 @@ namespace SW.Tools.Cfdi
             return null;
         }
 
-        public void SetConceptoImpuestoTraslado( string tipoFactor, string impuesto, decimal _base, decimal? tasaOCuota = null, decimal? importe = null)
+        public void SetConceptoImpuestoTraslado(string tipoFactor, string impuesto, decimal _base, decimal? tasaOCuota = null, decimal? importe = null)
         {
 
 
@@ -192,11 +192,11 @@ namespace SW.Tools.Cfdi
             if (tipoFactor.Trim().ToLower() == "exento")
             {
                 impuestoObj = new ComprobanteConceptoImpuestosTraslado()
-                { Base = _base, Impuesto = impuesto,  TipoFactor = tipoFactor };
+                { Base = _base, Impuesto = impuesto, TipoFactor = tipoFactor, TasaOCuotaSpecified = false, ImporteSpecified = false };
             }
             else
                 impuestoObj = new ComprobanteConceptoImpuestosTraslado()
-                { Base = _base, ImporteSpecified = true, Importe = importe.Value,  Impuesto = impuesto, TasaOCuotaSpecified = true, TasaOCuota = tasaOCuota.Value, TipoFactor = tipoFactor };
+                { Base = _base, ImporteSpecified = true, Importe = importe.Value, Impuesto = impuesto, TasaOCuotaSpecified = true, TasaOCuota = tasaOCuota.Value, TipoFactor = tipoFactor };
             if (this.Conceptos[positionConcept].Impuestos.Traslados != null)
             {
                 var listCT = this.Conceptos[positionConcept].Impuestos.Traslados.ToList();
@@ -209,18 +209,18 @@ namespace SW.Tools.Cfdi
                 this.Conceptos[positionConcept].Impuestos.Traslados[0] = impuestoObj;
             }
             if (tipoFactor.Trim().ToLower() != "exento") {
-            this.SetImpuestoTraslado(_base, impuesto, tipoFactor, tasaOCuota.Value, importe.Value);}
+                this.SetImpuestoTraslado(_base, impuesto, tipoFactor, tasaOCuota.Value, importe.Value); }
 
-                else
-                {
+            else
+            {
                 this.SetImpuestoTraslado(_base, impuesto, tipoFactor, null, null);
             }
         }
 
-        public void SetConceptoImpuestoRetencion(decimal _base, string impuesto, string tipoFactor, decimal? tasaOCuota= null, decimal? importe = null )
+        public void SetConceptoImpuestoRetencion(decimal _base, string impuesto, string tipoFactor, decimal? tasaOCuota = null, decimal? importe = null)
         {
-                
-            
+
+
             int positionConcept = this.Conceptos.Length - 1;
             if (this.Conceptos[positionConcept].Impuestos == null)
                 this.Conceptos[positionConcept].Impuestos = new ComprobanteConceptoImpuestos();
@@ -301,14 +301,15 @@ namespace SW.Tools.Cfdi
                 this.Addenda.Any[0] = xmlAddenda;
             }
         }
-       
+
 
         private void SetImpuestoTraslado(decimal _base, string impuesto, string tipoFactor, decimal? tasaOCuota = null, decimal? importe = null)
         {
-           
-           
-            if ( this.Impuestos == null || this.Impuestos.Traslados == null )
+
+
+            if (this.Impuestos == null || this.Impuestos.Traslados == null)
             {
+                
                 try
                 {
                     this.Impuestos = new ComprobanteImpuestos();
@@ -338,39 +339,57 @@ namespace SW.Tools.Cfdi
                 try
                 {
 
-                    if (tipoFactor.Trim().ToLower() != "exento")
+                    switch (tipoFactor.Trim().ToLower())
                     {
-                        if (this.Impuestos.Traslados.Any(a => a.Impuesto == impuesto && a.TasaOCuota == tasaOCuota.Value))
-                        {
-                            decimal rounded = Coins.RoundEven(importe.Value, 2);
-                            this.Impuestos.Traslados.Where(a => a.Impuesto == impuesto && a.TasaOCuota == tasaOCuota.Value)
-                                .ToList().ForEach(i => i.Importe = i.Importe + importe.Value);
-                            this.Impuestos.Traslados.Where(a => a.Impuesto == impuesto && a.TasaOCuota == tasaOCuota.Value && a.TipoFactor == tipoFactor)
-                                .ToList().ForEach(i => i.Base = i.Base + _base);
-                            
-                        }
-                        else
-                        {
-                            var listImpTras = this.Impuestos.Traslados.ToList();
-                            listImpTras.Add(new ComprobanteImpuestosTraslado()
-                            { Base = _base, ImporteSpecified = true, Importe = importe.Value, Impuesto = impuesto, TasaOCuotaSpecified = true, TasaOCuota = tasaOCuota.Value, TipoFactor = tipoFactor });
-                            this.Impuestos.Traslados = listImpTras.ToArray();
-                        }
-                    }
-                    else
-                    {
-                        
-                            this.Impuestos.Traslados.Where(a => a.Impuesto == impuesto  && a.TipoFactor == tipoFactor)
-                                .ToList().ForEach(i => i.Base = i.Base + _base);
+                        case "tasa":
+                            if (this.Impuestos.Traslados.Any(a => a.Impuesto == impuesto && a.TipoFactor == tipoFactor && a.TasaOCuota == tasaOCuota))
+                            {
 
+                                decimal rounded = Coins.RoundEven(importe.Value, 2);
+                                this.Impuestos.Traslados.Where(a => a.Impuesto == impuesto && a.TasaOCuota == tasaOCuota.Value && a.TipoFactor == tipoFactor)
+                                    .ToList().ForEach(i => i.Importe = i.Importe + importe.Value);
+                                this.Impuestos.Traslados.Where(a => a.Impuesto == impuesto && a.TasaOCuota == tasaOCuota.Value && a.TipoFactor == tipoFactor)
+                                    .ToList().ForEach(i => i.Base = i.Base + _base);
+
+                            }
+
+                            else
+                            {
+ 
+                                var listImpTras = this.Impuestos.Traslados.ToList();
+                                listImpTras.Add(new ComprobanteImpuestosTraslado()
+                                { Base = _base, ImporteSpecified = true, Importe = importe.Value, Impuesto = impuesto, TasaOCuotaSpecified = true, TasaOCuota = tasaOCuota.Value, TipoFactor = tipoFactor });
+                                this.Impuestos.Traslados = listImpTras.ToArray();
+                            }
+
+                            break;
+                        case "exento":
+                            if (this.Impuestos.Traslados.Any(a => a.Impuesto == impuesto && a.TipoFactor == tipoFactor))
+                            {
+                                
+                                this.Impuestos.Traslados.Where(a => a.Impuesto == impuesto && a.TipoFactor == tipoFactor)
+                                    .ToList().ForEach(i => i.Base = i.Base + _base);
+
+                            }
+                            else
+                            {
+
+                                var listImpTras = this.Impuestos.Traslados.ToList();
+                                listImpTras.Add(new ComprobanteImpuestosTraslado()
+                                { Base = _base, Impuesto = impuesto, TipoFactor = tipoFactor });
+                                this.Impuestos.Traslados = listImpTras.ToArray();
+                            }
+
+                            break;
                     }
-            }
+
+                }
                 catch (Exception)
-            {
-                throw;
+                {
+                    throw;
+                }
             }
-        }
-            
+
 
         }
 
