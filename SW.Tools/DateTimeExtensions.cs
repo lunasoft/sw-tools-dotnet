@@ -41,9 +41,5 @@ namespace SW.Tools
             }
         }
 
-        internal static string DateTimeFixCFDI(string v1, string xml, string v2)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

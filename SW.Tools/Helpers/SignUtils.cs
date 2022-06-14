@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Xml;
 using System.Xml.Xsl;
@@ -78,6 +79,31 @@ namespace SW.Tools.Helpers
                 xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(ms.ToArray()));
             }
             return xml;
+        }
+        internal static string SignXml(string xml, byte[] pfx, string password)
+        {
+            XmlDocument originalXmlDocument = new XmlDocument() { PreserveWhitespace = false };
+            originalXmlDocument.LoadXml(xml);
+            XmlElement signatureElement = GetSignature(originalXmlDocument, pfx, password);
+            originalXmlDocument.DocumentElement.AppendChild(originalXmlDocument.ImportNode(signatureElement, true));
+            return originalXmlDocument.OuterXml;
+        }
+        internal static XmlElement GetSignature(XmlDocument originalXmlDocument, byte[] pfx, String pfxPassword)
+        {
+            X509Certificate2 cert = new X509Certificate2(pfx, pfxPassword);
+            RSACryptoServiceProvider Key = cert.PrivateKey as RSACryptoServiceProvider;
+            SignedXml signedXml = new SignedXml(originalXmlDocument) { SigningKey = Key };
+            Reference reference = new Reference() { Uri = String.Empty };
+            XmlDsigEnvelopedSignatureTransform env = new XmlDsigEnvelopedSignatureTransform();
+            reference.AddTransform(env);
+            KeyInfoX509Data kdata = new KeyInfoX509Data(cert);
+            kdata.AddIssuerSerial(cert.Issuer, cert.SerialNumber);
+            KeyInfo keyInfo = new KeyInfo();
+            keyInfo.AddClause(kdata);
+            signedXml.KeyInfo = keyInfo;
+            signedXml.AddReference(reference);
+            signedXml.ComputeSignature();
+            return signedXml.GetXml();
         }
         internal static string GetSignature(string password, byte[] pfx, string strToSign, string algorithm)
         {

@@ -1,8 +1,9 @@
-﻿using SW.Tools.Entities;
+﻿using SW.Tools.Entities.Cancelacion;
+using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
+using System.Linq;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace SW.Tools.Helpers
 {
@@ -25,23 +26,29 @@ namespace SW.Tools.Helpers
 ", "");
             return xmlInvoice;
         }
-        public static string RemoveComplementNamespace(string xml)
+        /// <summary>
+        /// Crear XML de cancelacion, recibe una lista de folios con el formato uuid,motivo,uuidSustitucion
+        /// </summary>
+        /// <param name="foliosFiscales">Lista de folios a cancelar con el formato uuid,motivo,uuidSustitucion</param>
+        /// <param name="rfcEmisor">RFC Emisor</param>
+        /// <param name="isRetencion">Especifica si es un XML de retencion</param>
+        /// <returns></returns>
+        public static string CreateCancelationXML(List<Cancelacion> foliosFiscales, string rfcEmisor, bool isRetencion = false)
         {
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(xml);
-            var complemento = doc.GetElementsByTagName("cfdi:Complemento");
-            if(complemento.Count != 0)
-            {
-                var ns = complemento[0].FirstChild.Prefix;
-                foreach (XmlNode child in complemento[0].ChildNodes)
-                {
-                    if (child.Attributes["xmlns:" + ns] != null)
-                        child.Attributes.Remove(child.Attributes["xmlns:" + ns]);
-                    break;
-                }
-            }
-            
-            return doc.OuterXml;
+            XNamespace satCancelacionXmlNamespace = isRetencion ? "http://www.sat.gob.mx/esquemas/retencionpago/1" : "http://cancelacfd.sat.gob.mx";
+            var xmlSolicitud = new XElement(satCancelacionXmlNamespace + "Cancelacion",
+                                            new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
+                                            new XAttribute(XNamespace.Xmlns + "xsd", "http://www.w3.org/2001/XMLSchema"),
+                                            new XAttribute("Fecha", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")),
+                                            new XAttribute("RfcEmisor", rfcEmisor),
+                                            from uuid in foliosFiscales
+                                            select new XElement(satCancelacionXmlNamespace + "Folios",
+                                                new XElement(satCancelacionXmlNamespace + "Folio",
+                                                new XAttribute("UUID", uuid.Folio.ToString()),
+                                                new XAttribute("Motivo", Convert.ToInt16(uuid.Motivo).ToString().PadLeft(2, '0')),
+                                                new XAttribute("FolioSustitucion", uuid.FolioSustitucion != null ? uuid.FolioSustitucion.ToString() : String.Empty)
+                                                )));
+            return xmlSolicitud.ToString();
         }
     }
 }
