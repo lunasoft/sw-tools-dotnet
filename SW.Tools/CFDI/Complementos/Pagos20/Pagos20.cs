@@ -1079,6 +1079,10 @@ namespace SW.Tools.Cfdi.Complementos.Pagos20
 
         private decimal importeDRField;
 
+        private bool tasaOCuotaDRFieldSpecified;
+
+        private bool importeDRFieldSpecified;
+
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public decimal BaseDR
@@ -1146,6 +1150,32 @@ namespace SW.Tools.Cfdi.Complementos.Pagos20
             set
             {
                 this.importeDRField = value;
+            }
+        }
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool TasaOCuotaDRSpecified
+        {
+            get
+            {
+                return this.tasaOCuotaDRFieldSpecified;
+            }
+            set
+            {
+                this.tasaOCuotaDRFieldSpecified = value;
+            }
+        }
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ImporteDRSpecified
+        {
+            get
+            {
+                return this.importeDRFieldSpecified;
+            }
+            set
+            {
+                this.importeDRFieldSpecified = value;
             }
         }
     }

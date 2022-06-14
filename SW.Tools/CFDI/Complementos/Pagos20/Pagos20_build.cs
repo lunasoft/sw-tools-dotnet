@@ -90,7 +90,7 @@ namespace SW.Tools.Cfdi.Complementos.Pagos20
             if (Totales == null)
                 Totales = new PagosTotales();
             Totales.MontoTotalPagos = Convert.ToDecimal(montototalpagos);
-            Totales.TotalRetencionesIVASpecified = Totales.TotalRetencionesIVA != 0;
+            Totales.TotalRetencionesIVASpecified = !string.IsNullOrEmpty(totalretencionesiva);
             Totales.TotalRetencionesIVA = Convert.ToDecimal(totalretencionesiva);
             Totales.TotalRetencionesISRSpecified = !string.IsNullOrEmpty(totalretencionesisr); 
             Totales.TotalRetencionesISR = Convert.ToDecimal(totalretencionesisr);
@@ -178,7 +178,7 @@ namespace SW.Tools.Cfdi.Complementos.Pagos20
         }
         
 
-        public void SetImpuestoTrasladoDR(decimal tasaOCuota, string tipoFactor, string impuesto, decimal _base, decimal importe )
+        public void SetImpuestoTrasladoDR( string tipoFactorDr, string impuestoDr, decimal _baseDr, decimal? tasaOCuotaDr = null, decimal? importeDr = null )
         {
 
             
@@ -186,14 +186,14 @@ namespace SW.Tools.Cfdi.Complementos.Pagos20
             if (this.Pago.Last().DoctoRelacionado[positionConcept].ImpuestosDR == null)
                 this.Pago.Last().DoctoRelacionado[positionConcept].ImpuestosDR = new PagosPagoDoctoRelacionadoImpuestosDR();
             PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR impuestoObj;
-            if (tipoFactor.Trim().ToLower() == "exento")
+            if (tipoFactorDr.Trim().ToLower() == "exento")
             {
                 impuestoObj = new PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR()
-                { BaseDR = _base, ImporteDR = importe, ImpuestoDR = impuesto, TasaOCuotaDR = tasaOCuota, TipoFactorDR = tipoFactor };
+                { BaseDR = _baseDr, ImporteDRSpecified = false,  ImpuestoDR = impuestoDr, TasaOCuotaDRSpecified= false, TipoFactorDR = tipoFactorDr };
             }
             else
                 impuestoObj = new PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR()
-                { BaseDR = _base, ImporteDR = importe, ImporteDRSpecified = true, ImpuestoDR = impuesto, TasaOCuotaDR = tasaOCuota, TasaOCuotaDRSpecified = true, TipoFactorDR = tipoFactor };
+                { BaseDR = _baseDr, ImporteDR = importeDr.Value, ImporteDRSpecified = true, ImpuestoDR = impuestoDr, TasaOCuotaDR = tasaOCuotaDr.Value, TasaOCuotaDRSpecified = true, TipoFactorDR = tipoFactorDr };
             if (this.Pago.Last().DoctoRelacionado[positionConcept].ImpuestosDR.TrasladosDR != null)
             {
                 var listCT = this.Pago.Last().DoctoRelacionado[positionConcept].ImpuestosDR.TrasladosDR.ToList();
@@ -208,6 +208,39 @@ namespace SW.Tools.Cfdi.Complementos.Pagos20
             
 
         }
+
+        public void SetImpuestoRetencionDR( string tipoFactorDr, string impuestoDr, decimal _baseDr, decimal? tasaOCuotaDr = null, decimal? importeDr = null)
+        {
+
+
+            int positionConcept = this.Pago.Last().DoctoRelacionado.Length - 1;
+            if (this.Pago.Last().DoctoRelacionado[positionConcept].ImpuestosDR == null)
+                this.Pago.Last().DoctoRelacionado[positionConcept].ImpuestosDR = new PagosPagoDoctoRelacionadoImpuestosDR();
+            PagosPagoDoctoRelacionadoImpuestosDRRetencionDR impuestoObj;
+            if (tipoFactorDr.Trim().ToLower() == "exento")
+            {
+                impuestoObj = new PagosPagoDoctoRelacionadoImpuestosDRRetencionDR()
+                { BaseDR = _baseDr, ImporteDR = importeDr.Value, ImpuestoDR = impuestoDr, TasaOCuotaDR = tasaOCuotaDr.Value, TipoFactorDR = tipoFactorDr };
+            }
+            else
+                impuestoObj = new PagosPagoDoctoRelacionadoImpuestosDRRetencionDR()
+                { BaseDR = _baseDr, ImporteDR = importeDr.Value, ImporteDRSpecified = true, ImpuestoDR = impuestoDr, TasaOCuotaDR = tasaOCuotaDr.Value, TasaOCuotaDRSpecified = true, TipoFactorDR = tipoFactorDr };
+            if (this.Pago.Last().DoctoRelacionado[positionConcept].ImpuestosDR.RetencionesDR != null)
+            {
+                var listCT = this.Pago.Last().DoctoRelacionado[positionConcept].ImpuestosDR.RetencionesDR.ToList();
+                listCT.Add(impuestoObj);
+                this.Pago.Last().DoctoRelacionado[positionConcept].ImpuestosDR.RetencionesDR = listCT.ToArray();
+            }
+            else
+            {
+                this.Pago.Last().DoctoRelacionado[positionConcept].ImpuestosDR.RetencionesDR = new PagosPagoDoctoRelacionadoImpuestosDRRetencionDR[1];
+                this.Pago.Last().DoctoRelacionado[positionConcept].ImpuestosDR.RetencionesDR[0] = impuestoObj;
+            }
+
+
+        }
+
+
 
         public void SetImpuestoRetenciones(decimal importe, string impuesto )
         {
@@ -238,8 +271,7 @@ namespace SW.Tools.Cfdi.Complementos.Pagos20
             }
         }
 
-        public void SetImpuestoTraslados(decimal _base, decimal importe, string impuesto, decimal tasaOCuota,
-            string tipoFactor)
+        public void SetImpuestoTraslados(string tipoFactor,  string impuesto, decimal _base, decimal? tasaOCuota = null, decimal? importe = null)
         {
 
 
@@ -257,15 +289,24 @@ namespace SW.Tools.Cfdi.Complementos.Pagos20
 
             if (this.Pago.Last().ImpuestosP.Last().TrasladosP == null)
             {
-                this.Pago.Last().ImpuestosP.Last().TrasladosP = new PagosPagoImpuestosPTrasladoP[1];
-                this.Pago.Last().ImpuestosP.Last().TrasladosP[0] = new PagosPagoImpuestosPTrasladoP()
-                { BaseP = _base,ImportePSpecified = true, ImporteP = importe, ImpuestoP = impuesto,TasaOCuotaPSpecified=true, TasaOCuotaP = tasaOCuota, TipoFactorP = tipoFactor };
+                if (tipoFactor.Trim().ToLower() == "exento")
+                {
+                    this.Pago.Last().ImpuestosP.Last().TrasladosP = new PagosPagoImpuestosPTrasladoP[1];
+                    this.Pago.Last().ImpuestosP.Last().TrasladosP[0] = new PagosPagoImpuestosPTrasladoP()
+                    { BaseP = _base,  ImpuestoP = impuesto,  TipoFactorP = tipoFactor };
+                }
+                else
+                {
+                    this.Pago.Last().ImpuestosP.Last().TrasladosP = new PagosPagoImpuestosPTrasladoP[1];
+                    this.Pago.Last().ImpuestosP.Last().TrasladosP[0] = new PagosPagoImpuestosPTrasladoP()
+                    { BaseP = _base, ImportePSpecified = true, ImporteP = importe.Value, ImpuestoP = impuesto, TasaOCuotaPSpecified = true, TasaOCuotaP = tasaOCuota.Value, TipoFactorP = tipoFactor };
+                }
             }
             else
             {
                 var listImpTras = this.Pago.Last().ImpuestosP.Last().TrasladosP.ToList();
                 listImpTras.Add(new PagosPagoImpuestosPTrasladoP()
-                { BaseP = _base, ImportePSpecified = true, ImporteP = importe, ImpuestoP = impuesto, TasaOCuotaPSpecified = true, TasaOCuotaP = tasaOCuota, TipoFactorP = tipoFactor });
+                { BaseP = _base, ImportePSpecified = true, ImporteP = importe.Value, ImpuestoP = impuesto, TasaOCuotaPSpecified = true, TasaOCuotaP = tasaOCuota.Value, TipoFactorP = tipoFactor });
                 this.Pago.Last().ImpuestosP.Last().TrasladosP = listImpTras.ToArray();
             }
 

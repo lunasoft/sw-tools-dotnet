@@ -125,7 +125,7 @@ namespace SW.ToolsUT
             var xmlResult = Sign.SellarCFDIv40(pfx, password, xmlInvoice);
             return xmlResult;
         }
-        [TestMethod]
+       // [TestMethod]
         public void DeserailizeXml()
         {
             var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi33Invoice.xml")));
