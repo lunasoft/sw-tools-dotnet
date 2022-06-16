@@ -13,5 +13,9 @@ namespace SW.Tools.Helpers
             amount = Math.Truncate(amount * pres);
             return amount / pres;
         }
+        public static decimal RoundEven(this decimal number, int numDecimalPlaces)
+        {
+            return Math.Round(number, numDecimalPlaces, MidpointRounding.ToEven);
+        }
     }
 }

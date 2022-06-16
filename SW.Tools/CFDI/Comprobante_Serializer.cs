@@ -11,7 +11,7 @@ using System.Xml.Serialization;
 
 namespace SW.Tools.Helpers
 {
-    public partial class Serializer
+    public partial class SerializerCfdi40
     {
         static XmlSerializer cfdi40Serializer = new XmlSerializer(typeof(Comprobante));
         public static string SerializeDocument(Comprobante comprobante)

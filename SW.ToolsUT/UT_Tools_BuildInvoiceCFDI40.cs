@@ -14,6 +14,7 @@ using SW.Tools.Services.Fiscal;
 using SW.Tools.Cfdi;
 using SW.Tools.Cfdi.Complementos.Pagos20;
 using SW.Tools.Helpers;
+using Comprobante = SW.Tools.Cfdi.Comprobante;
 
 namespace SW.ToolsUT
 {
@@ -45,7 +46,7 @@ namespace SW.ToolsUT
             comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
             comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "65000", "601");
             var invoice = comprobante.GetComprobante();
-            var xmlInvoice = Serializer.SerializeDocument(invoice);
+            var xmlInvoice = SerializerCfdi40.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
             Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
             StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
@@ -64,7 +65,7 @@ namespace SW.ToolsUT
             comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "65000", "601");
             comprobante.SetInformacionGlobal("01", "04", "2022");
             var invoice = comprobante.GetComprobante();
-            var xmlInvoice = Serializer.SerializeDocument(invoice);
+            var xmlInvoice = SerializerCfdi40.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
             Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
             StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
@@ -83,7 +84,7 @@ namespace SW.ToolsUT
             comprobante.SetAcuentaTerceros("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "601", "29133");
             comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "65000", "601");
             var invoice = comprobante.GetComprobante();
-            var xmlInvoice = Serializer.SerializeDocument(invoice);
+            var xmlInvoice = SerializerCfdi40.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
             Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
             StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
@@ -108,12 +109,33 @@ namespace SW.ToolsUT
             comprobante.SetCFDIRelacionado("03", lista);
             comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "65000", "601");
             var invoice = comprobante.GetComprobante();
-            var xmlInvoice = Serializer.SerializeDocument(invoice);
+            var xmlInvoice = SerializerCfdi40.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
             Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
             StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
             Assert.IsTrue(response.status == "success");
         }
+        [TestMethod]
+        public void UT_CFDI40_CFDIExentos()
+        {
+            Comprobante comprobante = new Comprobante();
+
+
+            comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01");
+            comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
+            comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "65000", "601");
+            comprobante.SetConcepto(1, "50211503", "H87", "Cigarros",null, "Pieza", 200.00m, "02", 200.00m);
+            comprobante.SetConceptoImpuestoTraslado("Tasa", "002", 1m, 0.000000m, 0.00m);
+            comprobante.SetConceptoImpuestoTraslado("Exento", "002", 1m);
+            comprobante.SetConceptoImpuestoRetencion(1m, "001", "Tasa", 0.000000m, 0.00m);
+            var invoice = comprobante.GetComprobante();
+            var xmlInvoice = SerializerCfdi40.SerializeDocument(invoice);
+            xmlInvoice = SignInvoice(xmlInvoice);
+            Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
+            StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
+            Assert.IsTrue(response.status == "success");
+        }
+
         [TestMethod]
        
         private string SignInvoice(string xmlInvoice)

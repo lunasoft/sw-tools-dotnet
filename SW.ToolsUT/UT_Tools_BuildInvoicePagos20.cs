@@ -14,6 +14,7 @@ using SW.Tools.Services.Fiscal;
 using SW.Tools.Cfdi;
 using SW.Tools.Cfdi.Complementos.Pagos20;
 using SW.Tools.Helpers;
+using Comprobante = SW.Tools.Cfdi.Comprobante;
 
 namespace SW.ToolsUT
 {
@@ -41,7 +42,7 @@ namespace SW.ToolsUT
             pago.SetReceptor("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "29133", "606");
             pago.SetTotales("200.00");
             var invoice = pago.GetInvoice("99056", "01", "01", "A", "1");
-            var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocument(invoice);
+            var xmlInvoice = SW.Tools.Helpers.SerializerCfdi40.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
 
             Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
@@ -64,7 +65,7 @@ namespace SW.ToolsUT
             string[] lista = new string[1];
             lista[0] = "0aded095-b84d-4364-8f8e-59c3f650e530";
             var invoice = pago.GetInvoice("99056", "01", "01", "A", "1", "04", lista);
-            var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocument(invoice);
+            var xmlInvoice = SW.Tools.Helpers.SerializerCfdi40.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
             Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
             StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
@@ -86,7 +87,7 @@ namespace SW.ToolsUT
             pago.SetImpuestoTrasladoDR("Tasa", "002", 100.00m, 0.160000m, 16.00m);
             pago.SetImpuestoTraslados( "Tasa", "002", 100.00m, 0.160000m, 16.00m);
             var invoice = pago.GetInvoice("99056", "01", "01", "A", "1");
-            var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocument(invoice);
+            var xmlInvoice = SW.Tools.Helpers.SerializerCfdi40.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
             Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
             StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
@@ -110,7 +111,7 @@ namespace SW.ToolsUT
             pago.SetImpuestoTrasladoDR( "Tasa", "002", 100.00m, 0.160000m, 16.00m);
             pago.SetImpuestoTraslados("Tasa", "002", 4.84m, 0.160000m, 0.77m  );
             var invoice = pago.GetInvoice("99056", "01", "01", "A", "1");
-            var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocument(invoice);
+            var xmlInvoice = SW.Tools.Helpers.SerializerCfdi40.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
             Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
             StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
@@ -142,7 +143,7 @@ namespace SW.ToolsUT
             pago.SetImpuestoRetenciones(16.00m, "002");
             pago.SetImpuestoRetenciones(34.40m, "003");
             var invoice = pago.GetInvoice("99056", "01", "01", "A", "1");
-            var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocument(invoice);
+            var xmlInvoice = SW.Tools.Helpers.SerializerCfdi40.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
             Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
             StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
@@ -168,7 +169,7 @@ namespace SW.ToolsUT
             pago.SetImpuestoRetenciones(0.10m, "002");
             pago.SetImpuestoTraslados("Exento", "002", 8.62m );
             var invoice = pago.GetInvoice("99056", "01", "01", "A", "1");
-            var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocument(invoice);
+            var xmlInvoice = SW.Tools.Helpers.SerializerCfdi40.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
             Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
             StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
@@ -196,7 +197,7 @@ namespace SW.ToolsUT
 
             pago.SetImpuestoTraslados("Tasa", "002", 200.00m, 0.160000m,32.00m);
             var invoice = pago.GetInvoice("99056", "01", "01", "A", "1");
-            var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocument(invoice);
+            var xmlInvoice = SW.Tools.Helpers.SerializerCfdi40.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
             Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
             StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
@@ -225,7 +226,7 @@ namespace SW.ToolsUT
             pago.SetImpuestoTrasladoDR("Tasa", "002", 304.043103m, 0.160000m, 48.646897m);
             pago.SetImpuestoTraslados("Tasa", "002", 6118.42m, 0.160000m, 978.94m);
             var invoice = pago.GetInvoice("99056", "01", "01", "A", "1");
-            var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocument(invoice);
+            var xmlInvoice = SW.Tools.Helpers.SerializerCfdi40.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
             Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
             StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
@@ -248,7 +249,7 @@ namespace SW.ToolsUT
         public void DeserailizeXml()
         {
             var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi33Invoice.xml")));
-            var xmlInvoicess = Tools.Helpers.Serializer.DeserealizeDocument<Comprobante>(xml);
+            var xmlInvoicess = Serializer.DeserealizeDocument<Comprobante>(xml);
         }
     }
 }
