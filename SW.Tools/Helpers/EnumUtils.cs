@@ -46,6 +46,26 @@ namespace SW.Tools.Helpers
         {
             return GetXmlEnumAttributeValueFromEnum<c_TipoDeComprobante>(value);
         }
+        public static string GetString(this c_UsoCFDI value)
+        {
+            return GetXmlEnumAttributeValueFromEnum<c_UsoCFDI>(value);
+        }
+        public static string GetString(this c_Impuesto value)
+        {
+            return GetXmlEnumAttributeValueFromEnum<c_Impuesto>(value);
+        }
+        public static string GetString(this c_TipoCadenaPago value)
+        {
+            return GetXmlEnumAttributeValueFromEnum<c_TipoCadenaPago>(value);
+        }
+        public static string GetString(this c_TipoFactor value)
+        {
+            return GetXmlEnumAttributeValueFromEnum<c_TipoFactor>(value);
+        }
+        public static string GetString(this c_RegimenFiscal value)
+        {
+            return GetXmlEnumAttributeValueFromEnum<c_RegimenFiscal>(value);
+        }
         public static string GetString(this c_ClaveProdServ value)
         {
             return GetXmlEnumAttributeValueFromEnum<c_ClaveProdServ>(value);
@@ -53,6 +73,14 @@ namespace SW.Tools.Helpers
         public static string GetString(this c_ClaveUnidad value)
         {
             return GetXmlEnumAttributeValueFromEnum<c_ClaveUnidad>(value);
+        }
+        public static string GetString(this c_TipoRelacion value)
+        {
+            return GetXmlEnumAttributeValueFromEnum<c_TipoRelacion>(value);
+        }
+        public static string GetString(this c_TasaOCuota value)
+        {
+            return GetXmlEnumAttributeValueFromEnum<c_TasaOCuota>(value);
         }
         public static TEnum GetEnumValue<TEnum>(string value)
         {

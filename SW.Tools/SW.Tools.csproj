@@ -43,31 +43,19 @@
       <HintPath>..\packages\cadenaoriginal40.dll.0.0.2\lib\net40\cadenaoriginal40.dll</HintPath>
     </Reference>
     <Reference Include="cadenaoriginalretenciones20, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Resources\dll\cadenaoriginalretenciones20.dll</HintPath>
+      <HintPath>..\packages\cadenaoriginalRetenciones20.dll.1.0.1\lib\cadenaoriginalretenciones20.dll</HintPath>
     </Reference>
-    <Reference Include="cadenaoriginaltfd, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Resources\dll\cadenaoriginaltfd.dll</HintPath>
+    <Reference Include="cadenaoriginalTFD11, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cadenaoriginalTFD11.dll.1.0.5\lib\net40\cadenaoriginalTFD11.dll</HintPath>
     </Reference>
     <Reference Include="Gma.QrCodeNet.Encoding, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Gma.QrCodeNet.0.4.1.2\lib\net40\Gma.QrCodeNet.Encoding.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="SW-sdk">
-      <HintPath>..\..\..\..\..\..\..\Downloads\SW-sdk.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
-    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\CFDISDK\SW.CFDISDKUT\bin\Debug\System.Security.Cryptography.X509Certificates.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -84,26 +72,19 @@
     <Compile Include="Catalogs\CatCFDI_c_TipoDeComprobante.cs" />
     <Compile Include="Catalogs\Cat_Moneda_Info.cs" />
     <Compile Include="Catalogs\c_ClaveProdServ.cs" />
-    <Compile Include="CFDI\Complementos\Pagos20\Pagos20.cs" />
-    <Compile Include="CFDI\Complementos\Pagos20\Pagos20_build.cs" />
-    <Compile Include="CFDI\Complementos\Pagos20\Pagos20_Serializer.cs" />
-    <Compile Include="CFDI\Comprobante.cs" />
-    <Compile Include="CFDI\Comprobante_Build.cs" />
-    <Compile Include="CFDI\Comprobante_Extended.cs" />
-    <Compile Include="CFDI\Comprobante_Serializer.cs" />
     <Compile Include="Entities\Cancelacion\Cancelacion.cs" />
     <Compile Include="Entities\Cancelacion\CancelacionMotivo.cs" />
-    <Compile Include="Entities\StampResponse2\Comprobante.cs" />
-    <Compile Include="Entities\StampResponse2\Comprobante_Build.cs" />
-    <Compile Include="Entities\StampResponse2\Comprobante_Extended.cs" />
-    <Compile Include="Entities\StampResponse2\Pagos10.cs" />
-    <Compile Include="Entities\StampResponse2\Pagos10_Build.cs" />
     <Compile Include="Entities\StampResponse\StampResponse.cs" />
     <Compile Include="Helpers\DotNetUtilitiesCustom.cs" />
     <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="Catalogs\c_Moneda_Element.cs" />
-    <Compile Include="Entities\Complementos\RFCINC.cs" />
-    <Compile Include="Entities\Complementos\Nomina.cs" />
+    <Compile Include="Entities\Complements\RFCINC.cs" />
+    <Compile Include="Entities\Comprobante.cs" />
+    <Compile Include="Entities\Comprobante_Build.cs" />
+    <Compile Include="Entities\Comprobante_Extended.cs" />
+    <Compile Include="Entities\Complements\Nomina.cs" />
+    <Compile Include="Entities\Pagos10.cs" />
+    <Compile Include="Entities\Pagos10_Build.cs" />
     <Compile Include="Entities\ToolsException.cs" />
     <Compile Include="Entities\YearsMonthsDays.cs" />
     <Compile Include="Errors.cs" />
@@ -139,19 +120,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\dll\cadenaoriginalretenciones20.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\dll\cadenaoriginaltfd.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Debug\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

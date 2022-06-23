@@ -1,6 +1,4 @@
-﻿using SW.Tools.Cfdi;
-using SW.Tools.Cfdi.Complementos.Pagos20;
-using SW.Tools.Entities;
+﻿using SW.Tools.Entities;
 using SW.Tools.Services.Fiscal;
 using System;
 using System.IO;
@@ -8,10 +6,6 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using Comprobante = SW.Tools.Entities.Comprobante;
-using ComprobanteComplemento = SW.Tools.Entities.ComprobanteComplemento;
-using ComprobanteConcepto = SW.Tools.Entities.ComprobanteConcepto;
-using Pagos = SW.Tools.Entities.Pagos;
 
 namespace SW.Tools.Helpers
 {
@@ -92,7 +86,7 @@ namespace SW.Tools.Helpers
                 stream = new MemoryStream();
                 writer = new StreamWriter(stream, encoding);
 
-                XmlSerializer serializer = new XmlSerializer(typeof(Entities.Pagos));
+                XmlSerializer serializer = new XmlSerializer(typeof(Pagos));
                 serializer.Serialize(writer, pagos, ns);
                 int count = (int)stream.Length;
                 byte[] arr = new byte[count];

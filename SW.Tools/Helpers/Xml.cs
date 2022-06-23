@@ -50,25 +50,5 @@ namespace SW.Tools.Helpers
                                                 )));
             return xmlSolicitud.ToString();
         }
-        public static string RemoveComplementNamespace(string xml)
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(xml);
-            var complemento = doc.GetElementsByTagName("cfdi:Complemento");
-            if (complemento.Count != 0)
-            {
-                var ns = complemento[0].FirstChild.Prefix;
-                foreach (XmlNode child in complemento[0].ChildNodes)
-                {
-                    if (child.Attributes["xmlns:" + ns] != null)
-                        child.Attributes.Remove(child.Attributes["xmlns:" + ns]);
-                    break;
-                }
-            }
-
-            return doc.OuterXml;
-        }
     }
 }
-
-
