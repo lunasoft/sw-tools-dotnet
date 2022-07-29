@@ -74,7 +74,11 @@
     <Compile Include="Catalogs\c_ClaveProdServ.cs" />
     <Compile Include="Entities\Cancelacion\Cancelacion.cs" />
     <Compile Include="Entities\Cancelacion\CancelacionMotivo.cs" />
+    <Compile Include="Entities\Response\CertificatesResponse.cs" />
+    <Compile Include="Entities\Response\Response.cs" />
     <Compile Include="Entities\StampResponse\StampResponse.cs" />
+    <Compile Include="Handlers\ResponseHandler\CertificatesResponseHandler.cs" />
+    <Compile Include="Handlers\ResponseHandler\ResponseHandler.cs" />
     <Compile Include="Helpers\DotNetUtilitiesCustom.cs" />
     <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="Catalogs\c_Moneda_Element.cs" />
@@ -88,11 +92,14 @@
     <Compile Include="Entities\ToolsException.cs" />
     <Compile Include="Entities\YearsMonthsDays.cs" />
     <Compile Include="Errors.cs" />
+    <Compile Include="Helpers\ResponseHelper.cs" />
     <Compile Include="Resources\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\Certificates\Certificates.cs" />
+    <Compile Include="Services\Certificates\CertificatesService.cs" />
     <Compile Include="Services\Fiscal\Fiscal.cs" />
     <Compile Include="Helpers\Coins.cs" />
     <Compile Include="Helpers\DateTime.cs" />
