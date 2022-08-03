@@ -76,6 +76,7 @@
     <Compile Include="Entities\Cancelacion\CancelacionMotivo.cs" />
     <Compile Include="Entities\Response\CertificateResponse.cs" />
     <Compile Include="Entities\Response\Response.cs" />
+    <Compile Include="Entities\Response\SignResponse.cs" />
     <Compile Include="Entities\StampResponse\StampResponse.cs" />
     <Compile Include="Handlers\ResponseHandler.cs" />
     <Compile Include="Services\Certificate\CertificateResponseHandler.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Helpers\XmlExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Convertion\ConvertionService.cs" />
+    <Compile Include="Services\Sign\SignResponseHandler.cs" />
     <Compile Include="Services\Sign\Sign.cs" />
     <Compile Include="Services\Convertion\Convertion.cs" />
     <Compile Include="Services\Sign\SignService.cs" />
