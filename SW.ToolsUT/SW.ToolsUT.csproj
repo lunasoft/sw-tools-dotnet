@@ -69,6 +69,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Helpers\BuildSettings.cs" />
+    <Compile Include="UT_Tools_Certificate.cs" />
     <Compile Include="UT_Tools_BuildInvoiceCFDI33.cs" />
     <Compile Include="UT_Tools_Fiscal.cs" />
     <Compile Include="UT_Tools_Convertion.cs" />
@@ -84,6 +85,12 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Resources\certificadoFIEL.cer">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\certificadoNoCSD.cer">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\CSD_Pruebas_CFDI_EKU9003173C9.cer">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
