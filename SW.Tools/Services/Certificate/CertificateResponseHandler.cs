@@ -15,9 +15,9 @@ namespace SW.Tools.Handlers.CertificateResponseHandler
         {
             return GetResponse(e);
         }
-        internal static InfoCertificateResponse HandleException(CryptographicException e)
+        internal static InfoCertificateResponse HandleException(Exception e, string message)
         {
-            return GetResponse(e);
+            return GetResponse(e, message);
         }
     }
     internal class VerifyCertificateResponseHandler : ResponseHandler<VerifyCertificateResponse>
@@ -26,9 +26,9 @@ namespace SW.Tools.Handlers.CertificateResponseHandler
         {
             return GetResponse(e);
         }
-        internal static VerifyCertificateResponse HandleException(CryptographicException e)
+        internal static VerifyCertificateResponse HandleException(Exception e, string message)
         {
-            return GetResponse(e);
+            return GetResponse(e, message);
         }
     }
 }

@@ -38,7 +38,7 @@ namespace SW.Tools.Services.Certificate
             }
             catch(CryptographicException e)
             {
-                return VerifyCertificateResponseHandler.HandleException(e);
+                return VerifyCertificateResponseHandler.HandleException(e, "El certificado no es válido o se encuentra corrupto.");
             }
             catch (Exception e)
             {
@@ -64,7 +64,7 @@ namespace SW.Tools.Services.Certificate
             } 
             catch(CryptographicException e)
             {
-                return InfoCertificateResponseHandler.HandleException(e);
+                return InfoCertificateResponseHandler.HandleException(e, "El certificado no es válido o se encuentra corrupto.");
             } 
             catch(Exception e)
             {
