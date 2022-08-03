@@ -1,59 +1,57 @@
 ﻿using SW.Tools.Entities.Response;
-using SW.Tools.Handlers.ResponseHandler;
+using SW.Tools.Handlers.CertificateResponseHandler;
 using SW.Tools.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SW.Tools.Services.Certificates
+namespace SW.Tools.Services.Certificate
 {
-    public class CertificatesService
+    public class CertificateService
     {
-        internal static Response VerifyCertificateType(byte[] cer)
+        internal static VerifyCertificateResponse VerifyCertificateType(byte[] cer)
         {
             try
             {
                 X509Certificate2 x509Certificate = new X509Certificate2(cer);
                 List<X509KeyUsageExtension> extension = x509Certificate.Extensions.OfType<X509KeyUsageExtension>().ToList();
-                Response response = new Response();
+                VerifyCertificateResponse response = new VerifyCertificateResponse();
                 if (isFIEL(extension))
                 {
-                    response.message = "El certificado es FIEL";
+                    response.data = "El certificado es FIEL.";
                 }
                 else
                 {
                     if (isCSD(extension))
                     {
-                        response.message = "El certificado es CSD";
+                        response.data = "El certificado es CSD.";
                     }
                     else
                     {
                         response.status = "error";
-                        response.message = "El certificado no es CSD ni FIEL";
+                        response.data = "El certificado no es CSD ni FIEL.";
                     }
                 }
                 return response;
             }
             catch(CryptographicException e)
             {
-                return ResponseHandler.HandleException(e, "El certificado no es válido o está corrupto");
+                return VerifyCertificateResponseHandler.HandleException(e);
             }
             catch (Exception e)
             {
-                return ResponseHandler.HandleException(e, "Ocurrió un error inesperado");
+                return VerifyCertificateResponseHandler.HandleException(e);
             }
         }
-        internal static CertificatesResponse ReadCertificate(byte[] cer)
+        internal static InfoCertificateResponse ReadCertificate(byte[] cer)
         {
             try
             {
-                CertificatesResponse response = new CertificatesResponse();
+                InfoCertificateResponse response = new InfoCertificateResponse();
                 X509Certificate2 x509Certificate = new X509Certificate2(cer);
-                response.data = new CertificatesResponseData()
+                response.data = new InfoCertificateResponseData()
                 {
                     commonName = x509Certificate.GetNameInfo(X509NameType.SimpleName, false),
                     certificateNumber = SignUtils.CertificateNumber(x509Certificate),
@@ -66,11 +64,11 @@ namespace SW.Tools.Services.Certificates
             } 
             catch(CryptographicException e)
             {
-                return CertificatesResponseHandler.HandleException(e, "El certificado no es válido o está corrupto");
+                return InfoCertificateResponseHandler.HandleException(e);
             } 
             catch(Exception e)
             {
-                return CertificatesResponseHandler.HandleException(e, "Ocurrió un error inesperado");
+                return InfoCertificateResponseHandler.HandleException(e);
             }
         }
         #region Private

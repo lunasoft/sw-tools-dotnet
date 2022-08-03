@@ -2,9 +2,9 @@
 using System;
 using System.Security.Cryptography;
 
-namespace SW.Tools.Services.Certificates
+namespace SW.Tools.Services.Certificate
 {
-    public class Certificates : CertificatesService
+    public class Certificate : CertificateService
     {
         /// <summary>
         /// Servicio que verifica si un certificado es de tipo FIEL, CSD o ninguno de los dos.
@@ -12,8 +12,8 @@ namespace SW.Tools.Services.Certificates
         /// <param name="certificado">Certificado.</param>
         /// <exception cref="CryptographicException"></exception>
         /// <exception cref="Exception"></exception>
-        /// <returns>Un objeto <see cref="Response"/></returns>
-        public static Response VerificarTipoCertificado(byte[] certificado)
+        /// <returns>Un objeto <see cref="VerifyCertificateResponse"/></returns>
+        public static VerifyCertificateResponse VerificarTipoCertificado(byte[] certificado)
         {
             return VerifyCertificateType(certificado);
         }
@@ -23,8 +23,8 @@ namespace SW.Tools.Services.Certificates
         /// <param name="certificado">Certificado.</param>
         /// <exception cref="CryptographicException"></exception>
         /// <exception cref="Exception"></exception>
-        /// <returns>Un objeto <see cref="CertificatesResponse"/></returns>
-        public static CertificatesResponse LeerCertificado(byte[] certificado)
+        /// <returns>Un objeto <see cref="InfoCertificateResponse"/></returns>
+        public static InfoCertificateResponse LeerCertificado(byte[] certificado)
         {
             return ReadCertificate(certificado);
         }
