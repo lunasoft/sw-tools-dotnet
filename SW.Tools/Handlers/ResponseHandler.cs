@@ -21,11 +21,16 @@ namespace SW.Tools.Handlers
         }
         private static T TryGetResponse(Exception e, string message = null)
         {
+            string messageDetail = ResponseHelper<Exception>.GetErrorDetail(e);
+            if(String.IsNullOrEmpty(messageDetail) && !String.IsNullOrEmpty(message))
+            {
+                messageDetail = e.Message;
+            }
             return new T()
             {
                 status = "error",
                 message = message ?? e.Message,
-                messageDetail = ResponseHelper<Exception>.GetErrorDetail(e)
+                messageDetail = messageDetail ?? e.StackTrace.Trim()
             };
         }
     }
