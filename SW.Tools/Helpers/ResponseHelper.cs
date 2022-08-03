@@ -8,30 +8,20 @@ using System.Threading.Tasks;
 
 namespace SW.Tools.Helpers
 {
-    internal class ResponseHelper
+    internal class ResponseHelper<T> where T : Exception, new()
     {
-        internal static Response GetResponse(string message, string messageDetail)
+        internal static string GetErrorDetail(T e)
         {
-            return new Response()
-            {
-                status = "error",
-                message = message,
-                messageDetail = messageDetail
-            };
+            return TryGetErrorDetail(e);
         }
-        internal static CertificatesResponse GetCertificatesResponse(string message, string messageDetail)
+        private static string TryGetErrorDetail(T e)
         {
-            return new CertificatesResponse()
+            if (e.InnerException != null)
+                return e.InnerException.Message;
+            else if(!String.IsNullOrEmpty(e.StackTrace))
             {
-                status = "error",
-                message = message,
-                messageDetail = messageDetail
-            };
-        }
-        internal static string GetErrorDetail(Exception ex)
-        {
-            if (ex.InnerException != null)
-                return ex.InnerException.Message;
+                return e.StackTrace;
+            }
             else
                 return null;
         }
