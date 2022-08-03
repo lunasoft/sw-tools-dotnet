@@ -1,123 +1,19 @@
-﻿using SW.Tools.Entities;
-using SW.Tools.Services.Fiscal;
+﻿using SW.Tools.Cfdi;
+using SW.Tools.Helpers;
 using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization.Json;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 
 namespace SW.Tools.Helpers
 {
-    public partial class Serializer
+    public partial class SerializerCfdi40
     {
-        public static string SerializeDocumentToXml<T>(T obj)
-        {
-            try
-            {
-                string xmlString = null;
-                MemoryStream memoryStream = new MemoryStream();
-                XmlSerializer xs = new XmlSerializer(typeof(T));
-                XmlTextWriter xmlTextWriter = new XmlTextWriter(memoryStream, Encoding.UTF8);
-                xs.Serialize(xmlTextWriter, obj);
-                memoryStream = (MemoryStream)xmlTextWriter.BaseStream;
-                xmlString = Helpers.Encodins.UTF8ByteArrayToString(memoryStream.ToArray());
-                return Helpers.Xml.RemoveInvalidCharacters(xmlString);
-            }
-            catch(Exception ex)
-            {
-                var a = ex;
-                return string.Empty;
-            }
-        }
-        public static string SerializeJson<T>(T obj)
-        {
-            DataContractJsonSerializer js = new DataContractJsonSerializer(typeof(T));
-            MemoryStream stream = new MemoryStream();
-            js.WriteObject(stream, obj);
-            stream.Position = 0;
-            StreamReader reader = new StreamReader(stream, Encoding.UTF8);
-            string json = reader.ReadToEnd();
-            reader.Close();
-            stream.Close();
-
-            return Fiscal.RemoverCaracteresInvalidosJson(json);
-        }
-        public static T DeserializeJson<T>(string json)
-        {
-            using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(json)))
-            {
-                DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(T));
-                T obj = (T)deserializer.ReadObject(ms);
-                return obj;
-            }
-        }
-        public static T DeserealizeDocument<T>(string xml)
-        {
-            StringReader stream = null;
-            XmlTextReader reader = null;
-            try
-            {
-                XmlSerializer serializer = new XmlSerializer(typeof(T));
-                stream = new StringReader(xml);
-                reader = new XmlTextReader(stream);
-                return (T)serializer.Deserialize(reader);
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-            finally
-            {
-                if (stream != null) stream.Close();
-                if (reader != null) reader.Close();
-            }
-        }
-        public static string SerializeDocument(Pagos pagos)
-        {
-            MemoryStream stream = null;
-            TextWriter writer = null;
-            try
-            {
-                UTF8Encoding encoding = new UTF8Encoding();
-                XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-                ns.Add("pago10", "http://www.sat.gob.mx/Pagos");
-
-                stream = new MemoryStream();
-                writer = new StreamWriter(stream, encoding);
-
-                XmlSerializer serializer = new XmlSerializer(typeof(Pagos));
-                serializer.Serialize(writer, pagos, ns);
-                int count = (int)stream.Length;
-                byte[] arr = new byte[count];
-                stream.Seek(0, SeekOrigin.Begin);
-                stream.Read(arr, 0, count);
-                string xml = encoding.GetString(arr).Trim();
-
-                XmlDocument doc = new XmlDocument();
-                doc.LoadXml(xml);
-
-                XmlAttribute aSchemaLocation = doc.CreateAttribute("xsi", "schemaLocation", "http://www.w3.org/2001/XMLSchema-instance");
-                aSchemaLocation.Value = "http://www.sat.gob.mx/Pagos http://www.sat.gob.mx/sitio_internet/cfd/Pagos/Pagos10.xsd";
-                doc.ChildNodes[1].Attributes.InsertBefore(aSchemaLocation, doc.ChildNodes[1].Attributes[0]);
-                return doc.OuterXml;
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-            finally
-            {
-                if (stream != null) stream.Close();
-                if (writer != null) writer.Close();
-            }
-        }
-
-    }
-
-    public partial class Serializer
-    {
-        static XmlSerializer cfdi33Serializer = new XmlSerializer(typeof(Comprobante));
+        static XmlSerializer cfdi40Serializer = new XmlSerializer(typeof(Comprobante));
         public static string SerializeDocument(Comprobante comprobante)
         {
             MemoryStream stream = null;
@@ -126,9 +22,9 @@ namespace SW.Tools.Helpers
             try
             {
                 XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-                ns.Add("cfdi", "http://www.sat.gob.mx/cfd/3");
+                ns.Add("cfdi", "http://www.sat.gob.mx/cfd/4");
 
-                string schemaValues = "http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd";
+                string schemaValues = "http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd";
 
                 if (comprobante.HasComplemento)
                 {
@@ -244,9 +140,9 @@ namespace SW.Tools.Helpers
                                     schemaValues += " http://www.sat.gob.mx/ine http://www.sat.gob.mx/sitio_internet/cfd/ine/ine11.xsd";
                                     ns.Add("ine", "http://www.sat.gob.mx/ine");
                                     break;
-                                case "pago10:pagos":
-                                    schemaValues += " http://www.sat.gob.mx/Pagos http://www.sat.gob.mx/sitio_internet/cfd/Pagos/Pagos10.xsd";
-                                    ns.Add("pago10", "http://www.sat.gob.mx/Pagos");
+                                case "pago20:pagos":
+                                    schemaValues += " http://www.sat.gob.mx/Pagos20 http://www.sat.gob.mx/sitio_internet/cfd/Pagos/Pagos20.xsd";
+                                    ns.Add("pago20", "http://www.sat.gob.mx/Pagos20");
                                     break;
                             }
                         }
@@ -313,7 +209,7 @@ namespace SW.Tools.Helpers
                 aSchemaLocation.Value = schemaValues;
                 doc.ChildNodes[1].Attributes.InsertBefore(aSchemaLocation, doc.ChildNodes[1].Attributes[0]);
 
-                return doc.OuterXml;
+                return Xml.RemoveComplementNamespace(doc.OuterXml);
             }
             catch (Exception e)
             {
@@ -333,7 +229,7 @@ namespace SW.Tools.Helpers
             {
                 stream = new StringReader(xml);
                 reader = new XmlTextReader(stream);
-                return (Comprobante)cfdi33Serializer.Deserialize(reader);
+                return (Comprobante)cfdi40Serializer.Deserialize(reader);
             }
             catch (Exception e)
             {
