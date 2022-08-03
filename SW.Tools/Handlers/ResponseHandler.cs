@@ -15,26 +15,17 @@ namespace SW.Tools.Handlers
         {
             return TryGetResponse(e);
         }
-        internal static T GetResponse(CryptographicException e)
+        internal static T GetResponse(Exception e, string message)
         {
-            return TryGetResponse(e);
+            return TryGetResponse(e, message);
         }
-        private static T TryGetResponse(Exception e)
+        private static T TryGetResponse(Exception e, string message = null)
         {
             return new T()
             {
                 status = "error",
-                message = e.Message,
+                message = message ?? e.Message,
                 messageDetail = ResponseHelper<Exception>.GetErrorDetail(e)
-            };
-        }
-        private static T TryGetResponse(CryptographicException e)
-        {
-            return new T()
-            {
-                status = "error",
-                message = e.Message,
-                messageDetail = ResponseHelper<CryptographicException>.GetErrorDetail(e)
             };
         }
     }

@@ -20,7 +20,7 @@ namespace SW.Tools.Helpers
                 return e.InnerException.Message;
             else if(!String.IsNullOrEmpty(e.StackTrace))
             {
-                return e.StackTrace;
+                return e.StackTrace.Trim();
             }
             else
                 return null;
