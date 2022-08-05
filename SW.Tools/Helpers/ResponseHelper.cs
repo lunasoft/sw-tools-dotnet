@@ -18,10 +18,6 @@ namespace SW.Tools.Helpers
         {
             if (e.InnerException != null)
                 return e.InnerException.Message;
-            else if(!String.IsNullOrEmpty(e.StackTrace))
-            {
-                return e.StackTrace.Trim();
-            }
             else
                 return null;
         }

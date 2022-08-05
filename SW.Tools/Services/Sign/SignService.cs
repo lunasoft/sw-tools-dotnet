@@ -2,12 +2,15 @@
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;
 using SW.Tools.Entities.Cancelacion;
+using SW.Tools.Entities.Response;
+using SW.Tools.Handlers.SignResponseHandler;
 using SW.Tools.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using System.Xml;
 using System.Xml.Xsl;
 
 namespace SW.Tools.Services.Sign
@@ -117,6 +120,31 @@ namespace SW.Tools.Services.Sign
             catch(Exception e)
             {
                 throw new Exception("Los folios no tienen un formato valido.", e);
+            }
+        }
+        internal static SignResponse SignXml(string xml, byte[] pfx, string password)
+        {
+            try
+            {
+                return new SignResponse()
+                {
+                    data = new SignDataResponse()
+                    {
+                        xml = SignUtils.SignXml(xml, pfx, password)
+                    }
+                };
+            }
+            catch (XmlException e)
+            {
+                return SignResponseHandler.HandleException(e, "El XML no es válido o no tiene un formato correcto.");
+            }
+            catch (CryptographicException e)
+            {
+                return SignResponseHandler.HandleException(e, "El certificado no es válido o se encuentra corrupto.");
+            }
+            catch (Exception e)
+            {
+                return SignResponseHandler.HandleException(e);
             }
         }
         internal static void ValidarCancelacion(List<Cancelacion> folios)

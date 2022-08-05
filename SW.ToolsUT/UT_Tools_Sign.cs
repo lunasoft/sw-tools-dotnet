@@ -11,6 +11,7 @@ using SW.Services.Cancelation;
 using SW.ToolsUT.Helpers;
 using System.Security.Cryptography;
 using SW.Tools.Entities.Cancelacion;
+using SW.Services.AcceptReject;
 
 namespace SW.ToolsUT
 {
@@ -269,5 +270,113 @@ namespace SW.ToolsUT
                 throw;
             }
         }
+        #region UT_FirmarXML
+        /// <summary>
+        /// Firmar XML de aceptacion rechazo.
+        /// </summary>
+        [TestMethod]
+        public void UT_Tools_FirmarXml_AceptacionRechazo_Success()
+        {
+            var build = new BuildSettings();
+            var pfx = Sign.CrearPFX(build.BytesCer, build.BytesKey, build.CerPassword);
+            var result = Sign.FirmarXML(GetXml("aceptacionRechazo.xml"), pfx, build.CerPassword);
+            Assert.Equals(result.status, "success");
+            Assert.IsNotNull(result.data);
+            Assert.IsTrue(!String.IsNullOrEmpty(result.data.xml));
+            var accept = new AcceptReject(build.Url, build.Token);
+            var response = accept.AcceptByXML(Encoding.UTF8.GetBytes(result.data.xml), SW.Helpers.EnumAcceptReject.Aceptacion);
+            Assert.Equals(response.status, "success");
+            Assert.IsTrue(!String.IsNullOrEmpty(response.codStatus));
+            Assert.IsNotNull(response.data);
+            Assert.IsTrue(!String.IsNullOrEmpty(response.data.acuse));
+        }
+        /// <summary>
+        /// Firmar XML de cancelacion.
+        /// </summary>
+        [TestMethod]
+        public void UT_Tools_FirmarXml_Cancelacion_Success()
+        {
+            var build = new BuildSettings();
+            var pfx = Sign.CrearPFX(build.BytesCer, build.BytesKey, build.CerPassword);
+            var result = Sign.FirmarXML(GetXml("aceptacionRechazo.xml"), pfx, build.CerPassword);
+            Assert.Equals(result.status, "success");
+            Assert.IsNotNull(result.data);
+            Assert.IsTrue(!String.IsNullOrEmpty(result.data.xml));
+            var cancelacion = new Cancelation(build.Url, build.Token);
+            var response = cancelacion.CancelarByXML(Encoding.UTF8.GetBytes(result.data.xml));
+            Assert.Equals(response.status, "success");
+            Assert.IsNotNull(response.data);
+            Assert.IsTrue(!String.IsNullOrEmpty(response.data.acuse));
+        }
+        /// <summary>
+        /// XML invalido.
+        /// </summary>
+        [TestMethod]
+        public void UT_Tools_FirmarXml_InvalidXML_Error()
+        {
+            var build = new BuildSettings();
+            var pfx = Sign.CrearPFX(build.BytesCer, build.BytesKey, build.CerPassword);
+            var result = Sign.FirmarXML(GetXml("invalidXml.xml"), pfx, build.CerPassword);
+            Assert.AreEqual(result.status, "error");
+            Assert.IsTrue(!String.IsNullOrEmpty(result.message));
+            Assert.IsTrue(!String.IsNullOrEmpty(result.messageDetail));
+        }
+        /// <summary>
+        /// XML vacío.
+        /// </summary>
+        [TestMethod]
+        public void UT_Tools_FirmarXml_EmptyXML_Error()
+        {
+            var build = new BuildSettings();
+            var pfx = Sign.CrearPFX(build.BytesCer, build.BytesKey, build.CerPassword);
+            var result = Sign.FirmarXML(String.Empty, pfx, build.CerPassword);
+            Assert.AreEqual(result.status, "error");
+            Assert.IsTrue(!String.IsNullOrEmpty(result.message));
+            Assert.IsTrue(!String.IsNullOrEmpty(result.messageDetail));
+        }
+        /// <summary>
+        /// PFX invalido.
+        /// </summary>
+        [TestMethod]
+        public void UT_Tools_FirmarXml_InvalidPfx_Error()
+        {
+            var build = new BuildSettings();
+            var result = Sign.FirmarXML(GetXml("cancelacionCFDI.xml"), build.BytesCer, build.CerPassword);
+            Assert.AreEqual(result.status, "error");
+            Assert.IsTrue(!String.IsNullOrEmpty(result.message));
+            Assert.IsTrue(!String.IsNullOrEmpty(result.messageDetail));
+        }
+        /// <summary>
+        /// Contraseña incorrecta.
+        /// </summary>
+        [TestMethod]
+        public void UT_Tools_FirmarXml_InvalidPassword_Error()
+        {
+            var build = new BuildSettings();
+            var pfx = Sign.CrearPFX(build.BytesCer, build.BytesKey, build.CerPassword);
+            var result = Sign.FirmarXML(GetXml("cancelacionCFDI.xml"), pfx, "pass");
+            Assert.AreEqual(result.status, "error");
+            Assert.IsTrue(!String.IsNullOrEmpty(result.message));
+            Assert.IsTrue(!String.IsNullOrEmpty(result.messageDetail));
+        }
+        /// <summary>
+        /// PFX vacío.
+        /// </summary>
+        [TestMethod]
+        public void UT_Tools_FirmarXml_EmptyPfx_Error()
+        {
+            var build = new BuildSettings();
+            var result = Sign.FirmarXML(GetXml("cancelacionCFDI.xml"), null, build.CerPassword);
+            Assert.AreEqual(result.status, "error");
+            Assert.IsTrue(!String.IsNullOrEmpty(result.message));
+            Assert.IsTrue(!String.IsNullOrEmpty(result.messageDetail));
+        }
+        #endregion
+        #region Private
+        private static string GetXml(string filename)
+        {
+            return Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(String.Format(@"Resources\Sign\{0}",filename))));
+        }
+        #endregion
     }
 }

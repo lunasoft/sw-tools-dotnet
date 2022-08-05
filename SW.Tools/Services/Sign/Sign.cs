@@ -1,4 +1,5 @@
 ﻿using SW.Tools.Entities.Cancelacion;
+using SW.Tools.Entities.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -162,6 +163,18 @@ namespace SW.Tools.Services.Sign
             {
                 throw;
             }
+        }
+        /// <summary>
+        /// Firmar un XML previamente creado, se puede firmar los documentos: 
+        /// <para>Cancelacion, Aceptacion Rechazo</para>
+        /// </summary>
+        /// <param name="xml">XML al que se le aplicará la firma o signature.</param>
+        /// <param name="pfx">Certificado PFX.</param>
+        /// <param name="password">Contraseña del certificado PFX.</param>
+        /// <returns>Un objeto <see cref="SignResponse"/></returns>
+        public static SignResponse FirmarXML(string xml, byte[] pfx, string password)
+        {
+            return SignService.SignXml(xml, pfx, password);
         }
         #endregion
     }
