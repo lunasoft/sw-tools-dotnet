@@ -249,6 +249,20 @@ namespace SW.ToolsUT
             Assert.IsNotNull(result.message);
             Assert.IsNotNull(result.messageDetail);
         }
+        [TestMethod]
+        public void UT_Tools_SellarAceptacionRechazo_InvalidParameters_Error()
+        {
+            var pfx = Sign.CrearPFX(_build.BytesCer, _build.BytesKey, _build.CerPassword);
+            List<AceptacionRechazo> folios = new List<AceptacionRechazo>();
+            folios.Add(new AceptacionRechazo()
+            {
+                Folio = Guid.NewGuid()
+            });
+            var result = Sign.SellarAceptacionRechazo(folios, null, pfx, _build.CerPassword);
+            Assert.AreEqual(result.status, "error");
+            Assert.IsNotNull(result.message);
+            Assert.IsNotNull(result.messageDetail);
+        }
         #endregion
         [TestMethod]
         [ExpectedException(typeof(Exception), "Los folios no tienen un formato válido.")]
