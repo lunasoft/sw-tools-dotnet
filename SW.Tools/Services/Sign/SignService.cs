@@ -126,7 +126,7 @@ namespace SW.Tools.Services.Sign
         {
             try
             {
-                Validation.ValidarAceptacionRechazo(aceptacionRechazo);
+                Validation.ValidarAceptacionRechazo(aceptacionRechazo, rfcReceptor, pfx, password);
                 string xml = Xml.CreateAcceptRejectXML(aceptacionRechazo, rfcReceptor);
                 xml = SignUtils.SignXml(xml, pfx, password);
                 return new SignResponse()

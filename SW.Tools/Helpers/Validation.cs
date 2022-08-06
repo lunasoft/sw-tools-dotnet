@@ -28,9 +28,13 @@ namespace SW.Tools.Helpers
                 throw new Exception("Los folios no tienen un formato válido.");
             }
         }
-        internal static void ValidarAceptacionRechazo(List<AceptacionRechazo> folios)
+        internal static void ValidarAceptacionRechazo(List<AceptacionRechazo> folios, string rfcReceptor, byte[] pfx, string password)
         {
-            if(folios != null && folios.Count > 0)
+            if (String.IsNullOrEmpty(rfcReceptor) || pfx is null || pfx.Length <= 0 || String.IsNullOrEmpty(password))
+            {
+                throw new Exception("Parametros incompletos.", new Exception("Son necesarios el RFC Receptor, el certificado PFX y la contraseña."));
+            }
+            if (folios != null && folios.Count > 0)
             {
                 if (folios.Count > 500)
                 {
@@ -40,7 +44,8 @@ namespace SW.Tools.Helpers
                 {
                     throw new Exception("Los folios no tienen un formato válido.");
                 }
-            }else
+            } 
+            else
             {
                 throw new Exception("Folios inválidos, la lista de folios está vacía o no es correcta.");
             }
