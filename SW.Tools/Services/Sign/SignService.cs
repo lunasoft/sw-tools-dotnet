@@ -15,7 +15,7 @@ using System.Xml.Xsl;
 
 namespace SW.Tools.Services.Sign
 {
-    internal class SignService
+    public class SignService
     {
         internal static byte[] CreatePFX(byte[] bytesCER, byte[] bytesKEY, string password)
         {
@@ -122,6 +122,34 @@ namespace SW.Tools.Services.Sign
                 throw new Exception("Los folios no tienen un formato valido.", e);
             }
         }
+        internal static SignResponse SignAceptacionRechazo(List<AceptacionRechazo> aceptacionRechazo, string rfcReceptor, byte[] pfx, string password)
+        {
+            try
+            {
+                Validation.ValidarAceptacionRechazo(aceptacionRechazo, rfcReceptor, pfx, password);
+                string xml = Xml.CreateAcceptRejectXML(aceptacionRechazo, rfcReceptor);
+                xml = SignUtils.SignXml(xml, pfx, password);
+                return new SignResponse()
+                {
+                    data = new SignDataResponse()
+                    {
+                        xml = xml
+                    }
+                };
+            }
+            catch (XmlException e)
+            {
+                return SignResponseHandler.HandleException(e, "Ocurrió un error al construir el XML.");
+            }
+            catch (CryptographicException e)
+            {
+                return SignResponseHandler.HandleException(e, "El certificado no es válido o se encuentra corrupto.");
+            }
+            catch (Exception e)
+            {
+                return SignResponseHandler.HandleException(e);
+            }
+        }
         internal static SignResponse SignXml(string xml, byte[] pfx, string password)
         {
             try
@@ -145,24 +173,6 @@ namespace SW.Tools.Services.Sign
             catch (Exception e)
             {
                 return SignResponseHandler.HandleException(e);
-            }
-        }
-        internal static void ValidarCancelacion(List<Cancelacion> folios)
-        {
-            if (folios.Count > 500)
-            {
-                throw new Exception("Se ha excedido el limite de folios a cancelar.");
-            }
-            if (folios.Any(l => l.Motivo == 0))
-            {
-                throw new Exception("No se ha especificado un motivo de cancelacion.");
-            }
-            if (folios.Any(l => l.Motivo == CancelacionMotivo.Motivo01 && l.FolioSustitucion is null))
-            {
-                throw new Exception("El motivo de cancelación no es válido.");
-            }
-            if (folios.Any(l => l.Folio == Guid.Empty)){
-                throw new Exception("Los folios no tienen un formato válido.");
             }
         }
     }

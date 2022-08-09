@@ -1,12 +1,13 @@
 ﻿using SW.Tools.Entities.Cancelacion;
 using SW.Tools.Entities.Response;
+using SW.Tools.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace SW.Tools.Services.Sign
 {
-    public class Sign
+    public class Sign : SignService
     {
         #region Public 
         /// <summary>
@@ -154,7 +155,7 @@ namespace SW.Tools.Services.Sign
             {
                 if (folios.Count > 0)
                 {
-                    SignService.ValidarCancelacion(folios);
+                    Validation.ValidarCancelacion(folios);
                     return SignService.SignCancelacion(folios, rfcEmisor, pfx, password, isRetencion);
                 }
                 throw new Exception("El listado de folios esta vacio.");
@@ -163,6 +164,18 @@ namespace SW.Tools.Services.Sign
             {
                 throw;
             }
+        }
+        /// <summary>
+        /// Servicio para crear y firmar un XML de aceptacion rechazo de folios pendientes de cancelación.
+        /// </summary>
+        /// <param name="folios">Listado de folios pendientes de aceptación o rechazo.</param>
+        /// <param name="rfcReceptor">RFC del receptor.</param>
+        /// <param name="pfx">Certificado PFX.</param>
+        /// <param name="password">Contraseña del certificado PFX.</param>
+        /// <returns>Un objeto <see cref="SignResponse"/></returns>
+        public static SignResponse SellarAceptacionRechazo(List<AceptacionRechazo> folios, string rfcReceptor, byte[] pfx, string password)
+        {
+            return SignAceptacionRechazo(folios, rfcReceptor, pfx, password);
         }
         /// <summary>
         /// Firmar un XML previamente creado, se puede firmar los documentos: 

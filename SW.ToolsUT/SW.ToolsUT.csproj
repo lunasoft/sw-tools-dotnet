@@ -121,6 +121,9 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\Sign\aceptacionRechazoFolios.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\stampResponseV4.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
