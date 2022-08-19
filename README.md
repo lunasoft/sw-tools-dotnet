@@ -291,7 +291,7 @@ namespace ExampleSDK
 
 ## Generar y sellar xml cancelación ##
 
-Puedes construir y sellar un xml de cancelación incluyendo el/los UUID a cancelar
+Puedes construir y sellar un xml de cancelación incluyendo el/los UUID a cancelar.
 - Folios (UUID, motivo, foliosustitucion)
 - RFC emisor
 - [PFX](#Crear_PFX) en Base64
@@ -517,7 +517,7 @@ namespace ExampleSDK
 
 ## Validar CSD/FIEL ##
 
-Mediante la siguiente función podrás validar si un certificado(.cer) es de tipo FIEL o de tipo CSD
+Mediante la siguiente función podrás validar si un certificado(.cer) es de tipo FIEL o de tipo CSD.
 - Certificado (.cer) en Base64
 - Key (.key) en Base64
 - Password del archivo key
