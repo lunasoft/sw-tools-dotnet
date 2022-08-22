@@ -11,12 +11,18 @@ using SW.Services.Cancelation;
 using SW.ToolsUT.Helpers;
 using System.Security.Cryptography;
 using SW.Tools.Entities.Cancelacion;
+using SW.Services.AcceptReject;
 
 namespace SW.ToolsUT
 {
     [TestClass]
     public class UT_Tools_Sign
     {
+        private BuildSettings _build;
+        public UT_Tools_Sign()
+        {
+            _build = new BuildSettings();
+        }
         /// <summary>
         /// Sign
         /// </summary>
@@ -173,6 +179,91 @@ namespace SW.ToolsUT
             var cancelacion = cancelation.CancelarByXML(Encoding.UTF8.GetBytes(xml));
             Assert.IsTrue(cancelacion.status == "success");
         }
+        #region UT_SellarAceptacionRechazo
+        [TestMethod]
+        public void UT_Tools_SellarAceptacionRechazo_UniqueUUID_OK()
+        {
+            var pfx = Sign.CrearPFX(_build.BytesCer, _build.BytesKey, _build.CerPassword);
+            List<AceptacionRechazo> folios = new List<AceptacionRechazo>();
+            folios.Add(new AceptacionRechazo()
+            {
+                Folio = Guid.Parse("FD74D156-B9B0-44A5-9906-E08182E8363E"),
+                Respuesta = AceptacionRechazoRespuesta.Aceptacion
+            });
+            var result = Sign.SellarAceptacionRechazo(folios, _build.RfcEmisor, pfx, _build.CerPassword);
+            Assert.AreEqual(result.status, "success");
+            Assert.IsNotNull(result.data);
+            Assert.IsTrue(!String.IsNullOrEmpty(result.data.xml));
+            AcceptReject acceptReject = new AcceptReject(_build.Url, _build.Token);
+            var response = acceptReject.AcceptByXML(Encoding.UTF8.GetBytes(result.data.xml), SW.Helpers.EnumAcceptReject.Aceptacion);
+            Assert.IsTrue(response.status == "success");
+        }
+        [TestMethod]
+        public void UT_Tools_SellarAceptacionRechazo_MultipleUUID_OK()
+        {
+            var pfx = Sign.CrearPFX(_build.BytesCer, _build.BytesKey, _build.CerPassword);
+            var folios = GetFolios();
+            var result = Sign.SellarAceptacionRechazo(folios, _build.RfcEmisor, pfx, _build.CerPassword);
+            Assert.AreEqual(result.status, "success");
+            Assert.IsNotNull(result.data);
+            Assert.IsTrue(!String.IsNullOrEmpty(result.data.xml));
+            AcceptReject acceptReject = new AcceptReject(_build.Url, _build.Token);
+            var response = acceptReject.AcceptByXML(Encoding.UTF8.GetBytes(result.data.xml), SW.Helpers.EnumAcceptReject.Rechazo);
+            Assert.IsTrue(response.status == "success");
+        }
+        [TestMethod]
+        public void UT_Tools_SellarAceptacionRechazo_EmptyFolios_Error()
+        {
+            var pfx = Sign.CrearPFX(_build.BytesCer, _build.BytesKey, _build.CerPassword);
+            var result = Sign.SellarAceptacionRechazo(null, _build.RfcEmisor, pfx, _build.CerPassword);
+            Assert.AreEqual(result.status, "error");
+            Assert.IsNotNull(result.message);
+            Assert.IsNotNull(result.messageDetail);
+        }
+        [TestMethod]
+        public void UT_Tools_SellarAceptacionRechazo_InvalidFolios_Error()
+        {
+            var pfx = Sign.CrearPFX(_build.BytesCer, _build.BytesKey, _build.CerPassword);
+            List<AceptacionRechazo> folios = new List<AceptacionRechazo>();
+            folios.Add(new AceptacionRechazo()
+            {
+                Folio = Guid.Empty,
+                Respuesta = AceptacionRechazoRespuesta.Rechazo
+            });
+            var result = Sign.SellarAceptacionRechazo(folios, _build.RfcEmisor, pfx, _build.CerPassword);
+            Assert.AreEqual(result.status, "error");
+            Assert.IsNotNull(result.message);
+            Assert.IsNotNull(result.messageDetail);
+        }
+        [TestMethod]
+        public void UT_Tools_SellarAceptacionRechazo_MaxFoliosCountReached_Error()
+        {
+            var pfx = Sign.CrearPFX(_build.BytesCer, _build.BytesKey, _build.CerPassword);
+            List<AceptacionRechazo> folios = new List<AceptacionRechazo>();
+            while(folios.Count <= 500)
+            {
+                folios.AddRange(GetFolios());
+            }
+            var result = Sign.SellarAceptacionRechazo(folios, _build.RfcEmisor, pfx, _build.CerPassword);
+            Assert.AreEqual(result.status, "error");
+            Assert.IsNotNull(result.message);
+            Assert.IsNotNull(result.messageDetail);
+        }
+        [TestMethod]
+        public void UT_Tools_SellarAceptacionRechazo_InvalidParameters_Error()
+        {
+            var pfx = Sign.CrearPFX(_build.BytesCer, _build.BytesKey, _build.CerPassword);
+            List<AceptacionRechazo> folios = new List<AceptacionRechazo>();
+            folios.Add(new AceptacionRechazo()
+            {
+                Folio = Guid.NewGuid()
+            });
+            var result = Sign.SellarAceptacionRechazo(folios, null, pfx, _build.CerPassword);
+            Assert.AreEqual(result.status, "error");
+            Assert.IsNotNull(result.message);
+            Assert.IsNotNull(result.messageDetail);
+        }
+        #endregion
         [TestMethod]
         [ExpectedException(typeof(Exception), "Los folios no tienen un formato válido.")]
         public void UT_Tools_SellarCancelacion_Error()
@@ -269,5 +360,127 @@ namespace SW.ToolsUT
                 throw;
             }
         }
+        #region UT_FirmarXML
+        /// <summary>
+        /// Firmar XML de aceptacion rechazo.
+        /// </summary>
+        [TestMethod]
+        public void UT_Tools_FirmarXml_AceptacionRechazo_Success()
+        {
+            var build = new BuildSettings();
+            var pfx = Sign.CrearPFX(build.BytesCer, build.BytesKey, build.CerPassword);
+            var result = Sign.FirmarXML(GetXml("aceptacionRechazo.xml"), pfx, build.CerPassword);
+            Assert.AreEqual(result.status, "success");
+            Assert.IsNotNull(result.data);
+            Assert.IsTrue(!String.IsNullOrEmpty(result.data.xml));
+            var accept = new AcceptReject(build.Url, build.Token);
+            var response = accept.AcceptByXML(Encoding.UTF8.GetBytes(result.data.xml), SW.Helpers.EnumAcceptReject.Aceptacion);
+            Assert.AreEqual(response.status, "success");
+            Assert.IsTrue(!String.IsNullOrEmpty(response.codStatus));
+            Assert.IsNotNull(response.data);
+            Assert.IsTrue(!String.IsNullOrEmpty(response.data.acuse));
+        }
+        /// <summary>
+        /// Firmar XML de cancelacion.
+        /// </summary>
+        [TestMethod]
+        public void UT_Tools_FirmarXml_Cancelacion_Success()
+        {
+            var build = new BuildSettings();
+            var pfx = Sign.CrearPFX(build.BytesCer, build.BytesKey, build.CerPassword);
+            var result = Sign.FirmarXML(GetXml("cancelacionCFDI.xml"), pfx, build.CerPassword);
+            Assert.AreEqual(result.status, "success");
+            Assert.IsNotNull(result.data);
+            Assert.IsTrue(!String.IsNullOrEmpty(result.data.xml));
+            var cancelacion = new Cancelation(build.Url, build.Token);
+            var response = cancelacion.CancelarByXML(Encoding.UTF8.GetBytes(result.data.xml));
+            Assert.AreEqual(response.status, "success");
+            Assert.IsNotNull(response.data);
+            Assert.IsTrue(!String.IsNullOrEmpty(response.data.acuse));
+        }
+        /// <summary>
+        /// XML invalido.
+        /// </summary>
+        [TestMethod]
+        public void UT_Tools_FirmarXml_InvalidXML_Error()
+        {
+            var build = new BuildSettings();
+            var pfx = Sign.CrearPFX(build.BytesCer, build.BytesKey, build.CerPassword);
+            var result = Sign.FirmarXML(GetXml("invalidXml.xml"), pfx, build.CerPassword);
+            Assert.AreEqual(result.status, "error");
+            Assert.IsTrue(!String.IsNullOrEmpty(result.message));
+            Assert.IsTrue(!String.IsNullOrEmpty(result.messageDetail));
+        }
+        /// <summary>
+        /// XML vacío.
+        /// </summary>
+        [TestMethod]
+        public void UT_Tools_FirmarXml_EmptyXML_Error()
+        {
+            var build = new BuildSettings();
+            var pfx = Sign.CrearPFX(build.BytesCer, build.BytesKey, build.CerPassword);
+            var result = Sign.FirmarXML(String.Empty, pfx, build.CerPassword);
+            Assert.AreEqual(result.status, "error");
+            Assert.IsTrue(!String.IsNullOrEmpty(result.message));
+            Assert.IsTrue(!String.IsNullOrEmpty(result.messageDetail));
+        }
+        /// <summary>
+        /// PFX invalido.
+        /// </summary>
+        [TestMethod]
+        public void UT_Tools_FirmarXml_InvalidPfx_Error()
+        {
+            var build = new BuildSettings();
+            var result = Sign.FirmarXML(GetXml("cancelacionCFDI.xml"), build.BytesCer, build.CerPassword);
+            Assert.AreEqual(result.status, "error");
+            Assert.IsTrue(!String.IsNullOrEmpty(result.message));
+            Assert.IsTrue(!String.IsNullOrEmpty(result.messageDetail));
+        }
+        /// <summary>
+        /// Contraseña incorrecta.
+        /// </summary>
+        [TestMethod]
+        public void UT_Tools_FirmarXml_InvalidPassword_Error()
+        {
+            var build = new BuildSettings();
+            var pfx = Sign.CrearPFX(build.BytesCer, build.BytesKey, build.CerPassword);
+            var result = Sign.FirmarXML(GetXml("cancelacionCFDI.xml"), pfx, "pass");
+            Assert.AreEqual(result.status, "error");
+            Assert.IsTrue(!String.IsNullOrEmpty(result.message));
+            Assert.IsTrue(!String.IsNullOrEmpty(result.messageDetail));
+        }
+        /// <summary>
+        /// PFX vacío.
+        /// </summary>
+        [TestMethod]
+        public void UT_Tools_FirmarXml_EmptyPfx_Error()
+        {
+            var build = new BuildSettings();
+            var result = Sign.FirmarXML(GetXml("cancelacionCFDI.xml"), null, build.CerPassword);
+            Assert.AreEqual(result.status, "error");
+            Assert.IsTrue(!String.IsNullOrEmpty(result.message));
+            Assert.IsTrue(!String.IsNullOrEmpty(result.messageDetail));
+        }
+        #endregion
+        #region Private
+        private static string GetXml(string filename)
+        {
+            return Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(String.Format(@"Resources\Sign\{0}",filename))));
+        }
+        private static List<AceptacionRechazo> GetFolios()
+        {
+            List<AceptacionRechazo> folios = new List<AceptacionRechazo>();
+            var getFolios = File.ReadAllLines(@"Resources\Sign\aceptacionRechazoFolios.txt");
+            foreach(var f in getFolios)
+            {
+                folios.Add(new AceptacionRechazo()
+                {
+                    Folio = Guid.Parse(f),
+                    Respuesta = AceptacionRechazoRespuesta.Rechazo
+                });
+            }
+            return folios;
+        }
+        #endregion
     }
 }

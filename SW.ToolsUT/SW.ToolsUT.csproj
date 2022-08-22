@@ -42,10 +42,10 @@
       <HintPath>..\packages\RestSharp.106.15.0\lib\net452\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="SAT.Services, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SW-sdk.0.0.13.1-rc\lib\net35-client\SAT.Services.dll</HintPath>
+      <HintPath>..\packages\SW-sdk.0.0.14.7-rc\lib\net35-client\SAT.Services.dll</HintPath>
     </Reference>
-    <Reference Include="SW-sdk, Version=0.0.13.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SW-sdk.0.0.13.1-rc\lib\net35-client\SW-sdk.dll</HintPath>
+    <Reference Include="SW-sdk, Version=0.0.14.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SW-sdk.0.0.14.7-rc\lib\net35-client\SW-sdk.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Web" />
@@ -69,6 +69,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Helpers\BuildSettings.cs" />
+    <Compile Include="UT_Tools_Certificate.cs" />
     <Compile Include="UT_Tools_BuildInvoiceCFDI33.cs" />
     <Compile Include="UT_Tools_Fiscal.cs" />
     <Compile Include="UT_Tools_Convertion.cs" />
@@ -84,6 +85,12 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Resources\certificadoFIEL.cer">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\certificadoNoCSD.cer">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\CSD_Pruebas_CFDI_EKU9003173C9.cer">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -102,6 +109,21 @@
     <None Include="Resources\CSD_Prueba_CFDI_LAN8507268IA.key">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="Resources\Sign\invalidXml.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sign\cancelacionCFDI.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sign\aceptacionRechazo.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sign\aceptacionRechazoFolios.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\stampResponseV4.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

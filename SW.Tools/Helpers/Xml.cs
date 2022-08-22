@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace SW.Tools.Helpers
 {
-    public static class Xml
+    public class Xml
     {
         public static XmlElement GetXMLElement(string xmlSerialized)
         {
@@ -48,6 +48,22 @@ namespace SW.Tools.Helpers
                                                 new XAttribute("Motivo", Convert.ToInt16(uuid.Motivo).ToString().PadLeft(2, '0')),
                                                 new XAttribute("FolioSustitucion", uuid.FolioSustitucion != null ? uuid.FolioSustitucion.ToString() : String.Empty)
                                                 )));
+            return xmlSolicitud.ToString();
+        }
+        public static string CreateAcceptRejectXML(List<AceptacionRechazo> folios, string rfcReceptor)
+        {
+            XNamespace xmlNamespace = "http://cancelacfd.sat.gob.mx";
+            var xmlSolicitud = new XElement(xmlNamespace + "SolicitudAceptacionRechazo",
+                                            new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
+                                            new XAttribute(XNamespace.Xmlns + "xsd", "http://www.w3.org/2001/XMLSchema"),
+                                            new XAttribute("Fecha", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")),
+                                            new XAttribute("RfcPacEnviaSolicitud", "LSO1306189R5"),
+                                            new XAttribute("RfcReceptor", rfcReceptor),
+                                            from uuid in folios
+                                            select new XElement(xmlNamespace + "Folios",
+                                                new XElement(xmlNamespace + "UUID", uuid.Folio.ToString()),
+                                                new XElement(xmlNamespace + "Respuesta", uuid.Respuesta)
+                                                ));
             return xmlSolicitud.ToString();
         }
     }
