@@ -26,6 +26,55 @@ namespace SW.Tools.Helpers
 ", "");
             return xmlInvoice;
         }
+        public static string RemoveComplementNamespace(XmlDocument xmlDocument)
+        {
+            XmlElement complement = xmlDocument.DocumentElement["cfdi:Complemento"];
+            if (complement != null)
+            {
+                foreach (XmlElement currentComplement in complement.ChildNodes.Cast<XmlNode>().Where(a => a.NodeType == XmlNodeType.Element))
+                {
+                    foreach (var namespacePrefix in _prefixNamespaces)
+                    {
+                        if (currentComplement.HasAttribute(namespacePrefix))
+                        {
+                            currentComplement.RemoveAttribute(namespacePrefix);
+                        }
+                    }
+                }
+            }
+            return xmlDocument.OuterXml;
+        }
+        private static readonly List<string> _prefixNamespaces = new List<string>
+        {
+            "xmlns:ecc12",
+            "xmlns:donat",
+            "xmlns:divisas",
+            "xmlns:implocal",
+            "xmlns:leyendasFisc",
+            "xmlns:pfic",
+            "xmlns:tpe",
+            "xmlns:nomina12",
+            "xmlns:registrofiscal",
+            "xmlns:pagoenespecie",
+            "xmlns:aerolineas",
+            "xmlns:valesdedespensa",
+            "xmlns:consumodecombustibles11",
+            "xmlns:notariospublicos",
+            "xmlns:vehiculousado",
+            "xmlns:servicioparcial",
+            "xmlns:decreto",
+            "xmlns:destruccion",
+            "xmlns:obrasarte",
+            "xmlns:cce11",
+            "xmlns:ine",
+            "xmlns:pago10",
+            "xmlns:detallista",
+            "xmlns:gceh",
+            "xmlns:ieeh",
+            "xmlns:xsi",
+            "xsi:schemaLocation"
+        };
+
         /// <summary>
         /// Crear XML de cancelacion, recibe una lista de folios con el formato uuid,motivo,uuidSustitucion
         /// </summary>

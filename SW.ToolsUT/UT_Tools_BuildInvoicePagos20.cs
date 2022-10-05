@@ -235,7 +235,6 @@ namespace SW.ToolsUT
             Assert.IsTrue(response.status == "success");
 
         }
-
         private string SignInvoice(string xmlInvoice)
         {
             byte[] bytesCer = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.cer");
@@ -244,12 +243,6 @@ namespace SW.ToolsUT
             var pfx = Sign.CrearPFX(bytesCer, bytesKey, password);
             var xmlResult = Sign.SellarCFDIv40(pfx, password, xmlInvoice);
             return xmlResult;
-        }
-        [TestMethod]
-        public void DeserailizeXml()
-        {
-            var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi33Invoice.xml")));
-            var xmlInvoicess = Serializer.DeserealizeDocument<Comprobante>(xml);
         }
     }
 }

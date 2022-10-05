@@ -140,9 +140,9 @@ namespace SW.Tools.Entities
                 _actual_Currency_Rate = value;
             }
         }
-        private List<Complements.RFCINC> _rfcinc;
+        private List<Complementos.RFCINC> _rfcinc;
         [System.Xml.Serialization.XmlIgnore]
-        public List<Complements.RFCINC> RFCINC
+        public List<Complementos.RFCINC> RFCINC
         {
             get
             {
