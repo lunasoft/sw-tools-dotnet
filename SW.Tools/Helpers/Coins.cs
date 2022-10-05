@@ -13,5 +13,6 @@ namespace SW.Tools.Helpers
             amount = Math.Truncate(amount * pres);
             return amount / pres;
         }
+        public static decimal RoundFromZero(this decimal number, int numDecimalPlaces) => Math.Round(number, numDecimalPlaces, MidpointRounding.AwayFromZero);
     }
 }

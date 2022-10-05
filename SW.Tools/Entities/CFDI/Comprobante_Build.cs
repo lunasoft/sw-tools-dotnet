@@ -345,7 +345,7 @@ namespace SW.Tools.Cfdi
                             if (this.Impuestos.Traslados.Any(a => a.Impuesto == impuesto && a.TipoFactor == tipoFactor && a.TasaOCuota == tasaOCuota))
                             {
 
-                                decimal rounded = Coins.RoundEven(importe.Value, 2);
+                                decimal rounded = Coins.RoundFromZero(importe.Value, 2);
                                 this.Impuestos.Traslados.Where(a => a.Impuesto == impuesto && a.TasaOCuota == tasaOCuota.Value && a.TipoFactor == tipoFactor)
                                     .ToList().ForEach(i => i.Importe = i.Importe + importe.Value);
                                 this.Impuestos.Traslados.Where(a => a.Impuesto == impuesto && a.TasaOCuota == tasaOCuota.Value && a.TipoFactor == tipoFactor)

@@ -58,11 +58,11 @@ namespace SW.ToolsUT
         {
             Comprobante comprobante = new Comprobante();
 
-            comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01");
+            comprobante.SetComprobante("MXN", "I", "99", "PPD", "65000", "01");
             comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m, "02", 550.00m);
             comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 550.00m, 0.160000m, 88.00m);
             comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
-            comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "65000", "601");
+            comprobante.SetReceptor("XAXX010101000", "PUBLICO EN GENERAL", "S01", "65000", "616");
             comprobante.SetInformacionGlobal("01", "04", "2022");
             var invoice = comprobante.GetComprobante();
             var xmlInvoice = SerializerCfdi40.SerializeDocument(invoice);
@@ -120,7 +120,6 @@ namespace SW.ToolsUT
         {
             Comprobante comprobante = new Comprobante();
 
-
             comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01");
             comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
             comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "65000", "601");
@@ -135,9 +134,6 @@ namespace SW.ToolsUT
             StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
             Assert.IsTrue(response.status == "success");
         }
-
-        [TestMethod]
-       
         private string SignInvoice(string xmlInvoice)
         {
             byte[] bytesCer = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.cer");
@@ -146,12 +142,6 @@ namespace SW.ToolsUT
             var pfx = Sign.CrearPFX(bytesCer, bytesKey, password);
             var xmlResult = Sign.SellarCFDIv40(pfx, password, xmlInvoice);
             return xmlResult;
-        }
-       // [TestMethod]
-        public void DeserailizeXml()
-        {
-            var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi33Invoice.xml")));
-            var xmlInvoicess = Tools.Helpers.Serializer.DeserealizeDocument<Comprobante>(xml);
         }
     }
 }
