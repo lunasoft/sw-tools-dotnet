@@ -209,7 +209,7 @@ namespace SW.Tools.Helpers
                 aSchemaLocation.Value = schemaValues;
                 doc.ChildNodes[1].Attributes.InsertBefore(aSchemaLocation, doc.ChildNodes[1].Attributes[0]);
 
-                return Xml.RemoveComplementNamespace(doc.OuterXml);
+                return Xml.RemoveComplementNamespace(doc);
             }
             catch (Exception e)
             {
