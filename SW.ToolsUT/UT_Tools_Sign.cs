@@ -68,7 +68,7 @@ namespace SW.ToolsUT
         [TestMethod]
         public void UT_Tools_Sign_SellarCFDIv40_OK()
         {
-            string selloOriginal = @"BSMdXl13FTWhQuer1XVWqBwUVnytWPPVqpfb8DWN/3yKaTVh2nusSjX54geZCptuKHhjHuH+xhTa6T/U0rQ8XQpv1Zu7DV/xuyjMUyaK9flT4Cin8tLo7aEku4RUFna1ExqwbcD4VsAgUs94SLBl1Y4IrvujZV4SkRC8Pm+GhvTwsKJ1M/K8p+7h8Zzgm1vfEgjDIzFwBvketIfhu0yUysT+N3HqJg6vG8Q1R8krY7/ytc75FHGYSk7gJKam7ZP1FYOU7weHrTglYKL3dInqklLIADtW7ibIsXi7ZC21gyoFz9Kkvi1IXZjyM9ll2t6itRhP3He/anCqriwML7H9OA==";
+            string selloOriginal = @"h4On+n0hpaZ13iDhyhXk9xDLRO3H3+4JWaTgw8S07ctKvrloHHP4K3tHNeT55ckDDxG6uXOvmpYA6nJ5aqH+h0LzJN/NDLAeaipxGgAZbelrN+gZ/AwgfIVaioVJ0f5pqpE4ReDUOcrtH8diXmeY2/yVw1hggXVJpUVf/y3uW9YvmsGyefAZh3zuupmWe9D3Xde/hqzYfhmsP86R5dROixiHkSIPjsCD4t2PnmxOZeGuKE7eHAB+766zoH/drKhru9hVWhn3+BtU/xFYRFQPu5lVmpbj9y5C+gWix+Rlp/krBNzLbdSBDCK5wqBfuC+vQZH7Z/h+EtHPms16tgCrtQ==";
             byte[] bytesCer = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.cer");
             byte[] bytesKey = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.key");
             string password = "12345678a";

@@ -72,7 +72,7 @@ namespace SW.Tools.Services.Sign
                 xml = Fiscal.Fiscal.RemoverCaracteresInvalidosXml(xml);
                 return new SignResponse
                 {
-                    data = new SignDataResponse() { xml = SignService.SignRetencion(certificatePfx, password, xml) }
+                    data = new SignDataResponse() { xml = SignService.SignCfdi(certificatePfx, password, xml) }
 
                 };
             }

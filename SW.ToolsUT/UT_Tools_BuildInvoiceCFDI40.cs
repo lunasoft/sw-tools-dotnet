@@ -141,7 +141,7 @@ namespace SW.ToolsUT
             string password = "12345678a";
             var pfx = Sign.CrearPFX(bytesCer, bytesKey, password);
             var xmlResult = Sign.SellarCFDIv40(pfx, password, xmlInvoice);
-            return xmlResult;
+            return xmlResult.data.xml;
         }
     }
 }
