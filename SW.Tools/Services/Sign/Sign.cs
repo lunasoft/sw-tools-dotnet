@@ -1,5 +1,6 @@
 ﻿using SW.Tools.Entities.Cancelacion;
 using SW.Tools.Entities.Response;
+using SW.Tools.Handlers.SignResponseHandler;
 using SW.Tools.Helpers;
 using System;
 using System.Collections.Generic;
@@ -39,17 +40,23 @@ namespace SW.Tools.Services.Sign
         /// <param name="password">Contrasena PFX</param>
         /// <param name="xml">XML a sellar</param>
         /// <returns></returns>
-        public static string SellarCFDIv33(byte[] certificatePfx, string password, string xml)
+        public static SignResponse SellarCFDIv33(byte[] certificatePfx, string password, string xml)
         {
+          
             try
             {
                 xml = Fiscal.Fiscal.RemoverCaracteresInvalidosXml(xml);
-                return SignService.SignCfdi(certificatePfx, password, xml, "3.3");
+                return new SignResponse
+                {
+                    data = new SignDataResponse() { xml = SignService.SignCfdi(certificatePfx, password, xml, "3.3") }
+
+                };
             }
-            catch(Exception)
+            catch (Exception ex)
             {
-                throw;
+                return SignResponseHandler.HandleException(ex);
             }
+
         }
         /// <summary>
         /// Sellar XML CFDI 4.0
@@ -58,16 +65,20 @@ namespace SW.Tools.Services.Sign
         /// <param name="password">Contrasena PFX</param>
         /// <param name="xml">XML a sellar</param>
         /// <returns></returns>
-        public static string SellarCFDIv40(byte[] certificatePfx, string password, string xml)
+        public static SignResponse SellarCFDIv40(byte[] certificatePfx, string password, string xml)
         {
             try
             {
                 xml = Fiscal.Fiscal.RemoverCaracteresInvalidosXml(xml);
-                return SignService.SignCfdi(certificatePfx, password, xml);
+                return new SignResponse
+                {
+                    data = new SignDataResponse() { xml = SignService.SignRetencion(certificatePfx, password, xml) }
+
+                };
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                return SignResponseHandler.HandleException(ex);
             }
         }
         /// <summary>
@@ -77,33 +88,41 @@ namespace SW.Tools.Services.Sign
         /// <param name="password">Contrasena PFX</param>
         /// <param name="xml">XML a sellar</param>
         /// <returns></returns>
-        public static string SellarRetencionv20(byte[] certificatePfx, string password, string xml)
+        public static SignResponse SellarRetencionv20(byte[] certificatePfx, string password, string xml)
         {
             try
             {
                 xml = Fiscal.Fiscal.RemoverCaracteresInvalidosXml(xml);
-                return SignService.SignRetencion(certificatePfx, password, xml);
+                return new SignResponse
+                {
+                    data = new SignDataResponse() { xml = SignService.SignRetencion(certificatePfx, password, xml) }
+                    
+                };
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                return SignResponseHandler.HandleException(ex);
             }
+            
         }
         /// <summary>
         /// Obtener cadena original CFDI 3.3
         /// </summary>
         /// <param name="strXml">XML</param>
         /// <returns></returns>
-        public static string CadenaOriginalCFDIv33(string xml)
+        public static SignResponseV2 CadenaOriginalCFDIv33(string xml)
         {
             try
             {
                 xml = Fiscal.Fiscal.RemoverCaracteresInvalidosXml(xml);
-                return SignService.GetCadenaOriginal(xml, "3.3");
+                return new SignResponseV2()
+                {
+                    data = new SignDataResponseV2() { cadenaOriginal = SignService.GetCadenaOriginal(xml, "3.3") }
+            };
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                return SignResponseHandlerV2.HandleException(ex);
             }
         }
         /// <summary>
@@ -111,16 +130,21 @@ namespace SW.Tools.Services.Sign
         /// </summary>
         /// <param name="strXml"></param>
         /// <returns></returns>
-        public static string CadenaOriginalCFDIv40(string xml)
+        public static SignResponseV2 CadenaOriginalCFDIv40(string xml)
         {
             try
             {
                 xml = Fiscal.Fiscal.RemoverCaracteresInvalidosXml(xml);
-                return SignService.GetCadenaOriginal(xml);
+               
+                return new SignResponseV2()
+                {
+                    data = new SignDataResponseV2() { cadenaOriginal = SignService.GetCadenaOriginal(xml) }
+
+                };
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                return  SignResponseHandlerV2.HandleException(ex);
             }
         }
         /// <summary>
@@ -128,16 +152,20 @@ namespace SW.Tools.Services.Sign
         /// </summary>
         /// <param name="xml"></param>
         /// <returns></returns>
-        public static string CadenaOriginalRetencionv20(string xml)
+        public static SignResponseV2 CadenaOriginalRetencionv20(string xml)
         {
             try
             {
                 xml = Fiscal.Fiscal.RemoverCaracteresInvalidosXml(xml);
-                return SignService.GetCadenaOriginalRetencion(xml);
+                return new SignResponseV2()
+                {
+                    data = new SignDataResponseV2() { cadenaOriginal = SignService.GetCadenaOriginalRetencion(xml) }
+
+                };
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                return SignResponseHandlerV2.HandleException(ex);
             }
         }
         /// <summary>
@@ -149,20 +177,20 @@ namespace SW.Tools.Services.Sign
         /// <param name="password">Contrasena certificado PFX</param>
         /// <param name="isRetencion">Especifica si es un XML de retencion</param>
         /// <returns></returns>
-        public static string SellarCancelacion(List<Cancelacion> folios, string rfcEmisor, byte[] pfx, string password, bool isRetencion = false)
+        public static SignResponse SellarCancelacion(List<Cancelacion> folios, string rfcEmisor, byte[] pfx, string password, bool isRetencion = false)
         {
             try
             {
                 if (folios.Count > 0)
                 {
                     Validation.ValidarCancelacion(folios);
-                    return SignService.SignCancelacion(folios, rfcEmisor, pfx, password, isRetencion);
+                    return new SignResponse() { data = new SignDataResponse() { xml = SignService.SignCancelacion(folios, rfcEmisor, pfx, password, isRetencion) } };
                 }
                 throw new Exception("El listado de folios esta vacio.");
             }
-            catch
+            catch(Exception ex)
             {
-                throw;
+                return SignResponseHandler.HandleException(ex);
             }
         }
         /// <summary>
@@ -187,6 +215,7 @@ namespace SW.Tools.Services.Sign
         /// <returns>Un objeto <see cref="SignResponse"/></returns>
         public static SignResponse FirmarXML(string xml, byte[] pfx, string password)
         {
+
             return SignService.SignXml(xml, pfx, password);
         }
         #endregion
