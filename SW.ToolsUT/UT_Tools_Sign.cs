@@ -93,6 +93,40 @@ namespace SW.ToolsUT
             Assert.IsTrue(string.IsNullOrEmpty(xmlResult.messageDetail));
         }
         [TestMethod]
+        public void UT_Tools_Sign_SellarCFDIv33_Error()
+        {
+            string password = "12345678a";
+            byte[] invalidPfx = Encoding.ASCII.GetBytes("akxDTlUxMHE0eHBEWjJKY05HZFZ3a1FnNVY1aGphVy9NbGhIRGNVRVMrNXJCNGNQM0hPTzIvTTZNWWxkZzI.p50Ey8Eim1aLD2Hw7cvu6u5vGs");
+            var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi33.xml")));
+            var xmlResult = Sign.SellarCFDIv33(invalidPfx, password, xml);
+            Assert.IsTrue(xmlResult.status.Equals("error"));
+            Assert.IsTrue(xmlResult.message.Equals("No se pudo realizar el sellado."));
+            Assert.IsTrue(xmlResult.messageDetail.Equals("No se puede encontrar el objeto solicitado.\r\n"));
+        }
+        [TestMethod]
+        public void UT_Tools_Sign_SellarCFDIv40_Error()
+        {
+            string password = "12345678a";
+            byte[] invalidPfx = Encoding.ASCII.GetBytes("akxDTlUxMHE0eHBEWjJKY05HZFZ3a1FnNVY1aGphVy9NbGhIRGNVRVMrNXJCNGNQM0hPTzIvTTZNWWxkZzI.p50Ey8Eim1aLD2Hw7cvu6u5vGs");
+            var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi40.xml")));
+            var xmlResult = Sign.SellarCFDIv40(invalidPfx, password, xml);
+            Assert.IsTrue(xmlResult.status.Equals("error"));
+            Assert.IsTrue(xmlResult.message.Equals("No se pudo realizar el sellado."));
+            Assert.IsTrue(xmlResult.messageDetail.Equals("No se puede encontrar el objeto solicitado.\r\n"));
+        }
+        [TestMethod]
+        public void UT_Tools_Sign_SellarRetencionv20_Error()
+        {
+            string password = "12345678a";
+            byte[] invalidPfx = Encoding.ASCII.GetBytes("akxDTlUxMHE0eHBEWjJKY05HZFZ3a1FnNVY1aGphVy9NbGhIRGNVRVMrNXJCNGNQM0hPTzIvTTZNWWxkZzI.p50Ey8Eim1aLD2Hw7cvu6u5vGs");
+            var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\retencion20.xml")));
+            var xmlResult = Sign.SellarRetencionv20(invalidPfx, password, xml);
+            Assert.IsTrue(xmlResult.status.Equals("error"));
+            Assert.IsTrue(xmlResult.message.Equals("No se pudo realizar el sellado."));
+            Assert.IsTrue(xmlResult.messageDetail.Equals("No se puede encontrar el objeto solicitado.\r\n"));
+
+        }
+        [TestMethod]
         public void UT_Tools_CadenaOriginalCFDIv33_OK()
         {
             var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi33.xml")));
