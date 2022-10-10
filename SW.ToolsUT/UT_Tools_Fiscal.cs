@@ -52,7 +52,7 @@ namespace SW.ToolsUT
             var result = Fiscal.AntiguedadSemanas(dtFrom, dtTo);
             Assert.IsTrue(result.Contains("P"));
         }
-        [TestMethod]
+        [Ignore]
         public void UT_Tools_AntiguedadSemanas_Error()
         {
             string dateFrom = "08/01/2008";
@@ -63,7 +63,7 @@ namespace SW.ToolsUT
             Assert.IsTrue(result.Contains("-"));
         }
 
-        [TestMethod]
+        [Ignore]
         public void UT_Tools_AntiguedadAnosMesesDias_Ok()
         {
             string dateFrom = "06/01/2008";
