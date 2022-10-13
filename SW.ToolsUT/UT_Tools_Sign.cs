@@ -100,8 +100,8 @@ namespace SW.ToolsUT
             var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi33.xml")));
             var xmlResult = Sign.SellarCFDIv33(invalidPfx, password, xml);
             Assert.IsTrue(xmlResult.status.Equals("error"));
-            Assert.IsTrue(xmlResult.message.Equals("No se pudo realizar el sellado."));
-            Assert.IsTrue(xmlResult.messageDetail.Equals("No se puede encontrar el objeto solicitado.\r\n"));
+            Assert.IsTrue(xmlResult.message.Equals("El certificado es inválido, se encuentra corrupto o la contraseña es incorrecta."));
+            Assert.IsTrue(!String.IsNullOrEmpty(xmlResult.messageDetail));
         }
         [TestMethod]
         public void UT_Tools_Sign_SellarCFDIv40_Error()
@@ -111,8 +111,8 @@ namespace SW.ToolsUT
             var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi40.xml")));
             var xmlResult = Sign.SellarCFDIv40(invalidPfx, password, xml);
             Assert.IsTrue(xmlResult.status.Equals("error"));
-            Assert.IsTrue(xmlResult.message.Equals("No se pudo realizar el sellado."));
-            Assert.IsTrue(xmlResult.messageDetail.Equals("No se puede encontrar el objeto solicitado.\r\n"));
+            Assert.IsTrue(xmlResult.message.Equals("El certificado es inválido, se encuentra corrupto o la contraseña es incorrecta."));
+            Assert.IsTrue(!String.IsNullOrEmpty(xmlResult.messageDetail));
         }
         [TestMethod]
         public void UT_Tools_Sign_SellarRetencionv20_Error()
@@ -122,8 +122,8 @@ namespace SW.ToolsUT
             var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\retencion20.xml")));
             var xmlResult = Sign.SellarRetencionv20(invalidPfx, password, xml);
             Assert.IsTrue(xmlResult.status.Equals("error"));
-            Assert.IsTrue(xmlResult.message.Equals("No se pudo realizar el sellado."));
-            Assert.IsTrue(xmlResult.messageDetail.Equals("No se puede encontrar el objeto solicitado.\r\n"));
+            Assert.IsTrue(xmlResult.message.Equals("El certificado es inválido, se encuentra corrupto o la contraseña es incorrecta."));
+            Assert.IsTrue(!String.IsNullOrEmpty(xmlResult.messageDetail));
 
         }
         [TestMethod]
