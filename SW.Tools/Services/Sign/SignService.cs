@@ -48,6 +48,10 @@ namespace SW.Tools.Services.Sign
 
                 return SignUtils.SignXml(xml, signResult);
             }
+            catch (CryptographicException ex)
+            {
+                throw new CryptographicException("El certificado es inválido, se encuentra corrupto o la contraseña es incorrecta.", ex);
+            }
             catch (Exception e)
             {
                 throw new Exception("No se pudo realizar el sellado.", e);
@@ -66,6 +70,10 @@ namespace SW.Tools.Services.Sign
                 var signResult = SignUtils.GetSignature(password, pfx, originalString, "SHA256");
 
                 return SignUtils.SignXml(xml, signResult);
+            }
+            catch (CryptographicException ex)
+            {
+                throw new CryptographicException("El certificado es inválido, se encuentra corrupto o la contraseña es incorrecta.", ex);
             }
             catch (Exception e)
             {
@@ -143,7 +151,7 @@ namespace SW.Tools.Services.Sign
             }
             catch (CryptographicException e)
             {
-                return SignResponseHandler.HandleException(e, "El certificado no es válido o se encuentra corrupto.");
+                return SignResponseHandler.HandleException(e, "El certificado es inválido, se encuentra corrupto o la contraseña es incorrecta.");
             }
             catch (Exception e)
             {
@@ -168,7 +176,7 @@ namespace SW.Tools.Services.Sign
             }
             catch (CryptographicException e)
             {
-                return SignResponseHandler.HandleException(e, "El certificado no es válido o se encuentra corrupto.");
+                return SignResponseHandler.HandleException(e, "El certificado es inválido, se encuentra corrupto o la contraseña es incorrecta.");
             }
             catch (Exception e)
             {

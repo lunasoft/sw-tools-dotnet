@@ -215,7 +215,6 @@ namespace SW.Tools.Services.Sign
         /// <returns>Un objeto <see cref="SignResponse"/></returns>
         public static SignResponse FirmarXML(string xml, byte[] pfx, string password)
         {
-
             return SignService.SignXml(xml, pfx, password);
         }
         #endregion
