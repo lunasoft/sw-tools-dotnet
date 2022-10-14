@@ -1,22 +1,23 @@
 ![NET](http://resources.workable.com/wp-content/uploads/2015/08/Microsoft-dotNET-logo.jpg)
+
 ![NET](https://smarterwebci.visualstudio.com/_apis/public/build/definitions/402b9165-314f-4f5f-8073-9ae3a2e962ef/23/badge)
 
 # Contenido #
 
-- [Compatibilidad](#Compatibilidad)
-- [Dependencias](#Dependencias)
-- [Documentación](#Documentación)
-- [Instalación](#Instalación)
-- [Implementación](#Implementación)
-    - [Sign](#sign-service)
-        - [Sellar CFDI 3.3](#generar-xml-cfdi-33)
-        - [Sellar CFDI 4.0](#generar-xml-cfdi-40)
-        - [Sellar Retenciones 2.0](#sellar-xml-retención-20)
-        - [Sellar XML Cancelaciones](#generar-y-sellar-xml-de-cancelación)
-        - [Sellar XML Aceptacion/Rechazo](#generar-y-sellar-xml-aceptaciónrechazo)
-    - [Certificates](#certificados-service)
-    - [Fiscal](#fiscal-service)
-- [Autores](#Autores)
+- [Compatibilidad](#compatibilidad)
+- [Dependencias](#dependencias)
+- [Documentación](#documentación)
+- [Instalación](#instalación)
+- [Implementación](#implementación)
+  - [Sign](#sellado)
+    - [Sellar CFDI 3.3](#generar-xml-cfdi-33)
+    - [Sellar CFDI 4.0](#generar-xml-cfdi-40)
+    - [Sellar Retenciones 2.0](#sellar-xml-retención-20)
+    - [Sellar XML Cancelaciones](#generar-y-sellar-xml-de-cancelación)
+    - [Sellar XML Aceptacion/Rechazo](#generar-y-sellar-xml-aceptaciónrechazo)
+  - [Certificates](#certificados)
+  - [Fiscal](#fiscal)
+- [Autores](#autores)
 
 # Compatibilidad #
 
@@ -48,7 +49,12 @@ En caso de no utilizar Package Manager Console puedes descargar la libreria dire
 
 # Implementación #
 
-## Comprobante Service #
+----------------
+
+## Comprobante #
+
+----------------
+
 Servicios para generar XML a partir de un objeto comprobante.
 
 ### Generar XML CFDI 3.3 #
@@ -94,6 +100,8 @@ namespace ExampleSDK
 }
 ```
 
+----------------
+
 ### Generar XML CFDI 4.0 #
 
 Puedes generar un xml en su versión 4.0 de tipo ingreso/egreso así como tambien realizar el sellado para ser timbrado. Puedes consultar más ejemplos en [UT Tools](https://github.com/lunasoft/sw-tools-dotnet/blob/master/SW.ToolsUT/UT_Tools_BuildInvoiceCFDI40.cs)
@@ -136,6 +144,8 @@ namespace ExampleSDK
 }
 ```
 
+----------------
+
 ### Generar XML con complemento de Pagos 2.0 ##
 
 Puedes generar un xml en su versión 4.0 con su complementeo de pagos 2.0, así como tambien realizar el sellado para ser timbrado. Puedes consultar más ejemplos en [UT Tools](https://github.com/lunasoft/sw-tools-dotnet/blob/master/SW.ToolsUT/UT_Tools_BuildInvoicePagos20.cs)
@@ -176,7 +186,7 @@ namespace ExampleSDK
 }
 ```
 
-## Sign Service #
+## Sellado #
 
 Servicios para sellar comprobantes CFDI y de Retenciones, generar y aplicar siganture a un XML.
 También contiene métodos para crear y sellar XML de cancelación y de aceptación/rechazo.
@@ -397,9 +407,11 @@ namespace ExampleSDK
 }
 ```
 
+----------------
 
+## Certificados #
 
-## Certificados Service #
+----------------
 
 ### Crear PFX #
 
@@ -439,6 +451,8 @@ namespace ExampleSDK
 }
 ```
 
+----------------
+
 ### Validar CSD/FIEL #
 
 Mediante la siguiente función podrás validar si un certificado(.cer) es de tipo FIEL o de tipo CSD.
@@ -475,6 +489,8 @@ namespace ExampleSDK
     }
 }
 ```
+
+----------------
 
 ### Leer Certificado #
 
@@ -516,7 +532,11 @@ namespace ExampleSDK
 }
 ```
 
-## Fiscal Service #
+----------------
+
+## Fiscal #
+
+----------------
 
 ### Consultar Validez #
 
@@ -547,6 +567,8 @@ namespace ExampleSDK
     }
 }
 ```
+
+----------------
 
 ### Antiguedad en semanas #
 
@@ -583,6 +605,8 @@ namespace ExampleSDK
     }
 }
 ```
+
+----------------
 
 ### Antiguedad en años, meses y días #
 
@@ -621,14 +645,15 @@ namespace ExampleSDK
 }
 ```
 
+----------------
+
 # Autores #
 
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/hermesw"><img src="https://avatars.githubusercontent.com/u/23102756?v=4" width="100px;" alt="Hermes jimenez"/><br /><sub><b>Hermes Jimenez</b></sub></a></td>
-    <td align="center"><a href="https://github.com/SwAeyrton"><img src="https://avatars.githubusercontent.com/u/88451104?v=4" width="100px;" alt="Aeyrton Villalobos"/><br /><sub><b>Aeyrton Villalobos</b></sub></a></td>
-     <td align="center"><a href="https://github.com/martinfnsw"><img src="https://avatars.githubusercontent.com/u/88680430?v=4" width="100px;" alt="Martin Flores"/><br /><sub><b>Martin Flores</b></sub></a></td>
-     <td align="center"><a href="https://github.com/helttonrl"><img src="https://avatars.githubusercontent.com/u/23102756?v=4" width="100px;" alt="Heltton Ramirez"/><br /><sub><b>Heltton Ramirez</b></sub></a></td>
+    <td align="center"><a href="https://github.com/hermesw"><img src="https://avatars.githubusercontent.com/u/23102756?v=4" width="80px;" alt="Hermes jimenez"/><br /><sub><b>Hermes Jimenez</b></sub></a></td>
+    <td align="center"><a href="https://github.com/SwAeyrton"><img src="https://avatars.githubusercontent.com/u/88451104?v=4" width="80px;" alt="Aeyrton Villalobos"/><br /><sub><b>Aeyrton Villalobos</b></sub></a></td>
+     <td align="center"><a href="https://github.com/martinfnsw"><img src="https://avatars.githubusercontent.com/u/88680430?v=4" width="80px;" alt="Martin Flores"/><br /><sub><b>Martin Flores</b></sub></a></td>
+     <td align="center"><a href="https://github.com/helttonrl"><img src="https://avatars.githubusercontent.com/u/23102756?v=4" width="80px;" alt="Heltton Ramirez"/><br /><sub><b>Heltton Ramirez</b></sub></a></td>
   </tr>
   </table>
-  <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNTkuNzkwMDAwMDAwMDAwMDIiIGhlaWdodD0iMzUiIHZpZXdCb3g9IjAgMCAxNTkuNzkwMDAwMDAwMDAwMDIgMzUiPjxyZWN0IGNsYXNzPSJzdmdfX3JlY3QiIHg9IjAiIHk9IjAiIHdpZHRoPSIxMTUuMzEiIGhlaWdodD0iMzUiIGZpbGw9IiNGRjY5MDAiLz48cmVjdCBjbGFzcz0ic3ZnX19yZWN0IiB4PSIxMTMuMzEiIHk9IjAiIHdpZHRoPSI0Ni40ODAwMDAwMDAwMDAwMiIgaGVpZ2h0PSIzNSIgZmlsbD0iI0ZGRkZGRiIvPjxwYXRoIGNsYXNzPSJzdmdfX3RleHQiIGQ9Ik0xNS42OSAyMkwxNC4yMiAyMkwxNC4yMiAxMy40N0wxNi4xNCAxMy40N0wxOC42MCAyMC4wMUwyMS4wNiAxMy40N0wyMi45NyAxMy40N0wyMi45NyAyMkwyMS40OSAyMkwyMS40OSAxOS4xOUwyMS42NCAxNS40M0wxOS4xMiAyMkwxOC4wNiAyMkwxNS41NSAxNS40M0wxNS42OSAxOS4xOUwxNS42OSAyMlpNMjguNDkgMjJMMjYuOTUgMjJMMzAuMTcgMTMuNDdMMzEuNTAgMTMuNDdMMzQuNzMgMjJMMzMuMTggMjJMMzIuNDkgMjAuMDFMMjkuMTggMjAuMDFMMjguNDkgMjJaTTMwLjgzIDE1LjI4TDI5LjYwIDE4LjgyTDMyLjA3IDE4LjgyTDMwLjgzIDE1LjI4Wk00MS4xNCAyMkwzOC42OSAyMkwzOC42OSAxMy40N0w0MS4yMSAxMy40N1E0Mi4zNCAxMy40NyA0My4yMSAxMy45N1E0NC4wOSAxNC40OCA0NC41NyAxNS40MFE0NS4wNSAxNi4zMyA0NS4wNSAxNy41Mkw0NS4wNSAxNy41Mkw0NS4wNSAxNy45NVE0NS4wNSAxOS4xNiA0NC41NyAyMC4wOFE0NC4wOCAyMS4wMCA0My4xOSAyMS41MFE0Mi4zMCAyMiA0MS4xNCAyMkw0MS4xNCAyMlpNNDAuMTcgMTQuNjZMNDAuMTcgMjAuODJMNDEuMTQgMjAuODJRNDIuMzAgMjAuODIgNDIuOTMgMjAuMDlRNDMuNTUgMTkuMzYgNDMuNTYgMTcuOTlMNDMuNTYgMTcuOTlMNDMuNTYgMTcuNTJRNDMuNTYgMTYuMTMgNDIuOTYgMTUuNDBRNDIuMzUgMTQuNjYgNDEuMjEgMTQuNjZMNDEuMjEgMTQuNjZMNDAuMTcgMTQuNjZaTTU1LjA5IDIyTDQ5LjUxIDIyTDQ5LjUxIDEzLjQ3TDU1LjA1IDEzLjQ3TDU1LjA1IDE0LjY2TDUxLjAwIDE0LjY2TDUxLjAwIDE3LjAyTDU0LjUwIDE3LjAyTDU0LjUwIDE4LjE5TDUxLjAwIDE4LjE5TDUxLjAwIDIwLjgyTDU1LjA5IDIwLjgyTDU1LjA5IDIyWk02Ni42NSAyMkw2NC42OCAxMy40N0w2Ni4xNSAxMy40N0w2Ny40NyAxOS44OEw2OS4xMCAxMy40N0w3MC4zNCAxMy40N0w3MS45NiAxOS44OUw3My4yNyAxMy40N0w3NC43NCAxMy40N0w3Mi43NyAyMkw3MS4zNSAyMkw2OS43MyAxNS43N0w2OC4wNyAyMkw2Ni42NSAyMlpNODAuMzggMjJMNzguOTAgMjJMNzguOTAgMTMuNDdMODAuMzggMTMuNDdMODAuMzggMjJaTTg2Ljg3IDE0LjY2TDg0LjIzIDE0LjY2TDg0LjIzIDEzLjQ3TDkxLjAwIDEzLjQ3TDkxLjAwIDE0LjY2TDg4LjM0IDE0LjY2TDg4LjM0IDIyTDg2Ljg3IDIyTDg2Ljg3IDE0LjY2Wk05Ni4yNCAyMkw5NC43NSAyMkw5NC43NSAxMy40N0w5Ni4yNCAxMy40N0w5Ni4yNCAxNy4wMkwxMDAuMDUgMTcuMDJMMTAwLjA1IDEzLjQ3TDEwMS41MyAxMy40N0wxMDEuNTMgMjJMMTAwLjA1IDIyTDEwMC4wNSAxOC4yMUw5Ni4yNCAxOC4yMUw5Ni4yNCAyMloiIGZpbGw9IiNGRkZGRkYiLz48cGF0aCBjbGFzcz0ic3ZnX190ZXh0IiBkPSJNMTI3LjA3IDE3LjgwTDEyNy4wNyAxNy44MFExMjcuMDcgMTYuNTQgMTI3LjY3IDE1LjU0UTEyOC4yNyAxNC41NSAxMjkuMzIgMTMuOTlRMTMwLjM3IDEzLjQzIDEzMS42OSAxMy40M0wxMzEuNjkgMTMuNDNRMTMyLjg0IDEzLjQzIDEzMy43NiAxMy44NFExMzQuNjkgMTQuMjUgMTM1LjMwIDE1LjAyTDEzNS4zMCAxNS4wMkwxMzMuNzkgMTYuMzlRMTMyLjk4IDE1LjQwIDEzMS44MSAxNS40MEwxMzEuODEgMTUuNDBRMTMxLjEyIDE1LjQwIDEzMC41OSAxNS43MFExMzAuMDYgMTYgMTI5Ljc2IDE2LjU0UTEyOS40NyAxNy4wOSAxMjkuNDcgMTcuODBMMTI5LjQ3IDE3LjgwUTEyOS40NyAxOC41MSAxMjkuNzYgMTkuMDVRMTMwLjA2IDE5LjYwIDEzMC41OSAxOS45MFExMzEuMTIgMjAuMjAgMTMxLjgxIDIwLjIwTDEzMS44MSAyMC4yMFExMzIuOTggMjAuMjAgMTMzLjc5IDE5LjIyTDEzMy43OSAxOS4yMkwxMzUuMzAgMjAuNThRMTM0LjY5IDIxLjM1IDEzMy43NyAyMS43NlExMzIuODQgMjIuMTcgMTMxLjY5IDIyLjE3TDEzMS42OSAyMi4xN1ExMzAuMzcgMjIuMTcgMTI5LjMyIDIxLjYxUTEyOC4yNyAyMS4wNSAxMjcuNjcgMjAuMDVRMTI3LjA3IDE5LjA2IDEyNy4wNyAxNy44MFpNMTQwLjcyIDIwLjIxTDEzOS4yMCAyMC4yMUwxMzkuMjAgMTguNjdMMTQwLjkxIDE4LjY3TDE0MS4xMSAxNi45NEwxMzkuNjAgMTYuOTRMMTM5LjYwIDE1LjM5TDE0MS4zMCAxNS4zOUwxNDEuNTMgMTMuNjBMMTQzLjE3IDEzLjYwTDE0Mi45NCAxNS4zOUwxNDQuNDEgMTUuMzlMMTQ0LjY0IDEzLjYwTDE0Ni4yNyAxMy42MEwxNDYuMDQgMTUuMzlMMTQ3LjU1IDE1LjM5TDE0Ny41NSAxNi45NEwxNDUuODUgMTYuOTRMMTQ1LjY1IDE4LjY3TDE0Ny4xNSAxOC42N0wxNDcuMTUgMjAuMjFMMTQ1LjQ2IDIwLjIxTDE0NS4yMyAyMkwxNDMuNTkgMjJMMTQzLjgyIDIwLjIxTDE0Mi4zNSAyMC4yMUwxNDIuMTIgMjJMMTQwLjQ5IDIyTDE0MC43MiAyMC4yMVpNMTQyLjc0IDE2Ljk0TDE0Mi41NCAxOC42N0wxNDQuMDIgMTguNjdMMTQ0LjIyIDE2Ljk0TDE0Mi43NCAxNi45NFoiIGZpbGw9IiNGRjY5MDAiIHg9IjEyNi4zMSIvPjwvc3ZnPg==" alt="MADE WITH C#" />
