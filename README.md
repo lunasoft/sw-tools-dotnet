@@ -425,6 +425,8 @@ namespace ExampleSDK
 
 ## Certificados #
 
+Servicios para leer y manipular certificados.
+
 ----------------
 
 ### Crear PFX #
@@ -549,6 +551,8 @@ namespace ExampleSDK
 ----------------
 
 ## Fiscal #
+
+Servicios varios utiles para la emisión de un CFDI.
 
 ----------------
 
