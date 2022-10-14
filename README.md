@@ -9,14 +9,24 @@
 - [Documentación](#documentación)
 - [Instalación](#instalación)
 - [Implementación](#implementación)
-  - [Sign](#sellado)
-    - [Sellar CFDI 3.3](#generar-xml-cfdi-33)
-    - [Sellar CFDI 4.0](#generar-xml-cfdi-40)
+  - [Comprobante](#compatibilidad)
+    - [Generar CFDI 3.3](#generar-xml-cfdi-33)
+    - [Generar CFDI 4.0](#generar-xml-cfdi-40)
+    - [Generar Pagos 2.0](#generar-xml-con-complemento-de-pagos-20)
+  - [Sellado](#sellado)
+    - [Sellar CFDI 3.3](#sellar-xml-cfdi-33)
+    - [Sellar CFDI 4.0](#sellar-xml-cfdi-40)
     - [Sellar Retenciones 2.0](#sellar-xml-retención-20)
     - [Sellar XML Cancelaciones](#generar-y-sellar-xml-de-cancelación)
     - [Sellar XML Aceptacion/Rechazo](#generar-y-sellar-xml-aceptaciónrechazo)
-  - [Certificates](#certificados)
+  - [Certificados](#certificados)
+    - [Crear PFX](#crear-pfx)
+    - [Leer Certificado](#leer-certificado)
+    - [Validar CSD o FIEL](#validar-csdfiel)
   - [Fiscal](#fiscal)
+    - [Consultar Validez](#consultar-validez)
+    - [Antiguedad Semanas](#antiguedad-en-semanas)
+    - [Antiguedad Años](#antiguedad-en-años-meses-y-días)
 - [Autores](#autores)
 
 # Compatibilidad #
@@ -35,8 +45,6 @@
 - [Inicio Rápido](https://developers.sw.com.mx/knowledge-base/)
 - [Documentacion Oficial Servicios](http://developers.sw.com.mx)
 
-----------------
-
 # Instalación #
 
 Instalar la libreria a traves Package Manager Console [nuget.org](https://www.nuget.org/packages/SW.Tools/1.0.3.2-rc)
@@ -49,13 +57,11 @@ En caso de no utilizar Package Manager Console puedes descargar la libreria dire
 
 # Implementación #
 
-----------------
-
 ## Comprobante #
 
-----------------
-
 Servicios para generar XML a partir de un objeto comprobante.
+
+----------------
 
 ### Generar XML CFDI 3.3 #
 
@@ -146,7 +152,7 @@ namespace ExampleSDK
 
 ----------------
 
-### Generar XML con complemento de Pagos 2.0 ##
+### Generar XML Pagos 2.0 #
 
 Puedes generar un xml en su versión 4.0 con su complementeo de pagos 2.0, así como tambien realizar el sellado para ser timbrado. Puedes consultar más ejemplos en [UT Tools](https://github.com/lunasoft/sw-tools-dotnet/blob/master/SW.ToolsUT/UT_Tools_BuildInvoicePagos20.cs)
 
@@ -191,6 +197,8 @@ namespace ExampleSDK
 Servicios para sellar comprobantes CFDI y de Retenciones, generar y aplicar siganture a un XML.
 También contiene métodos para crear y sellar XML de cancelación y de aceptación/rechazo.
 
+----------------
+
 ### Sellar XML CFDI 3.3 #
 
 Una vez construido el xml con todos sus nodos y atributos puedes realizar el sellado del mismo con la siguiente fucnión:
@@ -233,7 +241,9 @@ namespace ExampleSDK
 }
 ```
 
-## Sellar XML CFDI 4.0 #
+----------------
+
+### Sellar XML CFDI 4.0 #
 
 Una vez construido el xml con todos sus nodos y atributos puedes realizar el sellado del mismo con la siguiente función:
 
@@ -274,6 +284,8 @@ namespace ExampleSDK
     }
 }
 ```
+
+----------------
 
 ### Sellar XML Retención 2.0 #
 
@@ -317,6 +329,8 @@ namespace ExampleSDK
     }
 }
 ```
+
+----------------
 
 ### Generar y sellar XML de cancelación #
 
@@ -367,6 +381,8 @@ namespace ExampleSDK
 }
 ```
 
+----------------
+
 ### Generar y sellar XML Aceptación/Rechazo #
 
 Cuando requieras aceptar o rechazar una o más cancelaciones puedes generar el xml de aceptación/rechazo.
@@ -406,8 +422,6 @@ namespace ExampleSDK
     }
 }
 ```
-
-----------------
 
 ## Certificados #
 
