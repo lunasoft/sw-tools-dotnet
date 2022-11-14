@@ -57,7 +57,7 @@ namespace SW.ToolsUT
         {
             Comprobante comprobante = new Comprobante();
 
-            comprobante.SetComprobante("AMD", "I", "99", "PPD", "20000", "01",null,null,null,1m);
+            comprobante.SetComprobante("AMD", "I", "99", "PPD", "20000", "01",null,null,"Condicion",1m);
             comprobante.SetConcepto(1, "50211503", "ZZ", "Cigarros", "1", "NO APLICA", 200.00m, "02", 200.00m);
             comprobante.SetConceptoImpuestoTraslado("Tasa", "002", 3592.83m, 0.160000m, 574.85m);
             comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
