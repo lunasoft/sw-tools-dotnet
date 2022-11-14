@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SW.Tools.Handlers.SignResponseHandler
 {
-    internal class SignResponseHandler : ResponseHandler<SignResponse>
+    internal class SignResponseHandler : ResponseHandler<SignResponse> 
     {
         internal static SignResponse HandleException(Exception e)
         {
@@ -18,6 +18,18 @@ namespace SW.Tools.Handlers.SignResponseHandler
         internal static SignResponse HandleException(Exception e, string message)
         {
             return GetResponse(e, message);
+        }      
+    }
+    internal class SignResponseHandlerV2 : ResponseHandler<SignResponseV2>
+    {
+        internal static SignResponseV2 HandleException(Exception e)
+        {
+            return GetResponse(e);
+        }
+        internal static SignResponseV2 HandleException(Exception e, string message)
+        {
+            return GetResponse(e, message);
         }
     }
+
 }
