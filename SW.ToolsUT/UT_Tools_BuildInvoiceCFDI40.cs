@@ -52,23 +52,6 @@ namespace SW.ToolsUT
             StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
             Assert.IsTrue(response.status == "success");
         }
-        [TestMethod]
-        public void UT_StampInvoice_2()
-        {
-            Comprobante comprobante = new Comprobante();
-
-            comprobante.SetComprobante("AMD", "I", "99", "PPD", "20000", "01",null,null,"Condicion",1m);
-            comprobante.SetConcepto(1, "50211503", "ZZ", "Cigarros", "1", "NO APLICA", 200.00m, "02", 200.00m);
-            comprobante.SetConceptoImpuestoTraslado("Tasa", "002", 3592.83m, 0.160000m, 574.85m);
-            comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
-            comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "65000", "601");
-            var invoice = comprobante.GetComprobante();
-            var xmlInvoice = SerializerCfdi40.SerializeDocument(invoice);
-            xmlInvoice = SignInvoice(xmlInvoice);
-            Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
-            StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
-            Assert.IsTrue(response.status == "success");
-        }
 
         [TestMethod]
         public void UT_CFDI40_InformacionGlobal()
