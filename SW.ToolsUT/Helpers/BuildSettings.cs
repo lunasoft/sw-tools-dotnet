@@ -11,5 +11,7 @@ namespace SW.ToolsUT.Helpers
         public byte[] BytesKey = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.key");
         public string CerPassword = "12345678a";
         public string RfcEmisor = "EKU9003173C9";
+        public string User = "pruebas_ut@sw.com.mx";
+        public string Password = "SWpass12345";
     }
 }

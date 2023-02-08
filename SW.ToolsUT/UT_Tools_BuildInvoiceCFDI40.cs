@@ -15,20 +15,17 @@ using SW.Tools.Cfdi;
 using SW.Tools.Cfdi.Complementos.Pagos20;
 using SW.Tools.Helpers;
 using Comprobante = SW.Tools.Cfdi.Comprobante;
+using SW.ToolsUT.Helpers;
 
 namespace SW.ToolsUT
 {
     [TestClass]
     public class UT_Tools_BuildInvoiceCFDI40
     {
-        private string userStamp;
-        private string passwordStamp;
-        private string url;
+        private readonly BuildSettings _build;
         public UT_Tools_BuildInvoiceCFDI40()
         {
-            userStamp = "ut@test.com";
-            passwordStamp = "12345678a";
-            url = "http://services.test.sw.com.mx";
+            _build = new BuildSettings();
         }
 
         [TestMethod]
@@ -36,7 +33,7 @@ namespace SW.ToolsUT
         {
             Comprobante comprobante = new Comprobante();
 
-            comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01");
+            comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01", "SW-Tools-dotnet", Guid.NewGuid().ToString());
             comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta", "1", "NO APLICA", 3592.83m, "02", 3592.83m);
             comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 3592.83m, 0.160000m, 574.85m);
             comprobante.SetConcepto(1, "84131500", "ZZ", "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m, "02", 258.68m);
@@ -48,7 +45,7 @@ namespace SW.ToolsUT
             var invoice = comprobante.GetComprobante();
             var xmlInvoice = SerializerCfdi40.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
-            Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
+            Stamp stamp = new Stamp(_build.Url, _build.User, _build.Password);
             StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
             Assert.IsTrue(response.status == "success");
         }
@@ -58,7 +55,7 @@ namespace SW.ToolsUT
         {
             Comprobante comprobante = new Comprobante();
 
-            comprobante.SetComprobante("MXN", "I", "99", "PPD", "65000", "01");
+            comprobante.SetComprobante("MXN", "I", "99", "PPD", "65000", "01", "SW-Tools-dotnet", Guid.NewGuid().ToString());
             comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m, "02", 550.00m);
             comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 550.00m, 0.160000m, 88.00m);
             comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
@@ -67,7 +64,7 @@ namespace SW.ToolsUT
             var invoice = comprobante.GetComprobante();
             var xmlInvoice = SerializerCfdi40.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
-            Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
+            Stamp stamp = new Stamp(_build.Url, _build.User, _build.Password);
             StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
             Assert.IsTrue(response.status == "success");
         }
@@ -77,7 +74,7 @@ namespace SW.ToolsUT
         {
             Comprobante comprobante = new Comprobante();
 
-            comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01");
+            comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01", "SW-Tools-dotnet", Guid.NewGuid().ToString());
             comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m, "02", 550.00m);
             comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 550.00m, 0.160000m, 88.00m);
             comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
@@ -86,7 +83,7 @@ namespace SW.ToolsUT
             var invoice = comprobante.GetComprobante();
             var xmlInvoice = SerializerCfdi40.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
-            Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
+            Stamp stamp = new Stamp(_build.Url, _build.User, _build.Password);
             StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
             Assert.IsTrue(response.status == "success");
         }
@@ -95,7 +92,7 @@ namespace SW.ToolsUT
         {
             Comprobante comprobante = new Comprobante();
 
-            comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01");
+            comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01", "SW-Tools-dotnet", Guid.NewGuid().ToString());
             comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta", "1", "NO APLICA", 3592.83m, "02", 3592.83m);
             comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 3592.83m, 0.160000m, 574.85m);
             comprobante.SetConcepto(1, "84131500", "ZZ", "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m, "02", 258.68m);
@@ -111,7 +108,7 @@ namespace SW.ToolsUT
             var invoice = comprobante.GetComprobante();
             var xmlInvoice = SerializerCfdi40.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
-            Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
+            Stamp stamp = new Stamp(_build.Url, _build.User, _build.Password);
             StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
             Assert.IsTrue(response.status == "success");
         }
@@ -120,7 +117,7 @@ namespace SW.ToolsUT
         {
             Comprobante comprobante = new Comprobante();
 
-            comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01");
+            comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01", "SW-Tools-dotnet", Guid.NewGuid().ToString());
             comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
             comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "65000", "601");
             comprobante.SetConcepto(1, "50211503", "H87", "Cigarros",null, "Pieza", 200.00m, "02", 200.00m);
@@ -130,7 +127,7 @@ namespace SW.ToolsUT
             var invoice = comprobante.GetComprobante();
             var xmlInvoice = SerializerCfdi40.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
-            Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
+            Stamp stamp = new Stamp(_build.Url, _build.User, _build.Password);
             StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
             Assert.IsTrue(response.status == "success");
         }
