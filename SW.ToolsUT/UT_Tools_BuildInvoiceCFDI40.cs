@@ -44,7 +44,7 @@ namespace SW.ToolsUT
             comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m, "02", 550.00m);
             comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 550.00m, 0.160000m, 88.00m);
             comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
-            comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "65000", "601");
+            comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "86991", "601");
             var invoice = comprobante.GetComprobante();
             var xmlInvoice = SerializerCfdi40.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
@@ -62,7 +62,7 @@ namespace SW.ToolsUT
             comprobante.SetConcepto(1, "50211503", "ZZ", "Cigarros", "1", "NO APLICA", 200.00m, "02", 200.00m);
             comprobante.SetConceptoImpuestoTraslado("Tasa", "002", 3592.83m, 0.160000m, 574.85m);
             comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
-            comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "65000", "601");
+            comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "86991", "601");
             var invoice = comprobante.GetComprobante();
             var xmlInvoice = SerializerCfdi40.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
@@ -76,11 +76,11 @@ namespace SW.ToolsUT
         {
             Comprobante comprobante = new Comprobante();
 
-            comprobante.SetComprobante("MXN", "I", "99", "PPD", "65000", "01");
+            comprobante.SetComprobante("MXN", "I", "99", "PPD", "86991", "01");
             comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m, "02", 550.00m);
             comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 550.00m, 0.160000m, 88.00m);
             comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
-            comprobante.SetReceptor("XAXX010101000", "PUBLICO EN GENERAL", "S01", "65000", "616");
+            comprobante.SetReceptor("XAXX010101000", "PUBLICO EN GENERAL", "S01", "86991", "616");
             comprobante.SetInformacionGlobal("01", "04", "2022");
             var invoice = comprobante.GetComprobante();
             var xmlInvoice = SerializerCfdi40.SerializeDocument(invoice);
@@ -100,7 +100,7 @@ namespace SW.ToolsUT
             comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 550.00m, 0.160000m, 88.00m);
             comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
             comprobante.SetAcuentaTerceros("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "601", "29133");
-            comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "65000", "601");
+            comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "86991", "601");
             var invoice = comprobante.GetComprobante();
             var xmlInvoice = SerializerCfdi40.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
@@ -125,7 +125,7 @@ namespace SW.ToolsUT
             lista[0] = "0aded095-b84d-4364-8f8e-59c3f650e530";
             lista[1] = "2da2a676-f424-4898-a190-79253fdf5f7a";
             comprobante.SetCFDIRelacionado("03", lista);
-            comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "65000", "601");
+            comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "86991", "601");
             var invoice = comprobante.GetComprobante();
             var xmlInvoice = SerializerCfdi40.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
@@ -140,11 +140,28 @@ namespace SW.ToolsUT
 
             comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01");
             comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
-            comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "65000", "601");
+            comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "86991", "601");
             comprobante.SetConcepto(1, "50211503", "H87", "Cigarros",null, "Pieza", 200.00m, "02", 200.00m);
             comprobante.SetConceptoImpuestoTraslado("Tasa", "002", 1m, 0.000000m, 0.00m);
             comprobante.SetConceptoImpuestoTraslado("Exento", "002", 1m);
             comprobante.SetConceptoImpuestoRetencion(1m, "001", "Tasa", 0.000000m, 0.00m);
+            var invoice = comprobante.GetComprobante();
+            var xmlInvoice = SerializerCfdi40.SerializeDocument(invoice);
+            xmlInvoice = SignInvoice(xmlInvoice);
+            Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
+            StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
+            Assert.IsTrue(response.status == "success");
+        }
+        [TestMethod]
+        public void UT_CFDI40_CFDIJustExento()
+        {
+            Comprobante comprobante = new Comprobante();
+
+            comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01", "SW-Tools-dotnet", Guid.NewGuid().ToString());
+            comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
+            comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "86991", "601");
+            comprobante.SetConcepto(1, "50211503", "H87", "Cigarros", null, "Pieza", 200.00m, "02", 200.00m);
+            comprobante.SetConceptoImpuestoTraslado("Exento", "002", 1m);
             var invoice = comprobante.GetComprobante();
             var xmlInvoice = SerializerCfdi40.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
