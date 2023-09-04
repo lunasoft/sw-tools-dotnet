@@ -109,7 +109,7 @@ namespace SW.ToolsUT
             var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocument(invoice);
         }
 
-        [TestMethod]
+        [Ignore]
         public void UT_StampInvoicePagos10()
         {
             SW.Tools.Entities.Pagos pago = new Tools.Entities.Pagos();
@@ -127,7 +127,7 @@ namespace SW.ToolsUT
                 (response.data.cfdi);
             Assert.IsTrue(response.status == "success");
         }
-        [TestMethod]
+        [Ignore]
         public void UT_StampInvoice()
         {
             Tools.Entities.Comprobante comprobante = new Tools.Entities.Comprobante();

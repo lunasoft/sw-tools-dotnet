@@ -39,7 +39,7 @@ namespace SW.ToolsUT
             pago.SetDoctoRelacionado(null, null, "bfc36522-4b8e-45c4-8f14-d11b289f9eb7",
                 "MXN", "1", "01", 1m, 200.00m, 200.00m, 0.00m);
             pago.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
-            pago.SetReceptor("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "29133", "606");
+            pago.SetReceptor("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "01160", "606");
             pago.SetTotales("200.00");
             var invoice = pago.GetInvoice("99056", "01", "01", "A", "1");
             var xmlInvoice = SW.Tools.Helpers.SerializerCfdi40.SerializeDocument(invoice);
@@ -60,7 +60,7 @@ namespace SW.ToolsUT
             pago.SetDoctoRelacionado(null, null, "bfc36522-4b8e-45c4-8f14-d11b289f9eb7",
                 "MXN", "1", "01", 1m, 200.00m, 200.00m, 0.00m);
             pago.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
-            pago.SetReceptor("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "29133", "606");
+            pago.SetReceptor("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "01160", "606");
             pago.SetTotales("200.00");
             string[] lista = new string[1];
             lista[0] = "0aded095-b84d-4364-8f8e-59c3f650e530";
@@ -82,7 +82,7 @@ namespace SW.ToolsUT
             pago.SetDoctoRelacionado(null, null, "bfc36522-4b8e-45c4-8f14-d11b289f9eb7",
                 "MXN", "1", "02", 1m, 200.00m, 200.00m, 0.00m);
             pago.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
-            pago.SetReceptor("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "29133", "606");
+            pago.SetReceptor("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "01160", "606");
             pago.SetTotales("200.00", null, null, null, "100.00", "16.00");
             pago.SetImpuestoTrasladoDR("Tasa", "002", 100.00m, 0.160000m, 16.00m);
             pago.SetImpuestoTraslados( "Tasa", "002", 100.00m, 0.160000m, 16.00m);
@@ -105,7 +105,7 @@ namespace SW.ToolsUT
             pago.SetDoctoRelacionado(null, null, "bfc36522-4b8e-45c4-8f14-d11b289f9eb7",
                 "MXN", "1", "02", 20.64m, 116.00m, 116.00m, 0.00m);
             pago.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
-            pago.SetReceptor("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "29133", "606");
+            pago.SetReceptor("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "01160", "606");
 
             pago.SetTotales("116.00", null, null, null, "99.90", "15.89");
             pago.SetImpuestoTrasladoDR( "Tasa", "002", 100.00m, 0.160000m, 16.00m);
@@ -129,7 +129,7 @@ namespace SW.ToolsUT
             pago.SetDoctoRelacionado(null, null, "bfc36522-4b8e-45c4-8f14-d11b289f9eb7",
                 "MXN", "1", "02", 1m, 100.00m, 100.00m, 0.00m);
             pago.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
-            pago.SetReceptor("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "29133", "606");
+            pago.SetReceptor("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "01160", "606");
 
             pago.SetTotales("100.00", "16.00", "35.00", "34.40", null, null);
             pago.SetImpuestoRetencionDR( "Tasa", "001", 100.00m, 0.000000m,  0.00m);
@@ -161,7 +161,7 @@ namespace SW.ToolsUT
             pago.SetDoctoRelacionado(null, null, "bfc36522-4b8e-45c4-8f14-d11b289f9eb7",
                 "USD", "1", "02", 11.60m, 1160.00m, 1160.00m, 0.00m);
             pago.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
-            pago.SetReceptor("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "29133", "606");
+            pago.SetReceptor("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "01160", "606");
 
             pago.SetTotales("2500.00", "3", "0", null, null, null,null,null,null,null, "215.50");
             pago.SetImpuestoRetencionDR("Tasa", "002", 100.00m, 0.012500m, 1.25m);
@@ -187,7 +187,7 @@ namespace SW.ToolsUT
             pago.SetDoctoRelacionado(null, null, "bfc36522-4b8e-45c4-8f14-d11b289f9eb7",
                 "MXN", "1", "02", 1m, 200.00m, 100.00m, 100.00m);
             pago.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
-            pago.SetReceptor("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "29133", "606");
+            pago.SetReceptor("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "01160", "606");
 
             pago.SetTotales("200.00", null, null, null, "200.00", "32.00", null, null, null, null, null);
             pago.SetImpuestoTrasladoDR("Tasa", "002", 100.00m, 0.160000m, 16.00m);
@@ -212,7 +212,7 @@ namespace SW.ToolsUT
             SW.Tools.Cfdi.Complementos.Pagos20.Pagos pago = new SW.Tools.Cfdi.Complementos.Pagos20.Pagos();
             pago.SetPago("01", null, DateTime.Now, null, "MXN", 7097.37m, null, null, null, null, 1m);
             pago.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
-            pago.SetReceptor("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "29133", "606");
+            pago.SetReceptor("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "01160", "606");
             pago.SetTotales("14194.74", null, null, null, "12236.84", "1957.88", null, null, null, null, null);
             pago.SetDoctoRelacionado(null, null, "bfc36522-4b8e-45c4-8f14-d11b289f9eb7",
                 "USD", "2", "02", 0.049693m, 352.69m, 352.69m, 0m);
