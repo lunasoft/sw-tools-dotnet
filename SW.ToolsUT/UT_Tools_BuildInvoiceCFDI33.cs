@@ -9,6 +9,7 @@ using SW.Services.Stamp;
 using SW.Services.Cancelation;
 using SW.Tools.Services.Fiscal;
 using SW.Tools.Services.Sign;
+using SW.ToolsUT.Helpers;
 
 namespace SW.ToolsUT
 {
@@ -18,14 +19,10 @@ namespace SW.ToolsUT
     [TestClass]
     public class UT_Tools_BuildInvoiceCFDI33
     {
-        private string userStamp;
-        private string passwordStamp;
-        private string url;
+        private readonly BuildSettings _build;
         public UT_Tools_BuildInvoiceCFDI33()
         {
-            userStamp = "pruebas_ut@sw.com.mx";
-            passwordStamp = "swpass";
-            url = "http://services.test.sw.com.mx";
+            _build = new BuildSettings();
         }
         [TestMethod]
         public void UT_GetInvoice()
@@ -118,10 +115,10 @@ namespace SW.ToolsUT
                 "PPD", "MXN", "1", 1.000000m, 30000.000000m, 15000.000000m,15000.000000m);
             pago.SetEmisor("EKU9003173C9", "CINDEMEX SA DE CV", "601");
             pago.SetReceptor("AAQM610917QJA", "EMPLEADO SMARTERWEB");
-            var invoice = pago.GetInvoice("99056", "A", "1");
+            var invoice = pago.GetInvoice("99056", "SW-Tools-dotnet", Guid.NewGuid().ToString());
             var xmlInvoice = SW.Tools.Helpers.Serializer.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
-            Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
+            Stamp stamp = new Stamp(_build.Url, _build.User, _build.Password);
             StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
             var invoiceResultStamp = SW.Tools.Helpers.Serializer.DeserealizeDocument<SW.Tools.Entities.Comprobante>
                 (response.data.cfdi);
@@ -131,7 +128,7 @@ namespace SW.ToolsUT
         public void UT_StampInvoice()
         {
             Tools.Entities.Comprobante comprobante = new Tools.Entities.Comprobante();
-            comprobante.SetComprobante("MXN", "I", "01", "PPD", "20000");
+            comprobante.SetComprobante("MXN", "I", "01", "PPD", "20000", "SW-Tools-dotnet", Guid.NewGuid().ToString());
             comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta", "1", "NO APLICA", 3592.83m);
             comprobante.SetConceptoImpuestoTraslado(0.160000m, "Tasa", "002", 3592.83m);
             comprobante.SetConcepto(1, "84131500", "ZZ", "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m);
@@ -144,7 +141,7 @@ namespace SW.ToolsUT
             var invoice = comprobante.GetComprobante();
             var xmlInvoice = Tools.Helpers.Serializer.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
-            Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
+            Stamp stamp = new Stamp(_build.Url, _build.User, _build.Password);
             StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
             Assert.IsTrue(response.status == "success");
         }
@@ -155,7 +152,7 @@ namespace SW.ToolsUT
             string password = "12345678a";
             var pfx = Sign.CrearPFX(bytesCer, bytesKey, password);
             var xmlResult = Sign.SellarCFDIv33(pfx, password, xmlInvoice);
-            return xmlResult;
+            return xmlResult.data.xml;
         }
         [TestMethod]
         public void DeserailizeXml()
