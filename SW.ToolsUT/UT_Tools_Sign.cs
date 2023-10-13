@@ -37,7 +37,6 @@ namespace SW.ToolsUT
             X509Certificate x509 = new X509Certificate(pfx, password);
             Assert.IsTrue(x509.GetPublicKey() != null);
         }
-
         [TestMethod]
         [ExpectedException(typeof(Exception), "Los datos del Certificado CER KEY o Password son incorrectos.No es posible leer la llave privada.")]
         public void UT_Tools_Sign_CrearPFX_ERROR()
