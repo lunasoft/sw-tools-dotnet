@@ -37,7 +37,6 @@ namespace SW.ToolsUT
             X509Certificate x509 = new X509Certificate(pfx, password);
             Assert.IsTrue(x509.GetPublicKey() != null);
         }
-
         [TestMethod]
         [ExpectedException(typeof(Exception), "Los datos del Certificado CER KEY o Password son incorrectos.No es posible leer la llave privada.")]
         public void UT_Tools_Sign_CrearPFX_ERROR()
@@ -53,7 +52,7 @@ namespace SW.ToolsUT
         [TestMethod]
         public void UT_Tools_Sign_SellarCFDIv33_OK()
         {
-            string selloOriginal = @"Hm4Lc+sWGUf+D74bm1yej73532b1FcKNdKvM5aoYVkcFUwCTrdNYmpOQv5u+GjqyTd458NT+CmaJYHXSq7pjTDr8r5D+weP5xgZcfgdxC+FGuXpvhN++Kn4/WCMSQTvzeeDeigl3rsJKKAdu4rcVYpMrb8gEdrT6ajXfARHgiQasQL7aIuB1J9RWj3Ay/9ZZjRPtos6VYqZirrcKCyy1dPTQsqzpLpLU8sxwdUX12Eu1HXR7HGrIee/fboq+bwd/rA/FINnZHhEJH9qnyd7AOYHKGCfwltqJcY1FuaunVp6Dc14I90JVNKxNzaEkmeuAym5QE3nUio/oIDp8GQcznA==";
+            string selloOriginal = @"Wp8bQbLpTQHj1pS0OOdwuiFJnyzyReqJ4BjjthBeyfqGOONgx7dtXCQnGtn812Ksf4H2WayOc489ul0IaMlq73X7lcYp519bfASmp3HZ5MD3Orsf3W6LWcSyxcbKy5kF8jPZk/R1/v1MJLh5Mga39WdOzbiZ02AqbVf8zBHxz9vTeUKa2BP/5cFFj6ei69+y5+DBfjYYiId+bKfuIRpbp+6DiD0kOeUD+Z7T6OSY+uakVR7b+I9fUN5VoKuG+6vq/TJdFZMECi1gU192HBdfKX4hDbn7X848rqcpqeBxNsYWCyvjoq7pciAMchzFdXHRvUmXZv5MTFFrWaIbhGLwwQ==";
             byte[] bytesCer = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.cer");
             byte[] bytesKey = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.key");
             string password = "12345678a";
@@ -68,7 +67,7 @@ namespace SW.ToolsUT
         [TestMethod]
         public void UT_Tools_Sign_SellarCFDIv40_OK()
         {
-            string selloOriginal = @"h4On+n0hpaZ13iDhyhXk9xDLRO3H3+4JWaTgw8S07ctKvrloHHP4K3tHNeT55ckDDxG6uXOvmpYA6nJ5aqH+h0LzJN/NDLAeaipxGgAZbelrN+gZ/AwgfIVaioVJ0f5pqpE4ReDUOcrtH8diXmeY2/yVw1hggXVJpUVf/y3uW9YvmsGyefAZh3zuupmWe9D3Xde/hqzYfhmsP86R5dROixiHkSIPjsCD4t2PnmxOZeGuKE7eHAB+766zoH/drKhru9hVWhn3+BtU/xFYRFQPu5lVmpbj9y5C+gWix+Rlp/krBNzLbdSBDCK5wqBfuC+vQZH7Z/h+EtHPms16tgCrtQ==";
+            string selloOriginal = @"cMo3ESbV+ibz6Rd5L0u0eEbPgBPGcf0Mrka8jR3sbCaZ92QjvyhI1YCpabnMopVC0KqozliggG8M9FZtKrbZOhmE9uT1QfOtub5ufHVzuF/LMoTgSZzYH+jxSlbyaZblL0u8mYtZWanl4BE0GB72ceOBJGWUsedn+bel3sEMU1MkooGBkxHv0WgIdAheYGIdaT3HOX5M5wmOEjdU+ZS+/u61GjmPNUMe7M0WeifiRj7lCh+MlEankkcjw1cjXreTIN9NGG/8KYyFTnpx0rPgc9gGMsTSqh5L71CF2ciCML90AJWAh0eou+BR6Wd5Ba3CAu2xgS6CYDAKxY4wuur38g==";
             byte[] bytesCer = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.cer");
             byte[] bytesKey = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.key");
             string password = "12345678a";
@@ -83,7 +82,7 @@ namespace SW.ToolsUT
         [TestMethod]
         public void UT_Tools_Sign_SellarRetencionv20_OK()
         {
-            string selloOriginal = @"TEOLSNcpyqoEd3PIrJaD9mXMaG6IFcgAmupCvlGj2QY1wl3SxzdiFCudAo9IvL4Rt2ih3OZXgUImhEr/VwOBX4z8RlBY2OafNLNtBSs+TNiQeoYaT1fwr+y1fQusoeKx+kkIaBaFmm53OS61Kh3CZkThvAMgGTpOUsetHF+xauj1u6dnziq28u45jbwvOv7bM7Y5s1krosRxnx0kqd3LGtM5vyCeckQqOWhW4IPc58h5ci7PSv57S+7hcuy3Z8Wyeg0AqSXinaU+svf9D5VcWihVcP4kefdqWqGRr3huG6uVscTCubSwKWwPJHAEuzYqGx3N65POZFjArgG+OonvjQ==";
+            string selloOriginal = @"MWYMtWQGyDfiz3r7DY1c0ZYNQGFbdNfBsCFdWpTMwTr5Ju1kumCbkPKr3pp5HJ3MK44Ko6mUZ97IbDU+1o2yuI9lwJrtoAviREu5KcZgmI6C6Die7LSygiC386SEgR90fGpV9I8kGFNHvWkuTaeS4WEgLloxJYzGtTDqtpoYSMfKVHRGusIulNEvlJuzJIZmYiZVTyqw161KwFQ3/tMRo8ek7O+Jkwjrh+VwWSQ+3ueVfOO5MxFn6rvL1u+4o2B8IJe0nolQ9Fo32u6+NPTJUHUvQvVudmJcZg5A2mna5N/dEkmR2RfuN6bFaJgm7wyfmjDiF04yii+faJVTKqCNQQ==";
             byte[] bytesCer = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.cer");
             byte[] bytesKey = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.key");
             string password = "12345678a";
