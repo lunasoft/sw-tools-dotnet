@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Xml;
 using System.IO;
-using SW.Services.Authentication;
 using SW.Services.Stamp;
-using SW.Services.Cancelation;
-using SW.Tools.Entities.Complementos;
-using SW.Tools.Entities;
 using SW.Tools.Services.Sign;
-using SW.Tools.Services.Fiscal;
-using SW.Tools.Cfdi;
-using SW.Tools.Cfdi.Complementos.Pagos20;
 using SW.Tools.Helpers;
 using Comprobante = SW.Tools.Cfdi.Comprobante;
 using SW.ToolsUT.Helpers;
@@ -33,7 +23,7 @@ namespace SW.ToolsUT
         {
             Comprobante comprobante = new Comprobante();
 
-            comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01", "SW-Tools-dotnet", Guid.NewGuid().ToString());
+            comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01", "SW-Tools-dotnet", Guid.NewGuid().ToString(), fecha: DateTime.Now.AddHours(-6));
             comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta", "1", "NO APLICA", 3592.83m, "02", 3592.83m);
             comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 3592.83m, 0.160000m, 574.85m);
             comprobante.SetConcepto(1, "84131500", "ZZ", "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m, "02", 258.68m);
@@ -55,7 +45,7 @@ namespace SW.ToolsUT
         {
             Comprobante comprobante = new Comprobante();
 
-            comprobante.SetComprobante("MXN", "I", "99", "PPD", "65000", "01", "SW-Tools-dotnet", Guid.NewGuid().ToString());
+            comprobante.SetComprobante("MXN", "I", "99", "PPD", "65000", "01", "SW-Tools-dotnet", Guid.NewGuid().ToString(), fecha: DateTime.Now.AddHours(-6));
             comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m, "02", 550.00m);
             comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 550.00m, 0.160000m, 88.00m);
             comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
@@ -74,7 +64,7 @@ namespace SW.ToolsUT
         {
             Comprobante comprobante = new Comprobante();
 
-            comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01", "SW-Tools-dotnet", Guid.NewGuid().ToString());
+            comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01", "SW-Tools-dotnet", Guid.NewGuid().ToString(), fecha: DateTime.Now.AddHours(-6));
             comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m, "02", 550.00m);
             comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 550.00m, 0.160000m, 88.00m);
             comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
@@ -92,7 +82,7 @@ namespace SW.ToolsUT
         {
             Comprobante comprobante = new Comprobante();
 
-            comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01", "SW-Tools-dotnet", Guid.NewGuid().ToString());
+            comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01", "SW-Tools-dotnet", Guid.NewGuid().ToString(), fecha: DateTime.Now.AddHours(-6));
             comprobante.SetConcepto(1, "84131500", "ZZ", "Prima neta", "1", "NO APLICA", 3592.83m, "02", 3592.83m);
             comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 3592.83m, 0.160000m, 574.85m);
             comprobante.SetConcepto(1, "84131500", "ZZ", "Recargo por pago fraccionado", "1", "NO APLICA", 258.68m, "02", 258.68m);
@@ -117,7 +107,7 @@ namespace SW.ToolsUT
         {
             Comprobante comprobante = new Comprobante();
 
-            comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01", "SW-Tools-dotnet", Guid.NewGuid().ToString());
+            comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01", "SW-Tools-dotnet", Guid.NewGuid().ToString(), fecha: DateTime.Now.AddHours(-6));
             comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
             comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "86991", "601");
             comprobante.SetConcepto(1, "50211503", "H87", "Cigarros",null, "Pieza", 200.00m, "02", 200.00m);
@@ -136,7 +126,7 @@ namespace SW.ToolsUT
         {
             Comprobante comprobante = new Comprobante();
 
-            comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01", "SW-Tools-dotnet", Guid.NewGuid().ToString());
+            comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01", "SW-Tools-dotnet", Guid.NewGuid().ToString(), fecha: DateTime.Now.AddHours(-6));
             comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
             comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "86991", "601");
             comprobante.SetConcepto(1, "50211503", "H87", "Cigarros", null, "Pieza", 200.00m, "02", 200.00m);
