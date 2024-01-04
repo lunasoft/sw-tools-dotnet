@@ -445,7 +445,7 @@ namespace SW.Tools.Cfdi
         }
 
         public void SetComprobante(string moneda, string tipoDeComprobante, string formaPago, string metodoPago,
-            string lugarExpedicion,string exportacion, string serie = null, string folio = null, string condicionesDePago = null, decimal tipoCambio = 0, string confirmacion = null)
+            string lugarExpedicion,string exportacion, string serie = null, string folio = null, string condicionesDePago = null, decimal tipoCambio = 0, string confirmacion = null, DateTime? fecha = null)
         {
             this.Serie = serie;
             this.Folio = folio;
@@ -460,7 +460,7 @@ namespace SW.Tools.Cfdi
             this.Confirmacion = confirmacion;
             this.TipoCambio = tipoCambio;
             this.Exportacion = exportacion;
-            this.Fecha= DateTime.Now.CentralTime();
+            this.Fecha = fecha ?? DateTime.Now.CentralTime();
         }
 
         public void SetInformacionGlobal(string periodicidad, string meses, string anio)
