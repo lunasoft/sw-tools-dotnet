@@ -1,20 +1,8 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Xml;
 using System.IO;
-using SW.Services.Authentication;
 using SW.Services.Stamp;
-using SW.Services.Cancelation;
-using SW.Tools.Entities.Complementos;
-using SW.Tools.Entities;
 using SW.Tools.Services.Sign;
-using SW.Tools.Services.Fiscal;
-using SW.Tools.Cfdi;
-using SW.Tools.Cfdi.Complementos.Pagos20;
-using SW.Tools.Helpers;
-using Comprobante = SW.Tools.Cfdi.Comprobante;
 using SW.ToolsUT.Helpers;
 
 namespace SW.ToolsUT

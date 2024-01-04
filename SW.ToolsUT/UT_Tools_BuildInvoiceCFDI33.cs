@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Text;
-using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Xml;
 using System.IO;
-using SW.Services.Authentication;
 using SW.Services.Stamp;
-using SW.Services.Cancelation;
 using SW.Tools.Services.Fiscal;
 using SW.Tools.Services.Sign;
 using SW.ToolsUT.Helpers;
