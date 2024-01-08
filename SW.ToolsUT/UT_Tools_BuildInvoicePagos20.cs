@@ -20,6 +20,7 @@ using SW.ToolsUT.Helpers;
 namespace SW.ToolsUT
 {
     [TestClass]
+
     public class UT_Tools_BuildInvoicePagos20
     {
         private readonly BuildSettings _build;
