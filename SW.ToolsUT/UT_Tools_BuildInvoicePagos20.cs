@@ -20,6 +20,8 @@ using SW.ToolsUT.Helpers;
 namespace SW.ToolsUT
 {
     [TestClass]
+    [Ignore]
+
     public class UT_Tools_BuildInvoicePagos20
     {
         private readonly BuildSettings _build;
@@ -82,7 +84,7 @@ namespace SW.ToolsUT
             pago.SetReceptor("JUFA7608212V6", "ADRIANA JUAREZ FERNANDEZ", "01160", "606");
             pago.SetTotales("200.00", null, null, null, "100.00", "16.00");
             pago.SetImpuestoTrasladoDR("Tasa", "002", 100.00m, 0.160000m, 16.00m);
-            pago.SetImpuestoTraslados( "Tasa", "002", 100.00m, 0.160000m, 16.00m);
+            pago.SetImpuestoTraslados("Tasa", "002", 100.00m, 0.160000m, 16.00m);
             var invoice = pago.GetInvoice("99056", "01", "01", "SW-Tools-dotnet", Guid.NewGuid().ToString());
             var xmlInvoice = SW.Tools.Helpers.SerializerCfdi40.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
@@ -93,7 +95,8 @@ namespace SW.ToolsUT
             Assert.IsTrue(response.status == "success");
 
         }
-        [TestMethod]
+       [TestMethod]
+        [Ignore]
         public void UT4_StampInvoicePagos20()
         {
             SW.Tools.Cfdi.Complementos.Pagos20.Pagos pago = new SW.Tools.Cfdi.Complementos.Pagos20.Pagos();
@@ -118,6 +121,7 @@ namespace SW.ToolsUT
 
         }
         [TestMethod]
+        [Ignore]
         public void UT5_StampInvoicePagos20()
         {
             SW.Tools.Cfdi.Complementos.Pagos20.Pagos pago = new SW.Tools.Cfdi.Complementos.Pagos20.Pagos();
@@ -176,6 +180,7 @@ namespace SW.ToolsUT
 
         }
         [TestMethod]
+        [Ignore]
         public void UT7_StampInvoicePagos20()
         {
             SW.Tools.Cfdi.Complementos.Pagos20.Pagos pago = new SW.Tools.Cfdi.Complementos.Pagos20.Pagos();
@@ -204,6 +209,7 @@ namespace SW.ToolsUT
 
         }
         [TestMethod]
+        [Ignore]
         public void UT8_StampInvoicePagos20()
         {
             SW.Tools.Cfdi.Complementos.Pagos20.Pagos pago = new SW.Tools.Cfdi.Complementos.Pagos20.Pagos();

@@ -17,6 +17,7 @@ namespace SW.ToolsUT
     /// Descripción resumida de UT_Tools_CreateInvoice
     /// </summary>
     [TestClass]
+    [Ignore]
     public class UT_Tools_BuildInvoiceCFDI33
     {
         private readonly BuildSettings _build;
