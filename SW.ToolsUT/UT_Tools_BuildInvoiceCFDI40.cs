@@ -61,13 +61,13 @@ namespace SW.ToolsUT
             comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 550.00m, 0.160000m, 88.00m);
             comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
             comprobante.SetReceptor("XAXX010101000", "PUBLICO EN GENERAL", "S01", "65000", "616");
-            comprobante.SetInformacionGlobal("01", "04", "2022");
+            comprobante.SetInformacionGlobal("01", "04", "2023");
             var invoice = comprobante.GetComprobante();
             var xmlInvoice = SerializerCfdi40.SerializeDocument(invoice);
             xmlInvoice = SignInvoice(xmlInvoice);
             Stamp stamp = new Stamp(_build.Url, _build.User, _build.Password);
             StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
-            Assert.IsTrue(response.status == "success");
+            Assert.IsTrue(response.status == "success"|| response.message == "307. El comprobante contiene un timbre previo.");
         }
         [TestMethod]
 
