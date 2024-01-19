@@ -415,9 +415,18 @@ namespace SW.Tools.Entities
             {
                 if (this.Impuestos.Traslados != null && this.Impuestos.Traslados.Count() > 0)
                 {
-                    this.Impuestos.TotalImpuestosTrasladados = this.Impuestos.Traslados.Sum(a => a.Importe).TruncateDecimals(this.moneda_Info.Decimales);
-                    this.Impuestos.TotalImpuestosTrasladadosSpecified = true;
-                    this.Total += this.Impuestos.TotalImpuestosTrasladados;
+                    int countTasa = this.Impuestos.Traslados.Count(a => a.TipoFactor.Trim().ToLower() == "tasa");
+                    int countExento = this.Impuestos.Traslados.Count(a => a.TipoFactor.Trim().ToLower() == "exento");
+                    if (countTasa <= 0 && countExento >= 1)
+                    {
+                        this.Impuestos.TotalImpuestosTrasladadosSpecified = false;
+                    }
+                    else
+                    {
+                        this.Impuestos.TotalImpuestosTrasladados = this.Impuestos.Traslados.Sum(a => a.Importe);
+                        this.Impuestos.TotalImpuestosTrasladadosSpecified = true;
+                        this.Total += this.Impuestos.TotalImpuestosTrasladados;
+                    }
                 }
 
                 if (this.Impuestos.Retenciones != null && this.Impuestos.Retenciones.Length > 0)
