@@ -36,7 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="cadenaoriginal40, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadenaoriginal40.dll.0.0.4-rc\lib\net40\cadenaoriginal40.dll</HintPath>
+      <HintPath>..\packages\cadenaoriginal40.dll.0.0.4.1\lib\net40\cadenaoriginal40.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
