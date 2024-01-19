@@ -143,8 +143,9 @@ namespace SW.ToolsUT
             string CadenaOriginal = "||3.3|RogueOne|HNFK231|2022-01-04T00:14:54|01|20001000000300022816|25000.00|MXN|1|28000.00|I|PUE|06300|EKU9003173C9|SW TRANSPORTES|601|AAA010101AAA|SW SMARTERWEB|G03|78101500|01|1|E48|SERVICIO|FLETE|25000.00|25000.00|25000.00|002|Tasa|0.160000|4000.00|25000.00|002|Tasa|0.040000|1000.00|002|1000.00|1000.00|002|Tasa|0.160000|4000.00|4000.00|2.0|No|2|Origen|OR101010|EKU9003173C9|2021-11-01T00:00:00|calle|211|0347|23|casa blanca 1|004|COA|MEX|25350|Destino|DE202020|AAA010101AAA|2021-11-01T01:00:00|1|calle|214|0347|23|casa blanca 2|004|COA|MEX|25350|Destino|DE202021|AAA010101AAA|2021-11-01T02:00:00|1|calle|220|0347|23|casa blanca 3|004|COA|MEX|25350|2.0|XBX|2|11121900|Productos de perfumería|1.0|XBX|Sí|1266|4H2|1.0|1|OR101010|DE202020|11121900|Productos de perfumería|1.0|XBX|Sí|1266|4H2|1.0|1|OR101010|DE202021|TPAF01|NumPermisoSCT|VL|plac892|2020|SW Seguros|123456789|SW Seguros Ambientales|123456789|SW Seguros|CTR021|ABC123|01|VAAM130719H60|a234567890||";
             var result_ = Fiscal.RemoverCaracteresInvalidosXml(Sign.CadenaOriginalCFDIv33(xml).data.cadenaOriginal);
             Assert.IsTrue(CadenaOriginal.Equals(result_));
-        }/// <summary>
-        /// Cadena Original Carta Porte 2.0
+        }
+        /// <summary>
+        /// Cadena Original Carta Porte 3.0
         /// </summary>
         [TestMethod]
         public void UT_Tools_CadenaOriginalCFDIv40_CP30_OK()
@@ -154,6 +155,29 @@ namespace SW.ToolsUT
             var result_ = Fiscal.RemoverCaracteresInvalidosXml(Sign.CadenaOriginalCFDIv40(xml).data.cadenaOriginal);
             Assert.IsTrue(CadenaOriginal.Equals(result_));
         }
+        /// <summary>
+        /// Cadena Original Comercio Exterior 2.0
+        /// </summary>
+        [TestMethod]
+        public void UT_Tools_CadenaOriginalCFDIv40_CE20_OK()
+        {
+            var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi40_cce20.xml")));
+            string CadenaOriginal = "||4.0|Serie|Folio1|2024-01-18T00:00:00|99|30001000000500003416|CondicionesDePago|400|AMD|1|400.00|I|02|PPD|20000|EKU9003173C9|ESCUELA KEMPER URGATE|601|XEXX010101000|ESCUELA KEMPER URGATE|20000|616|S01|50211503|131494-1055|2|H87|Pieza|Cigarros|200.00|400.00|01|2.0|A1|0|FOB|17.1598|25.56|CALLE DEL PAPEL|0214|01|014|QUE|MEX|76199|123456789|ST. A|TX|USA|00000|131494-1055|2402200100|117.64|01|12.78|25.56||";
+            var result_ = Fiscal.RemoverCaracteresInvalidosXml(Sign.CadenaOriginalCFDIv40(xml).data.cadenaOriginal);
+            Assert.IsTrue(CadenaOriginal.Equals(result_));
+        }
+        /// <summary>
+        /// Cadena Original Comercio Exterior 2.0 varios propietarios
+        /// </summary>
+        [TestMethod]
+        public void UT_Tools_CadenaOriginalCFDIv40_CE20_6Propietarios_OK()
+        {
+            var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi40_cce20_2.xml")));
+            string CadenaOriginal = "||4.0|CE20|2|2024-01-18T01:00:00|30001000000500003416|0.00|AMD|1|0.00|T|02|20000|EKU9003173C9|ESCUELA KEMPER URGATE|601|EKU9003173C9|ESCUELA KEMPER URGATE|42501|601|G01|50211503|131494-1055|2|H87|Pieza|Cigarros|200.00|400.00|01|2.0|05|A1|0|CFR|17.1598|25.56|CALLE DEL PAPEL|0214|01|014|QUE|MEX|76199|NumRegIdTrib1|AFG|NumRegIdTrib1|AFG|NumRegIdTrib1|AFG|NumRegIdTrib1|AFG|NumRegIdTrib1|AFG|NumRegIdTrib1|AFG|ST. A|TX|USA|00000|131494-1055|2402200100|117.64|01|12.78|25.56||";
+            var result_ = Fiscal.RemoverCaracteresInvalidosXml(Sign.CadenaOriginalCFDIv40(xml).data.cadenaOriginal);
+            Assert.IsTrue(CadenaOriginal.Equals(result_));
+        }
+
         [TestMethod]
         public void UT_Tools_CadenaOriginalCFDIv33_ERROR()
         {
