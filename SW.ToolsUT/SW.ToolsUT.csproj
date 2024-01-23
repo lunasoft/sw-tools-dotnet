@@ -108,6 +108,12 @@
     <None Include="Resources\CSD_Prueba_CFDI_LAN8507268IA.key">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="Resources\cfdi40_cce20.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\cfdi40_cce20_2.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\cfdi40_cp30.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
