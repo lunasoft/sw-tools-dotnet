@@ -149,6 +149,23 @@ namespace SW.ToolsUT
             StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
             Assert.IsTrue(response.status == "success");
         }
+        [TestMethod]
+        public void UT_CFDI40_CFDIJustExento()
+        {
+            Comprobante comprobante = new Comprobante();
+
+            comprobante.SetComprobante("MXN", "I", "99", "PPD", "20000", "01", "SW-Tools-dotnet", Guid.NewGuid().ToString());
+            comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
+            comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "86991", "601");
+            comprobante.SetConcepto(1, "50211503", "H87", "Cigarros", null, "Pieza", 200.00m, "02", 200.00m);
+            comprobante.SetConceptoImpuestoTraslado("Exento", "002", 1m);
+            var invoice = comprobante.GetComprobante();
+            var xmlInvoice = SerializerCfdi40.SerializeDocument(invoice);
+            xmlInvoice = SignInvoice(xmlInvoice);
+            Stamp stamp = new Stamp(this.url, this.userStamp, this.passwordStamp);
+            StampResponseV2 response = stamp.TimbrarV2(xmlInvoice);
+            Assert.IsTrue(response.status == "success");
+        }
         private string SignInvoice(string xmlInvoice)
         {
             byte[] bytesCer = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.cer");
