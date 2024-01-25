@@ -515,14 +515,23 @@ namespace SW.Tools.Cfdi
                 totalCalculado = (totalCalculado + this.Impuestos.TotalImpuestosTrasladados) - this.Impuestos.TotalImpuestosRetenidos;
             this.Total = totalCalculado;
 
-            
             if (this.Impuestos != null)
             {
                 if (this.Impuestos.Traslados != null && this.Impuestos.Traslados.Count() > 0)
                 {
-                    this.Impuestos.TotalImpuestosTrasladados = this.Impuestos.Traslados.Sum(a => a.Importe);
-                    this.Impuestos.TotalImpuestosTrasladadosSpecified = true;
-                    this.Total += this.Impuestos.TotalImpuestosTrasladados;
+                    int countTasa = this.Impuestos.Traslados.Count(a => a.TipoFactor.Trim().ToLower() == "tasa");
+                    int countExento = this.Impuestos.Traslados.Count(a => a.TipoFactor.Trim().ToLower() == "exento");
+                    if (countTasa <= 0 && countExento >= 1)
+                    {
+                        this.Impuestos.TotalImpuestosTrasladadosSpecified = false;
+                    }
+                    else
+                    {
+                        this.Impuestos.TotalImpuestosTrasladados = this.Impuestos.Traslados.Sum(a => a.Importe);
+                        this.Impuestos.TotalImpuestosTrasladadosSpecified = true;
+                        this.Total += this.Impuestos.TotalImpuestosTrasladados;
+                    }
+
 
 
                 }

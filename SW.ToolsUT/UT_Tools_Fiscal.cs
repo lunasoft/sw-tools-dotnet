@@ -53,7 +53,6 @@ namespace SW.ToolsUT
             Assert.IsTrue(result.Contains("P"));
         }
         [Ignore]
-        [TestMethod]
         public void UT_Tools_AntiguedadSemanas_Error()
         {
             string dateFrom = "08/01/2008";
@@ -65,7 +64,6 @@ namespace SW.ToolsUT
         }
 
         [Ignore]
-        [TestMethod]
         public void UT_Tools_AntiguedadAnosMesesDias_Ok()
         {
             string dateFrom = "06/01/2008";

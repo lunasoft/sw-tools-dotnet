@@ -35,14 +35,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="cadenaoriginal40, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cadenaoriginal40.dll.0.0.4.1\lib\net40\cadenaoriginal40.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.13.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="SAT.Services, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SW-sdk.0.0.14.7-rc\lib\net35-client\SAT.Services.dll</HintPath>
-    </Reference>
-    <Reference Include="SW-sdk, Version=0.0.14.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SW-sdk.0.0.14.7-rc\lib\net35-client\SW-sdk.dll</HintPath>
+    <Reference Include="SW-sdk, Version=0.0.18.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SW-sdk.0.0.18.3\lib\net35-client\SW-sdk.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Web" />
@@ -108,6 +108,15 @@
     <None Include="Resources\CSD_Prueba_CFDI_LAN8507268IA.key">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="Resources\cfdi40_cce20.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\cfdi40_cce20_2.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\cfdi40_cp30.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Sign\invalidXml.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
