@@ -40,7 +40,7 @@
       <HintPath>..\packages\cadenaoriginal33.dll.1.4.3\lib\net40\cadenaoriginal33.dll</HintPath>
     </Reference>
     <Reference Include="cadenaoriginal40, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadenaoriginal40.dll.0.0.4.1\lib\net40\cadenaoriginal40.dll</HintPath>
+      <HintPath>..\packages\cadenaoriginal40.dll.0.0.4.2-rc\lib\net40\cadenaoriginal40.dll</HintPath>
     </Reference>
     <Reference Include="cadenaoriginalretenciones20, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\cadenaoriginalRetenciones20.dll.1.0.1\lib\cadenaoriginalretenciones20.dll</HintPath>
