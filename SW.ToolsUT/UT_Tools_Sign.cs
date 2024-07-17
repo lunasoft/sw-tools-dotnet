@@ -70,7 +70,7 @@ namespace SW.ToolsUT
             byte[] bytesKey = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.key");
             string password = "12345678a";
             var pfx = Sign.CrearPFX(bytesCer, bytesKey, password);
-            var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi40.xml")));
+            var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi40_cp31.xml")));
             var xmlResult = Sign.SellarCFDIv40(pfx, password, xml);
             Assert.IsTrue(!string.IsNullOrEmpty(xmlResult.data.xml));
             Assert.IsTrue(xmlResult.status == "success");
@@ -152,6 +152,17 @@ namespace SW.ToolsUT
         {
             var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi40_cp30.xml")));
             string CadenaOriginal = "||4.0|Serie|Folio|2023-12-29T00:00:55|01|30001000000500003416|100.00|MXN|100.00|I|01|PUE|42501|EKU9003173C9|ESCUELA KEMPER URGATE|601|EKU9003173C9|ESCUELA KEMPER URGATE|42501|601|S01|78101800|UT421511|1|H87|Pieza|Transporte de carga por carretera|100.00|100.00|01|3.0|CCCBCD94-870A-4332-A52A-A52AA52AA52A|No|1|Sí|01|01|Origen|OR101010|EKU9003173C9|NombreRemitenteDestinatario1|2023-08-01T00:00:00|Calle1|211|212|1957|13|casa blanca|011|CMX|MEX|13250|Destino|DE202020|EKU9003173C9|NombreRemitenteDestinatario2|2023-08-01T00:00:01|1|Calle2|214|215|0347|23|casa negra|004|COA|MEX|25350|1.0|XBX|1|Sí|11121900|Accesorios de equipo de telefonía|1.0|XBX|No|01|DenominacionGenericaProd1|DenominacionDistintivaProd1|Fabricante1|2028-01-01|LoteMedic1|01|01|RegistroSanita1|1|1|OR101010|DE202020|TPAF01|NumPermisoSCT1|VL|1|plac892|2020|AseguraRespCivil|123456789|CTR004|VL45K98|01|CACX7605101P8|a234567890|NombreFigura||";
+            var result_ = Fiscal.RemoverCaracteresInvalidosXml(Sign.CadenaOriginalCFDIv40(xml).data.cadenaOriginal);
+            Assert.IsTrue(CadenaOriginal.Equals(result_));
+        }
+        /// <summary>
+        /// Cadena Original Carta Porte 3.1
+        /// </summary>
+        [TestMethod]
+        public void UT_Tools_CadenaOriginalCFDIv40_CP31_OK()
+        {
+            var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi40_cp31.xml")));
+            string CadenaOriginal = "||4.0|SerieCCP31|CP3.1|2024-07-16T18:00:55|01|30001000000500003416|100.00|MXN|100.00|I|01|PUE|42501|EKU9003173C9|ESCUELA KEMPER URGATE|601|URE180429TM6|UNIVERSIDAD ROBOTICA ESPAÑOLA|86991|601|S01|78101800|UT421511|1|H87|Pieza|Transporte de carga por carretera|100.00|100.00|01|3.1|CCCBCD94-870A-4332-A52A-A52AA52AA52A|No|1|Sí|01|01|Origen|OR101010|URE180429TM6|NombreRemitenteDestinatario1|2023-08-01T00:00:00|Calle1|211|212|1957|13|casa blanca|011|CMX|MEX|13250|Destino|DE202020|URE180429TM6|NombreRemitenteDestinatario2|2023-08-01T00:00:01|1|Calle2|214|215|0347|23|casa negra|004|COA|MEX|25350|1.0|XBX|1|Sí|11121900|Accesorios de equipo de telefonía|1.0|XBX|No|DenominacionGenericaProd1|DenominacionDistintivaProd1|Fabricante1|2003-04-02|LoteMedic1|01|01|RegistroSanita1|1|6309000100|1|OR101010|DE202020|TPAF01|NumPermisoSCT1|VL|1|plac892|2020|AseguraRespCivil|123456789|CTR004|VL45K98|01|URE180429TM6|NumLicencia1|NombreFigura1|Calle1|NumeroExterior1|NumeroInterior1|Colonia1|Localidad1|Referencia1|Municipio1|Estado1|AFG|CodigoPosta1||";
             var result_ = Fiscal.RemoverCaracteresInvalidosXml(Sign.CadenaOriginalCFDIv40(xml).data.cadenaOriginal);
             Assert.IsTrue(CadenaOriginal.Equals(result_));
         }
