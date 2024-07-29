@@ -243,8 +243,6 @@ namespace SW.Tools.Cfdi
 
         public void SetCFDIRelacionado(string tipoRelacion = null, string[] uuid = null)
         {
-
-
             if (this.CfdiRelacionados != null)
             {
                 var conceptList = this.CfdiRelacionados.ToList();
@@ -253,6 +251,7 @@ namespace SW.Tools.Cfdi
                     TipoRelacion = tipoRelacion,
                     CfdiRelacionado = GetUuidRelacionado(uuid)
                 });
+                this.CfdiRelacionados = conceptList.ToArray();
             }
             else
             {
