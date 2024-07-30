@@ -232,21 +232,26 @@ namespace SW.Tools.Entities
                 this.SetImpuestoRetencion(importe.Value, impuesto);
         }
 
-        public void SetCFDIRelacionado(string tipoRelacion, string uuid)
+        public void SetCFDIRelacionado(string tipoRelacion = null, string[] uuid = null)
         {
             if (this.CfdiRelacionados != null)
             {
-                var listCfdiRelaci = this.CfdiRelacionados.CfdiRelacionado.ToList();
-                listCfdiRelaci.Add(new ComprobanteCfdiRelacionadosCfdiRelacionado()
-                { UUID = uuid });
-                this.CfdiRelacionados.CfdiRelacionado = listCfdiRelaci.ToArray();
+                var conceptList = this.CfdiRelacionados.ToList();
+                conceptList.Add(new ComprobanteCfdiRelacionados()
+                {
+                    TipoRelacion = tipoRelacion,
+                    CfdiRelacionado = GetUuidRelacionado(uuid)
+                });
+                this.CfdiRelacionados = conceptList.ToArray();
             }
             else
             {
-                this.CfdiRelacionados = new ComprobanteCfdiRelacionados();
-                this.CfdiRelacionados.CfdiRelacionado = new ComprobanteCfdiRelacionadosCfdiRelacionado[1];
-                this.CfdiRelacionados.TipoRelacion= tipoRelacion;
-                this.CfdiRelacionados.CfdiRelacionado[0] = new ComprobanteCfdiRelacionadosCfdiRelacionado() { UUID = uuid };
+                this.CfdiRelacionados = new ComprobanteCfdiRelacionados[1];
+                this.CfdiRelacionados[0] = new ComprobanteCfdiRelacionados()
+                {
+                    TipoRelacion = tipoRelacion,
+                    CfdiRelacionado = GetUuidRelacionado(uuid)
+                };
             }
         }
 
