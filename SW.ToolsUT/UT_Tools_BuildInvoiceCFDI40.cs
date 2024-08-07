@@ -58,7 +58,7 @@ namespace SW.ToolsUT
 
             comprobante.SetComprobante("MXN", "I", "99", "PPD", "65000", "01", "SW-Tools-dotnet", Guid.NewGuid().ToString());
             comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m, "02", 550.00m);
-            comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 550.00m, 0.160000m, 88.00m);
+            comprobante.SetConceptoImpuestoTraslado("Tasa", "002", 550.00m, 0.160000m, 88.00m);
             comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
             comprobante.SetReceptor("XAXX010101000", "PUBLICO EN GENERAL", "S01", "65000", "616");
             comprobante.SetInformacionGlobal("01", "04", "2023");
