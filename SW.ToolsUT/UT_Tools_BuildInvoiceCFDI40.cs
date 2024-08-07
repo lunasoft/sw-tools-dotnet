@@ -20,7 +20,7 @@ using SW.ToolsUT.Helpers;
 namespace SW.ToolsUT
 {
     [TestClass]
-    [Ignore]
+    
     public class UT_Tools_BuildInvoiceCFDI40
     {
         private readonly BuildSettings _build;
@@ -101,10 +101,14 @@ namespace SW.ToolsUT
             comprobante.SetConcepto(1, "84131500", "ZZ", "derecho de poliza", "1", "NO APLICA", 550.00m, "02", 550.00m);
             comprobante.SetConceptoImpuestoTraslado( "Tasa", "002", 550.00m, 0.160000m, 88.00m);
             comprobante.SetEmisor("EKU9003173C9", "ESCUELA KEMPER URGATE", "601");
-            string[] lista = new string[2];
-            lista[0] = "0aded095-b84d-4364-8f8e-59c3f650e530";
-            lista[1] = "2da2a676-f424-4898-a190-79253fdf5f7a";
-            comprobante.SetCFDIRelacionado("03", lista);
+            string[] lista1 = new string[2];
+            lista1[0] = "0aded095-b84d-4364-8f8e-59c3f650e530";
+            lista1[1] = "2da2a676-f424-4898-a190-79253fdf5f7a";
+            comprobante.SetCFDIRelacionado("03", lista1);
+            string[] lista2 = new string[2];
+            lista2[0] = "0aded095-b84d-4364-8f8e-59c3f650e531";
+            lista2[1] = "2da2a676-f424-4898-a190-79253fdf5f7b";
+            comprobante.SetCFDIRelacionado("04", lista2);
             comprobante.SetReceptor("URE180429TM6", "UNIVERSIDAD ROBOTICA ESPAÑOLA", "G01", "86991", "601");
             var invoice = comprobante.GetComprobante();
             var xmlInvoice = SerializerCfdi40.SerializeDocument(invoice);
