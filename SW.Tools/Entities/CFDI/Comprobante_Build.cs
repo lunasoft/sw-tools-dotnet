@@ -253,6 +253,7 @@ namespace SW.Tools.Cfdi
                     TipoRelacion = tipoRelacion,
                     CfdiRelacionado = GetUuidRelacionado(uuid)
                 });
+                this.CfdiRelacionados = conceptList.ToArray();
             }
             else
             {
