@@ -253,6 +253,7 @@ namespace SW.Tools.Cfdi
                     TipoRelacion = tipoRelacion,
                     CfdiRelacionado = GetUuidRelacionado(uuid)
                 });
+                this.CfdiRelacionados = conceptList.ToArray();
             }
             else
             {
@@ -458,6 +459,7 @@ namespace SW.Tools.Cfdi
             this.MetodoPagoSpecified = !string.IsNullOrEmpty(this.MetodoPago);
             this.lugarExpedicionField = lugarExpedicion;
             this.Confirmacion = confirmacion;
+            this.TipoCambioSpecified = tipoCambio != 0 ? true : false;
             this.TipoCambio = tipoCambio;
             this.Exportacion = exportacion;
             this.Fecha= DateTime.Now.CentralTime();
