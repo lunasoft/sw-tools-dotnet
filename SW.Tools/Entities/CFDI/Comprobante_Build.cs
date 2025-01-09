@@ -532,16 +532,13 @@ namespace SW.Tools.Cfdi
                         this.Impuestos.TotalImpuestosTrasladadosSpecified = true;
                         this.Total += this.Impuestos.TotalImpuestosTrasladados;
                     }
-
-
-
                 }
 
                 if (this.Impuestos.Retenciones != null && this.Impuestos.Retenciones.Length > 0)
                 {
                     this.Impuestos.TotalImpuestosRetenidos = this.Impuestos.Retenciones.Sum(a => a.Importe);
                     this.Impuestos.TotalImpuestosRetenidosSpecified = true;
-                    this.Total -= this.Impuestos.TotalImpuestosTrasladados;
+                    this.Total -= this.Impuestos.TotalImpuestosRetenidos;
                 }
             }
             return this;
