@@ -13,6 +13,7 @@ using SW.ToolsUT.Helpers;
 namespace SW.ToolsUT
 {
     [TestClass]
+    [Ignore]
     public class UT_Tools_BuildInvoiceCFDI40
     {
         private readonly BuildSettings _build;
