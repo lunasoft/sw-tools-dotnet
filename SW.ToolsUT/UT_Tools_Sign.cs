@@ -78,6 +78,20 @@ namespace SW.ToolsUT
             Assert.IsTrue(string.IsNullOrEmpty(xmlResult.messageDetail));
         }
         [TestMethod]
+        public void UT_Tools_Sign_SellarCFDIv40Hidrocarburospetroliferos_OK()
+        {
+            byte[] bytesCer = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.cer");
+            byte[] bytesKey = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.key");
+            string password = "12345678a";
+            var pfx = Sign.CrearPFX(bytesCer, bytesKey, password);
+            var xml = Fiscal.RemoverCaracteresInvalidosXml(Encoding.UTF8.GetString(File.ReadAllBytes(@"Resources\cfdi_hidrocarburospetroliferos.xml")));
+            var xmlResult = Sign.SellarCFDIv40(pfx, password, xml);
+            Assert.IsTrue(!string.IsNullOrEmpty(xmlResult.data.xml));
+            Assert.IsTrue(xmlResult.status == "success");
+            Assert.IsTrue(string.IsNullOrEmpty(xmlResult.message));
+            Assert.IsTrue(string.IsNullOrEmpty(xmlResult.messageDetail));
+        }
+        [TestMethod]
         public void UT_Tools_Sign_SellarRetencionv20_OK()
         {
             byte[] bytesCer = File.ReadAllBytes(@"Resources\CSD_Pruebas_CFDI_EKU9003173C9.cer");
