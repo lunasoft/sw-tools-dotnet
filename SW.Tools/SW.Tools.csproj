@@ -5,6 +5,7 @@
     <AssemblyName>SW.Tools</AssemblyName>
     <RootNamespace>SW.Tools</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Version>1.0.14.2-rc</Version>
   </PropertyGroup>
 
   <ItemGroup>
