@@ -5,7 +5,7 @@
     <AssemblyName>SW.Tools</AssemblyName>
     <RootNamespace>SW.Tools</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <VersionPrefix>1.0.14.2</VersionPrefix>
+    <VersionPrefix>1.0.14.3</VersionPrefix>
     <Authors>SmarterWeb</Authors>
     <Description>Nuget para cfdi 33 y complementos</Description>
   </PropertyGroup>
